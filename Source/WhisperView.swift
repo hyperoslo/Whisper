@@ -66,11 +66,12 @@ public class WhisperView: UIView {
     if let images = whisperImages where images.count > 1 {
       complementImageView.animationImages = images
       complementImageView.animationDuration = AnimationTiming.loaderDuration
+      complementImageView.startAnimating()
     } else {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, 0, Dimensions.width, 0)
+    frame = CGRectMake(0, 0, Dimensions.width, Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
@@ -85,104 +86,7 @@ public class WhisperView: UIView {
 
   func delayFired(timer: NSTimer) {
     delegate?.notificationControllerWillHide()
-    removeView()
-  }
-}
-
-// MARK: - Present Methods
-
-extension WhisperView {
-
-  private func showView() {
-    view.frame = CGRectMake(0, height, Dimensions.width, 0)
-    for transformView in transformViews { transformView.transform = CGAffineTransformMakeScale(0.1, 0.1) }
-    UIView.animateWithDuration(AnimationTiming.movement, animations: { [unowned self] in
-      self.view.frame = CGRectMake(0, self.height, Dimensions.width, Dimensions.height)
-      for transformView in self.transformViews { transformView.transform = CGAffineTransformIdentity }
-      }, completion: { _ in
-        self.showTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.popUp,
-          target: self,
-          selector: "delayFired:",
-          userInfo: nil,
-          repeats: false)
-    })
-  }
-
-  private func presentView() {
-    view.frame = CGRectMake(0, height, Dimensions.width, 0)
-    for transformView in transformViews { transformView.transform = CGAffineTransformMakeScale(0.1, 0.1) }
-    UIView.animateWithDuration(AnimationTiming.movement, animations: { [unowned self] in
-      self.view.frame = CGRectMake(0, self.height, Dimensions.width, Dimensions.height)
-      for transformView in self.transformViews { transformView.transform = CGAffineTransformIdentity }
-      })
-  }
-
-  private func changeView(notification: Notification) {
-    UIView.animateWithDuration(AnimationTiming.switcher, animations: { [unowned self] in
-      for transformView in self.transformViews { transformView.transform = CGAffineTransformMakeScale(0.1, 0.1) }
-      }, completion: { _ in
-        self.setupViews(notification)
-        for transformView in self.transformViews { transformView.transform = CGAffineTransformMakeScale(0.1, 0.1) }
-        UIView.animateWithDuration(AnimationTiming.switcher, animations: { _ in
-          for transformView in self.transformViews { transformView.transform = CGAffineTransformIdentity }
-        })
-    })
-  }
-
-  private func removeView() {
-    UIView.animateWithDuration(AnimationTiming.movement, animations: { [unowned self] in
-      for transformView in self.transformViews { transformView.alpha = 0 }
-      for transformView in self.transformViews { transformView.transform = CGAffineTransformScale(
-        CGAffineTransformMakeTranslation(0, -7.5), 0.01, 0.01) }
-      self.view.frame = CGRectMake(0, self.height, Dimensions.width, 0)
-      }, completion: { _ in
-        self.removeFromParentViewController()
-        self.view.alpha = 0
-    })
-  }
-
-  private func setupViews(notification: Notification) {
-    titleLabel.text = notification.title
-    complementImageView.image = notification.image
-    view.backgroundColor = notification.color
-    kind = notification.kind
-
-    titleLabel.sizeToFit()
-    customLoader.startAnimating()
-    showTimer.invalidate()
-    for transformView in transformViews { transformView.transform = CGAffineTransformIdentity }
-    setupConstraints()
-  }
-}
-
-// MARK: - Whisperable
-
-extension WhisperView: Whisperable {
-
-  public func present(notification: Notification) {
-    setupViews(notification)
-    view.alpha = 1
-    for transformView in transformViews { transformView.alpha = 1 }
-    presentView()
-  }
-
-  public func show(notification: Notification) {
-    setupViews(notification)
-    view.alpha = 1
-    for transformView in transformViews { transformView.alpha = 1 }
-    showView()
-  }
-
-  public func change(notification: Notification) {
-    if titleLabel.text != nil {
-      changeView(notification)
-      showTimer.invalidate()
-    }
-  }
-
-  public func hide() {
-    removeView()
-    showTimer.invalidate()
+    //removeView()
   }
 }
 
@@ -210,54 +114,6 @@ extension WhisperView {
         y: 0,
         width: titleLabel.frame.width,
         height: frame.height)
-    }
-  }
-
-  func setupConstraints() {
-
-    if kind == .Searching {
-      view.addSubview(customLoader)
-
-      let totalObjectsWidth = Dimensions.loaderSize
-        + Dimensions.loaderTitleOffset + titleLabel.frame.width
-      let positionLoader = (totalWidth - totalObjectsWidth) / 2
-      let topOffset = (Dimensions.height - Dimensions.loaderSize) / 2
-
-//      layout (titleLabel, customLoader, replace: generalConstraints) {
-//        titleLabel, customLoader in
-//
-//        customLoader.left == customLoader.superview!.left + positionLoader
-//        customLoader.top == customLoader.superview!.top + topOffset
-//        customLoader.width == Dimensions.loaderSize
-//        customLoader.height == Dimensions.loaderSize
-//
-//        titleLabel.left == customLoader.right + Dimensions.loaderTitleOffset
-//        titleLabel.centerY == titleLabel.superview!.centerY
-//      }
-    } else if kind == .Default {
-      customLoader.removeFromSuperview()
-
-      let withImage = complementImageView.image != nil
-      let totalOffset = withImage ? Dimensions.imageSize + Dimensions.loaderTitleOffset : 0
-      let totalObjectsWidth = totalOffset + titleLabel.frame.width
-      let positionImage = (totalWidth - totalObjectsWidth) / 2
-      let positionTitle = withImage
-        ? positionImage + Dimensions.loaderTitleOffset + Dimensions.imageSize
-        : positionImage
-      let topOffset = (Dimensions.height - Dimensions.imageSize) / 2
-
-//      layout (titleLabel, complementImageView, replace: generalConstraints) {
-//        [unowned self] titleLabel, complementImage in
-//
-//        complementImage.left == complementImage.superview!.left + positionImage
-//        complementImage.top == complementImage.superview!.top + topOffset
-//        complementImage.width == Dimensions.imageSize
-//        complementImage.height == Dimensions.imageSize
-//
-//        titleLabel.left == titleLabel.superview!.left + positionTitle
-//        titleLabel.top == titleLabel.superview!.top
-//        titleLabel.width == self.titleLabel.frame.width
-//      }
     }
   }
 }
