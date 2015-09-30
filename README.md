@@ -1,4 +1,5 @@
 # Whisper
+<<<<<<< HEAD
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Whisper.svg?style=flat)](https://travis-ci.org/hyperoslo/Whisper)
 [![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
@@ -27,3 +28,6 @@ Hyper Interaktiv AS, ios@hyper.no
 ## License
 
 **Whisper** is available under the MIT license. See the LICENSE file for more info.
+=======
+A fairy eyelash or a unicorn whisper too far.
+>>>>>>> 86cb10f155a516d76dbb7c54220368d26b2b4bae
