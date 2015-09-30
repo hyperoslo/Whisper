@@ -4,7 +4,7 @@ public protocol NotificationControllerDelegate: class {
   func notificationControllerWillHide()
 }
 
-public class NotificationController: UIViewController {
+public class WhisperView: UIViewController {
 
   struct Dimensions {
     static let width: CGFloat = UIScreen.mainScreen().bounds.width
@@ -60,7 +60,6 @@ public class NotificationController: UIViewController {
   public weak var delegate: NotificationControllerDelegate?
   public var height: CGFloat
 
-  var kind: Notification.Kind?
   var showTimer = NSTimer()
   var loaderImages = [UIImage]()
 
@@ -73,21 +72,6 @@ public class NotificationController: UIViewController {
     view.frame = CGRectMake(0, 0, Dimensions.width, 0)
 
     for subview in transformViews { view.addSubview(subview) }
-
-    loaderImages = [
-      getImage("one"),
-      getImage("two"),
-      getImage("three"),
-      getImage("four"),
-      getImage("five"),
-      getImage("six"),
-      getImage("seven"),
-      getImage("eight"),
-      getImage("nine"),
-      getImage("ten"),
-      getImage("eleven"),
-      getImage("twelve"),
-    ]
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -104,7 +88,7 @@ public class NotificationController: UIViewController {
 
 // MARK: - Present Methods
 
-extension NotificationController {
+extension WhisperView {
 
   private func showView() {
     view.frame = CGRectMake(0, height, Dimensions.width, 0)
@@ -170,7 +154,7 @@ extension NotificationController {
 
 // MARK: - Whisperable
 
-extension NotificationController: Whisperable {
+extension WhisperView: Whisperable {
 
   public func present(notification: Notification) {
     setupViews(notification)
@@ -201,7 +185,7 @@ extension NotificationController: Whisperable {
 
 // MARK: - Autolayout
 
-extension NotificationController {
+extension WhisperView {
 
   func setupConstraints() {
     let totalWidth = UIScreen.mainScreen().bounds.width
@@ -255,7 +239,7 @@ extension NotificationController {
 
 // MARK: - Private helpers
 
-extension NotificationController {
+extension WhisperView {
 
   private func getImage(name: String) -> UIImage {
     let bundlePath = NSBundle(forClass: self.classForCoder).resourcePath?.stringByAppendingString("/Whisper.bundle")

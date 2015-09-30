@@ -14,10 +14,10 @@ private struct WhisperFactory {
   var navigationController: UINavigationController
   var edgeInsetHeight: CGFloat = 0
 
-//  lazy var whisperView: NotificationController = {
-//    let view = NotificationController()
-//    return view
-//    }()
+  lazy var whisperView: WhisperView = {
+    let view = WhisperView()
+    return view
+    }()
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
     // TODO: Create the whisper view with the message that you send.
