@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CAA86F622A9255BE7403ABBA6206A68CD1B37E77",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "CAA86F622A9255BE7403ABBA6206A68CD1B37E77" : 0,
+    "4D758676968280975A16CA6192B5AAFB3B275112" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D0C935F9-B475-4D95-B5D9-B9EE5EB88BD3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "CAA86F622A9255BE7403ABBA6206A68CD1B37E77" : "Whisper\/",
+    "4D758676968280975A16CA6192B5AAFB3B275112" : "mystore-ios\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "WhisperDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Demo\/WhisperDemo\/WhisperDemo.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/hyperoslo\/mystore-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4D758676968280975A16CA6192B5AAFB3B275112"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/hyperoslo\/Whisper.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CAA86F622A9255BE7403ABBA6206A68CD1B37E77"
+    }
+  ]
+}
