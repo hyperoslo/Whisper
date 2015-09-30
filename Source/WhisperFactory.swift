@@ -12,7 +12,7 @@ public func Whisper(message: Message, to: UINavigationController, action: Action
 private struct WhisperFactory {
 
   struct AnimationTiming {
-    static let movement: NSTimeInterval = 5
+    static let movement: NSTimeInterval = 0.3
     static let switcher: NSTimeInterval = 0.1
     static let popUp: NSTimeInterval = 1.5
     static let loaderDuration: NSTimeInterval = 0.7
@@ -59,6 +59,14 @@ private struct WhisperFactory {
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+      }, completion: { _ in
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+          UIView.animateWithDuration(AnimationTiming.movement, animations: {
+            self.whisperView.frame.size.height = 0
+            for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
+          })
+        }
     })
   }
 
