@@ -1,30 +1,33 @@
 import UIKit
-import Foundation
 
-public func Whisper(message: Message, navigationController: UINavigationController, action: Whisperx.Action = .Show) {
-  // TODO: Create the whisper view.
-  // TODO: Add it to the navigationController view.
-  // TODO: Present it or show it depending on the action.
+public enum Action: String {
+  case Present = "Whisper.PresentNotification"
+  case Show = "Whisper.ShowNotification"
 }
 
-public class Whisperx: NSObject {
+public func Whisper(message: Message, navigationController: UINavigationController, action: Action = .Show) {
+  WhisperFactory.craft(message, navigationController: navigationController, action: action)
+}
 
-  public struct Notifications {
-    public static let present = "Whisper.PresentNotification"
-    public static let show = "Whisper.ShowNotification"
-    public static let change = "Whisper.ChangeNotification"
-    public static let hide = "Whisper.HideNotification"
-  }
-
-  public enum Action: String {
-    case Present = "Whisper.PresentNotification"
-    case Show = "Whisper.ShowNotification"
-  }
+private struct WhisperFactory {
 
   var navigationController: UINavigationController
   var edgeInsetHeight: CGFloat = 0
-  var customLoader: [UIImage] = []
-  var customImage: UIImageView = UIImageView()
+
+//  lazy var whisperView: NotificationController = {
+//    let view = NotificationController()
+//    return view
+//    }()
+
+  static func craft(message: Message, navigationController: UINavigationController, action: Action) {
+    // TODO: Create the whisper view with the message that you send.
+    // TODO: Check if the whisper exists already.
+    // TODO: Add or replace it to the navigationController view.
+    // TODO: Present it or show it depending on the action.
+  }
+}
+
+public class Whisperx: NSObject {
 
   lazy var notificationController: NotificationController = { [unowned self] in
     let notificationController = NotificationController(
@@ -50,10 +53,6 @@ public class Whisperx: NSObject {
     navigationController.navigationBar.addSubview(notificationController.view)
 
     setupNotifications()
-  }
-
-  deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
   }
 
   // MARK: - Animations
@@ -85,24 +84,11 @@ public class Whisperx: NSObject {
       }
     }
   }
-
-  // MARK: - Notifications setup
-
-  func setupNotifications() {
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: "presentNotification:", name: Notifications.present, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: "showNotification:", name: Notifications.show, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: "changeNotification:", name: Notifications.change, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self,
-      selector: "hideNotification:", name: Notifications.hide, object: nil)
-  }
 }
 
 // MARK: - Whisperable
 
-extension Whisperx: Whisperable {
+extension Whisperx {
 
   public func present(notification: Notification) {
     if isAvailable {
@@ -118,44 +104,11 @@ extension Whisperx: Whisperable {
     }
   }
 
-  public func change(notification: Notification) {
-    if isAvailable {
-      notificationController.change(notification)
-    }
-  }
-
   public func hide() {
     if isAvailable {
       notificationController.hide()
       moveViews(false)
     }
-  }
-}
-
-// MARK: - NSNotifications
-
-extension Whisperx {
-
-  func presentNotification(notification: NSNotification) {
-    if let notification = notification.object as? Notification {
-      present(notification)
-    }
-  }
-
-  func showNotification(notification: NSNotification) {
-    if let notification = notification.object as? Notification {
-      show(notification)
-    }
-  }
-
-  func changeNotification(notification: NSNotification) {
-    if let notification = notification.object as? Notification {
-      change(notification)
-    }
-  }
-
-  func hideNotification(notification: NSNotification) {
-    hide()
   }
 }
 
@@ -170,7 +123,7 @@ extension Whisperx: NotificationControllerDelegate {
 
 // MARK: UINavigationControllerDelegate
 
-extension Whisperx: UINavigationControllerDelegate {
+extension UINavigationControllerDelegate {
 
   public func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
     viewToMove(viewController)
