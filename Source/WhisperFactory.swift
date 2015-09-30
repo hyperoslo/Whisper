@@ -12,7 +12,7 @@ public func Whisper(message: Message, to: UINavigationController, action: Action
 private struct WhisperFactory {
 
   struct AnimationTiming {
-    static let movement: NSTimeInterval = 0.3
+    static let movement: NSTimeInterval = 5
     static let switcher: NSTimeInterval = 0.1
     static let popUp: NSTimeInterval = 1.5
     static let loaderDuration: NSTimeInterval = 0.7
@@ -21,7 +21,7 @@ private struct WhisperFactory {
 
   static var navigationController = UINavigationController()
   static var edgeInsetHeight: CGFloat = 0
-  static var whisperView: WhisperView?
+  static var whisperView: WhisperView!
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
@@ -29,8 +29,10 @@ private struct WhisperFactory {
 
     let containsWhisper = false // TODO: Check if it contains or not the bar.
 
-    guard let whisper = whisperView else { return }
-    navigationController.navigationBar.addSubview(whisper)
+    navigationController.navigationBar.addSubview(whisperView)
+
+    whisperView.frame.size.height = 0
+    for subview in whisperView.transformViews { subview.frame.origin.y = -20 }
 
     if containsWhisper {
       changeView(action)
@@ -46,12 +48,18 @@ private struct WhisperFactory {
 
   // MARK: - Presentation
 
-  static func showView() {
-    UIView.animateWithDuration(Whi, animations: <#T##() -> Void#>)
+  static func presentView() {
+    UIView.animateWithDuration(AnimationTiming.movement, animations: {
+      self.whisperView.frame.size.height = WhisperView.Dimensions.height
+      for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+    })
   }
 
-  static func presentView() {
-
+  static func showView() {
+    UIView.animateWithDuration(AnimationTiming.movement, animations: {
+      self.whisperView.frame.size.height = WhisperView.Dimensions.height
+      for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+    })
   }
 
   static func changeView(action: Action) {

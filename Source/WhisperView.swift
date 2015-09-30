@@ -50,7 +50,7 @@ public class WhisperView: UIView {
 
     if let images = whisperImages where images.count > 1 {
       complementImageView.animationImages = images
-      complementImageView.animationDuration = AnimationTiming.loaderDuration
+      complementImageView.animationDuration = 0.7
       complementImageView.startAnimating()
     } else {
       complementImageView.image = whisperImages?.first
