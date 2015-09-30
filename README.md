@@ -1,4 +1,4 @@
-# Whisper
+# Whisper :dash:
 <<<<<<< HEAD
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Whisper.svg?style=flat)](https://travis-ci.org/hyperoslo/Whisper)
