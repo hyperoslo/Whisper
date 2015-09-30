@@ -1,6 +1,4 @@
 import UIKit
-import Cartography
-import Sugar
 
 public protocol NotificationControllerDelegate: class {
   func notificationControllerWillHide()
@@ -40,8 +38,8 @@ public class NotificationController: UIViewController {
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
-    label.textColor = ColorList.NotificationController.title
-    label.font = FontList.NotificationController.title
+//    label.textColor = ColorList.NotificationController.title
+//    label.font = FontList.NotificationController.title
 
     return label
     }()
@@ -67,21 +65,21 @@ public class NotificationController: UIViewController {
 
   var kind: Notification.Kind?
   var showTimer = NSTimer()
-  var generalConstraints = ConstraintGroup()
+//  var generalConstraints = ConstraintGroup()
 
   let loaderImages: [UIImage] = [
-    UIImage(named: ImageList.Whisper.loading1)!,
-    UIImage(named: ImageList.Whisper.loading2)!,
-    UIImage(named: ImageList.Whisper.loading3)!,
-    UIImage(named: ImageList.Whisper.loading4)!,
-    UIImage(named: ImageList.Whisper.loading5)!,
-    UIImage(named: ImageList.Whisper.loading6)!,
-    UIImage(named: ImageList.Whisper.loading7)!,
-    UIImage(named: ImageList.Whisper.loading8)!,
-    UIImage(named: ImageList.Whisper.loading9)!,
-    UIImage(named: ImageList.Whisper.loading10)!,
-    UIImage(named: ImageList.Whisper.loading11)!,
-    UIImage(named: ImageList.Whisper.loading12)!
+//    UIImage(named: ImageList.Whisper.loading1)!,
+//    UIImage(named: ImageList.Whisper.loading2)!,
+//    UIImage(named: ImageList.Whisper.loading3)!,
+//    UIImage(named: ImageList.Whisper.loading4)!,
+//    UIImage(named: ImageList.Whisper.loading5)!,
+//    UIImage(named: ImageList.Whisper.loading6)!,
+//    UIImage(named: ImageList.Whisper.loading7)!,
+//    UIImage(named: ImageList.Whisper.loading8)!,
+//    UIImage(named: ImageList.Whisper.loading9)!,
+//    UIImage(named: ImageList.Whisper.loading10)!,
+//    UIImage(named: ImageList.Whisper.loading11)!,
+//    UIImage(named: ImageList.Whisper.loading12)!
   ]
 
   // MARK: - Initializers
@@ -219,17 +217,17 @@ extension NotificationController {
       let positionLoader = (totalWidth - totalObjectsWidth) / 2
       let topOffset = (Dimensions.height - Dimensions.loaderSize) / 2
 
-      layout (titleLabel, customLoader, replace: generalConstraints) {
-        titleLabel, customLoader in
-
-        customLoader.left == customLoader.superview!.left + positionLoader
-        customLoader.top == customLoader.superview!.top + topOffset
-        customLoader.width == Dimensions.loaderSize
-        customLoader.height == Dimensions.loaderSize
-
-        titleLabel.left == customLoader.right + Dimensions.loaderTitleOffset
-        titleLabel.centerY == titleLabel.superview!.centerY
-      }
+//      layout (titleLabel, customLoader, replace: generalConstraints) {
+//        titleLabel, customLoader in
+//
+//        customLoader.left == customLoader.superview!.left + positionLoader
+//        customLoader.top == customLoader.superview!.top + topOffset
+//        customLoader.width == Dimensions.loaderSize
+//        customLoader.height == Dimensions.loaderSize
+//
+//        titleLabel.left == customLoader.right + Dimensions.loaderTitleOffset
+//        titleLabel.centerY == titleLabel.superview!.centerY
+//      }
     } else if kind == .Default {
       customLoader.removeFromSuperview()
 
@@ -242,18 +240,18 @@ extension NotificationController {
         : positionImage
       let topOffset = (Dimensions.height - Dimensions.imageSize) / 2
 
-      layout (titleLabel, complementImageView, replace: generalConstraints) {
-        [unowned self] titleLabel, complementImage in
-
-        complementImage.left == complementImage.superview!.left + positionImage
-        complementImage.top == complementImage.superview!.top + topOffset
-        complementImage.width == Dimensions.imageSize
-        complementImage.height == Dimensions.imageSize
-
-        titleLabel.left == titleLabel.superview!.left + positionTitle
-        titleLabel.top == titleLabel.superview!.top
-        titleLabel.width == self.titleLabel.frame.width
-      }
+//      layout (titleLabel, complementImageView, replace: generalConstraints) {
+//        [unowned self] titleLabel, complementImage in
+//
+//        complementImage.left == complementImage.superview!.left + positionImage
+//        complementImage.top == complementImage.superview!.top + topOffset
+//        complementImage.width == Dimensions.imageSize
+//        complementImage.height == Dimensions.imageSize
+//
+//        titleLabel.left == titleLabel.superview!.left + positionTitle
+//        titleLabel.top == titleLabel.superview!.top
+//        titleLabel.width == self.titleLabel.frame.width
+//      }
     }
   }
 }
