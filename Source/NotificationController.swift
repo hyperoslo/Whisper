@@ -30,10 +30,7 @@ public class NotificationController: UIViewController {
     public static let positive = "20D6B8"
   }
 
-  lazy private(set) var transformViews: [UIView] = { [unowned self] in
-    let views = [self.titleLabel, self.customLoader, self.complementImageView]
-    return views
-    }()
+  lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.customLoader, self.complementImageView]
 
   lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -65,21 +62,7 @@ public class NotificationController: UIViewController {
 
   var kind: Notification.Kind?
   var showTimer = NSTimer()
-
-  let loaderImages: [UIImage] = [
-//    UIImage(named: ImageList.Whisper.loading1)!,
-//    UIImage(named: ImageList.Whisper.loading2)!,
-//    UIImage(named: ImageList.Whisper.loading3)!,
-//    UIImage(named: ImageList.Whisper.loading4)!,
-//    UIImage(named: ImageList.Whisper.loading5)!,
-//    UIImage(named: ImageList.Whisper.loading6)!,
-//    UIImage(named: ImageList.Whisper.loading7)!,
-//    UIImage(named: ImageList.Whisper.loading8)!,
-//    UIImage(named: ImageList.Whisper.loading9)!,
-//    UIImage(named: ImageList.Whisper.loading10)!,
-//    UIImage(named: ImageList.Whisper.loading11)!,
-//    UIImage(named: ImageList.Whisper.loading12)!
-  ]
+  var loaderImages = [UIImage]()
 
   // MARK: - Initializers
 
@@ -90,6 +73,21 @@ public class NotificationController: UIViewController {
     view.frame = CGRectMake(0, 0, Dimensions.width, 0)
 
     for subview in transformViews { view.addSubview(subview) }
+
+    loaderImages = [
+      getImage("one"),
+      getImage("two"),
+      getImage("three"),
+      getImage("four"),
+      getImage("five"),
+      getImage("six"),
+      getImage("seven"),
+      getImage("eight"),
+      getImage("nine"),
+      getImage("ten"),
+      getImage("eleven"),
+      getImage("twelve"),
+    ]
   }
 
   public required init?(coder aDecoder: NSCoder) {
