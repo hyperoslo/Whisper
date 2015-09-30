@@ -10,9 +10,8 @@ public class WhisperView: UIView {
     static let width: CGFloat = UIScreen.mainScreen().bounds.width
     static let height: CGFloat = 24
     static let offsetHeight: CGFloat = height * 2
-    static let loaderSize: CGFloat = 13
+    static let imageSize: CGFloat = 14
     static let loaderTitleOffset: CGFloat = 5
-    static let imageSize: CGFloat = 15
   }
 
   struct AnimationTiming {
@@ -37,6 +36,7 @@ public class WhisperView: UIView {
     label.textAlignment = .Center
     label.textColor = UIColor.whiteColor()
     label.font = UIFont(name: "HelveticaNeue", size: 13)
+    label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
 
     return label
     }()
@@ -71,8 +71,10 @@ public class WhisperView: UIView {
     }
 
     frame = CGRectMake(0, 0, Dimensions.width, 0)
-
     for subview in transformViews { addSubview(subview) }
+
+    titleLabel.sizeToFit()
+    setupFrames()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -190,9 +192,24 @@ extension WhisperView {
 
   func setupFrames() {
     if whisperImages != nil {
+      titleLabel.frame = CGRect(
+        x: (frame.width - titleLabel.frame.width) / 2 + 20,
+        y: 0,
+        width: titleLabel.frame.width,
+        height: frame.height)
+
+      complementImageView.frame = CGRect(
+        x: titleLabel.frame.origin.y - Dimensions.imageSize - Dimensions.loaderTitleOffset,
+        y: (frame.height - Dimensions.imageSize) / 2,
+        width: Dimensions.imageSize,
+        height: Dimensions.imageSize)
 
     } else {
-      titleLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+      titleLabel.frame = CGRect(
+        x: (frame.width - titleLabel.frame.width) / 2,
+        y: 0,
+        width: titleLabel.frame.width,
+        height: frame.height)
     }
   }
 
