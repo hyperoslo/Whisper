@@ -1,4 +1,5 @@
 import UIKit
+import Whisper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow()
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
-    
+
+    let message = Notification(title: "Sup", color: UIColor.redColor())
+    Whisper(message, to: self.navigationController)
+
     return true
   }
 }

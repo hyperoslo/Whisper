@@ -1,13 +1,24 @@
 import UIKit
 import Foundation
 
-public class Whisper: NSObject {
+public func Whisper(message: Message, navigationController: UINavigationController, action: Whisperx.Action = .Show) {
+  // TODO: Create the whisper view.
+  // TODO: Add it to the navigationController view.
+  // TODO: Present it or show it depending on the action.
+}
+
+public class Whisperx: NSObject {
 
   public struct Notifications {
     public static let present = "Whisper.PresentNotification"
     public static let show = "Whisper.ShowNotification"
     public static let change = "Whisper.ChangeNotification"
     public static let hide = "Whisper.HideNotification"
+  }
+
+  public enum Action: String {
+    case Present = "Whisper.PresentNotification"
+    case Show = "Whisper.ShowNotification"
   }
 
   var navigationController: UINavigationController
@@ -91,7 +102,7 @@ public class Whisper: NSObject {
 
 // MARK: - Whisperable
 
-extension Whisper: Whisperable {
+extension Whisperx: Whisperable {
 
   public func present(notification: Notification) {
     if isAvailable {
@@ -123,7 +134,7 @@ extension Whisper: Whisperable {
 
 // MARK: - NSNotifications
 
-extension Whisper {
+extension Whisperx {
 
   func presentNotification(notification: NSNotification) {
     if let notification = notification.object as? Notification {
@@ -150,7 +161,7 @@ extension Whisper {
 
 // MARK: - NotificationControllerDelegate
 
-extension Whisper: NotificationControllerDelegate {
+extension Whisperx: NotificationControllerDelegate {
 
   public func notificationControllerWillHide() {
     moveViews(false)
@@ -159,7 +170,7 @@ extension Whisper: NotificationControllerDelegate {
 
 // MARK: UINavigationControllerDelegate
 
-extension Whisper: UINavigationControllerDelegate {
+extension Whisperx: UINavigationControllerDelegate {
 
   public func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
     viewToMove(viewController)
