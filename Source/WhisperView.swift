@@ -14,21 +14,6 @@ public class WhisperView: UIView {
     static let loaderTitleOffset: CGFloat = 5
   }
 
-  struct AnimationTiming {
-    static let movement: NSTimeInterval = 0.3
-    static let switcher: NSTimeInterval = 0.1
-    static let popUp: NSTimeInterval = 1.5
-    static let loaderDuration: NSTimeInterval = 0.7
-    static let totalDelay: NSTimeInterval = popUp + movement * 2
-  }
-
-  public struct BaseColors {
-    public static let neutral = "C8CBD1"
-    public static let error = "FA2F5B"
-    public static let warning = "FFCA00"
-    public static let positive = "20D6B8"
-  }
-
   lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
 
   lazy var titleLabel: UILabel = {
@@ -71,7 +56,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, 0, Dimensions.width, Dimensions.height)
+    frame = CGRectMake(0, height, Dimensions.width, Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()

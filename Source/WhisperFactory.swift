@@ -11,33 +11,54 @@ public func Whisper(message: Message, to: UINavigationController, action: Action
 
 private struct WhisperFactory {
 
+  struct AnimationTiming {
+    static let movement: NSTimeInterval = 0.3
+    static let switcher: NSTimeInterval = 0.1
+    static let popUp: NSTimeInterval = 1.5
+    static let loaderDuration: NSTimeInterval = 0.7
+    static let totalDelay: NSTimeInterval = popUp + movement * 2
+  }
+
   static var navigationController = UINavigationController()
   static var edgeInsetHeight: CGFloat = 0
   static var whisperView: WhisperView?
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
+    self.navigationController = navigationController
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
 
-    // TODO: Check if the whisper exists already.
-    // TODO: Add or replace it to the navigationController view.
-    // TODO: Present it or show it depending on the action.
+    let containsWhisper = false // TODO: Check if it contains or not the bar.
+
+    guard let whisper = whisperView else { return }
+    navigationController.navigationBar.addSubview(whisper)
+
+    if containsWhisper {
+      changeView(action)
+    } else {
+      switch action {
+      case .Present:
+        presentView()
+      case .Show:
+        showView()
+      }
+    }
   }
 
   // MARK: - Presentation
 
-  private func showView() {
+  static func showView() {
+    UIView.animateWithDuration(Whi, animations: <#T##() -> Void#>)
+  }
+
+  static func presentView() {
 
   }
 
-  private func presentView() {
+  static func changeView(action: Action) {
 
   }
 
-  private func changeView() {
-
-  }
-
-  private func hideView() {
+  static func hideView() {
     
   }
 }
