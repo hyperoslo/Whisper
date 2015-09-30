@@ -30,7 +30,7 @@ public class WhisperView: UIView {
     public static let positive = "20D6B8"
   }
 
-  lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.customLoader, self.complementImageView]
+  lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
 
   lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -55,14 +55,19 @@ public class WhisperView: UIView {
 
   // MARK: - Initializers
 
-  init(height: CGFloat, whisperImages: [UIImage]?) {
+  init(height: CGFloat, message: Message) {
     self.height = height
-    self.whisperImages = whisperImages
+    self.whisperImages = message.images
     super.init(frame: CGRectZero)
+
+    titleLabel.text = message.title
+    backgroundColor = message.color
 
     if let images = whisperImages where images.count > 1 {
       complementImageView.animationImages = images
       complementImageView.animationDuration = AnimationTiming.loaderDuration
+    } else {
+      complementImageView.image = whisperImages?.first
     }
 
     frame = CGRectMake(0, 0, Dimensions.width, 0)
@@ -184,17 +189,14 @@ extension WhisperView: Whisperable {
 extension WhisperView {
 
   func setupFrames() {
+    if whisperImages != nil {
 
+    } else {
+      titleLabel.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+    }
   }
 
   func setupConstraints() {
-    let totalWidth = UIScreen.mainScreen().bounds.width
-
-    if loaderImages.isEmpty {
-
-    } else {
-
-    }
 
     if kind == .Searching {
       view.addSubview(customLoader)

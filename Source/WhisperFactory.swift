@@ -11,16 +11,13 @@ public func Whisper(message: Message, navigationController: UINavigationControll
 
 private struct WhisperFactory {
 
-  var navigationController: UINavigationController
-  var edgeInsetHeight: CGFloat = 0
-
-  lazy var whisperView: WhisperView = {
-    let view = WhisperView()
-    return view
-    }()
+  static var navigationController = UINavigationController()
+  static var edgeInsetHeight: CGFloat = 0
+  static var whisperView: WhisperView?
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
-    // TODO: Create the whisper view with the message that you send.
+    whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
+
     // TODO: Check if the whisper exists already.
     // TODO: Add or replace it to the navigationController view.
     // TODO: Present it or show it depending on the action.
