@@ -12,7 +12,7 @@ public class Notification {
   public var image: UIImage?
   public var kind = Kind.Default
 
-  public init(title: String, color: UIColor, image: UIImage? = nil, kind: Kind = .Default) {
+  public init(title: String, color: UIColor = UIColor.lightGrayColor(), image: UIImage? = nil, kind: Kind = .Default) {
     self.title = title
     self.color = color
     self.image = image
