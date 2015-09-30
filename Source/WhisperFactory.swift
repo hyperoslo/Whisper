@@ -5,8 +5,8 @@ public enum Action: String {
   case Show = "Whisper.ShowNotification"
 }
 
-public func Whisper(message: Message, navigationController: UINavigationController, action: Action = .Show) {
-  WhisperFactory.craft(message, navigationController: navigationController, action: action)
+public func Whisper(message: Message, to: UINavigationController, action: Action = .Show) {
+  WhisperFactory.craft(message, navigationController: to, action: action)
 }
 
 private struct WhisperFactory {

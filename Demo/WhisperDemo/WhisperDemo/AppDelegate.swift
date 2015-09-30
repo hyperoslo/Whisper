@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
 
-    let message = Notification(title: "Sup", color: UIColor.redColor())
-    Whisper(message, to: self.navigationController)
+    let message = Message(title: "Sup", color: UIColor.redColor())
+    Whisper(message, to: navigationController)
 
     return true
   }
