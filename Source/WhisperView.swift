@@ -4,7 +4,7 @@ public protocol NotificationControllerDelegate: class {
   func notificationControllerWillHide()
 }
 
-public class WhisperView: UIViewController {
+public class WhisperView: UIView {
 
   struct Dimensions {
     static let width: CGFloat = UIScreen.mainScreen().bounds.width
@@ -41,15 +41,6 @@ public class WhisperView: UIViewController {
     return label
     }()
 
-  lazy var customLoader: UIImageView = { [unowned self] in
-    let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
-    imageView.animationImages = self.loaderImages
-    imageView.animationDuration = AnimationTiming.loaderDuration
-
-    return imageView
-    }()
-
   lazy var complementImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFill
@@ -59,19 +50,24 @@ public class WhisperView: UIViewController {
 
   public weak var delegate: NotificationControllerDelegate?
   public var height: CGFloat
-
+  var whisperImages: [UIImage]?
   var showTimer = NSTimer()
-  var loaderImages = [UIImage]()
 
   // MARK: - Initializers
 
-  public init(height: CGFloat) {
+  init(height: CGFloat, whisperImages: [UIImage]?) {
     self.height = height
-    super.init(nibName: nil, bundle: nil)
+    self.whisperImages = whisperImages
+    super.init(frame: CGRectZero)
 
-    view.frame = CGRectMake(0, 0, Dimensions.width, 0)
+    if let images = whisperImages where images.count > 1 {
+      complementImageView.animationImages = images
+      complementImageView.animationDuration = AnimationTiming.loaderDuration
+    }
 
-    for subview in transformViews { view.addSubview(subview) }
+    frame = CGRectMake(0, 0, Dimensions.width, 0)
+
+    for subview in transformViews { addSubview(subview) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -183,12 +179,22 @@ extension WhisperView: Whisperable {
   }
 }
 
-// MARK: - Autolayout
+// MARK: - Layout
 
 extension WhisperView {
 
+  func setupFrames() {
+
+  }
+
   func setupConstraints() {
     let totalWidth = UIScreen.mainScreen().bounds.width
+
+    if loaderImages.isEmpty {
+
+    } else {
+
+    }
 
     if kind == .Searching {
       view.addSubview(customLoader)
@@ -234,21 +240,5 @@ extension WhisperView {
 //        titleLabel.width == self.titleLabel.frame.width
 //      }
     }
-  }
-}
-
-// MARK: - Private helpers
-
-extension WhisperView {
-
-  private func getImage(name: String) -> UIImage {
-    let bundlePath = NSBundle(forClass: self.classForCoder).resourcePath?.stringByAppendingString("/Whisper.bundle")
-    let bundle = NSBundle(path: bundlePath!)
-    let traitCollection = UITraitCollection(displayScale: 3)
-
-    guard let image = UIImage(named: name, inBundle: bundle,
-      compatibleWithTraitCollection: traitCollection) else { return UIImage() }
-
-    return image
   }
 }
