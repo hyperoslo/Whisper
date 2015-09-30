@@ -38,8 +38,8 @@ public class NotificationController: UIViewController {
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
-//    label.textColor = ColorList.NotificationController.title
-//    label.font = FontList.NotificationController.title
+    label.textColor = UIColor.whiteColor()
+    label.font = UIFont(name: "HelveticaNeue", size: 13)
 
     return label
     }()
@@ -65,7 +65,6 @@ public class NotificationController: UIViewController {
 
   var kind: Notification.Kind?
   var showTimer = NSTimer()
-//  var generalConstraints = ConstraintGroup()
 
   let loaderImages: [UIImage] = [
 //    UIImage(named: ImageList.Whisper.loading1)!,
@@ -253,5 +252,21 @@ extension NotificationController {
 //        titleLabel.width == self.titleLabel.frame.width
 //      }
     }
+  }
+}
+
+// MARK: - Private helpers
+
+extension NotificationController {
+
+  private func getImage(name: String) -> UIImage {
+    let bundlePath = NSBundle(forClass: self.classForCoder).resourcePath?.stringByAppendingString("/Whisper.bundle")
+    let bundle = NSBundle(path: bundlePath!)
+    let traitCollection = UITraitCollection(displayScale: 3)
+
+    guard let image = UIImage(named: name, inBundle: bundle,
+      compatibleWithTraitCollection: traitCollection) else { return UIImage() }
+
+    return image
   }
 }
