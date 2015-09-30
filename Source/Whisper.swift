@@ -12,6 +12,8 @@ public class Whisper: NSObject {
 
   var navigationController: UINavigationController
   var edgeInsetHeight: CGFloat = 0
+  var customLoader: [UIImage] = []
+  var customImage: UIImageView = UIImageView()
 
   lazy var notificationController: NotificationController = { [unowned self] in
     let notificationController = NotificationController(
@@ -32,6 +34,8 @@ public class Whisper: NSObject {
 
     self.navigationController.delegate = self
     notificationController.delegate = self
+    notificationController.loaderImages = customLoader
+    notificationController.complementImageView = customImage
     navigationController.navigationBar.addSubview(notificationController.view)
 
     setupNotifications()

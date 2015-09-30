@@ -4,7 +4,13 @@ public class Notification {
 
   public enum Kind: String {
     case Default = "Default"
-    case Searching = "Searching"
+    case Loader = "Loading"
+  }
+
+  public enum Action: String {
+    case Present = "Whisper.PresentNotification"
+    case Show = "Whisper.ShowNotification"
+    case Hide = "Whisper.HideNotification"
   }
 
   public var title: String
