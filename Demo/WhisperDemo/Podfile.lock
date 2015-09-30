@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  Whisper: 0219f242c7024d1be9c32b5891692ea39ecbe14c
+  Whisper: 3cc47ccf0344c73108643ea7792b1646f43dd49f
 
 COCOAPODS: 0.39.0.beta.4
