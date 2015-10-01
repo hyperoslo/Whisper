@@ -32,9 +32,7 @@ class ViewController: UIViewController {
     setupFrames()
   }
 
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-
+  override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     guard let navigationController = self.navigationController else { return }
     let message = Message(title: "Sup", color: UIColor.redColor())
     Whisper(message, to: navigationController)

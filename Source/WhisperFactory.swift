@@ -25,14 +25,21 @@ private struct WhisperFactory {
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
-    whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
 
-    let containsWhisper = false // TODO: Check if it contains or not the bar.
+    var containsWhisper = false
+    for subview in navigationController.navigationBar.subviews {
+      if subview.classForCoder == WhisperView.classForCoder() {
+        containsWhisper = true
+        break
+      }
+    }
 
-    navigationController.navigationBar.addSubview(whisperView)
-
-    whisperView.frame.size.height = 0
-    for subview in whisperView.transformViews { subview.frame.origin.y = -20 }
+    if !containsWhisper {
+      whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
+      whisperView.frame.size.height = 0
+      for subview in whisperView.transformViews { subview.frame.origin.y = -20 }
+      navigationController.navigationBar.addSubview(whisperView)
+    }
 
     if containsWhisper {
       changeView(action)
@@ -65,13 +72,15 @@ private struct WhisperFactory {
           UIView.animateWithDuration(AnimationTiming.movement, animations: {
             self.whisperView.frame.size.height = 0
             for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
+            }, completion: { _ in
+              self.whisperView.removeFromSuperview()
           })
         }
     })
   }
 
   static func changeView(action: Action) {
-
+    print("CHANGE THE STUFF")
   }
 
   static func hideView() {
