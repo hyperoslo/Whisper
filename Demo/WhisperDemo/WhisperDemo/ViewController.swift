@@ -35,7 +35,9 @@ class ViewController: UIViewController {
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     guard let navigationController = self.navigationController else { return }
     let message = Message(title: "Sup", color: UIColor.redColor())
-    Whisper(message, to: navigationController)
+    
+    Whisper(message, to: navigationController, action: .Present)
+    Silent(navigationController, after: 1.5)
   }
 
   // MARK - Configuration

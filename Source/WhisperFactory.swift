@@ -9,6 +9,10 @@ public func Whisper(message: Message, to: UINavigationController, action: Action
   WhisperFactory.craft(message, navigationController: to, action: action)
 }
 
+public func Silent(controller: UINavigationController, after: NSTimeInterval = 0) {
+  WhisperFactory.silentWhisper(controller, after: after)
+}
+
 private struct WhisperFactory {
 
   struct AnimationTiming {
@@ -53,6 +57,19 @@ private struct WhisperFactory {
     }
   }
 
+  static func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
+    navigationController = controller
+
+    for subview in navigationController.navigationBar.subviews {
+      if let whisper = subview as? WhisperView {
+        whisperView = whisper
+        break
+      }
+    }
+
+    hideView(after)
+  }
+
   // MARK: - Presentation
 
   static func presentView() {
@@ -67,15 +84,7 @@ private struct WhisperFactory {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
       }, completion: { _ in
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-          UIView.animateWithDuration(AnimationTiming.movement, animations: {
-            self.whisperView.frame.size.height = 0
-            for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
-            }, completion: { _ in
-              self.whisperView.removeFromSuperview()
-          })
-        }
+        hideView(1.5)
     })
   }
 
@@ -83,8 +92,17 @@ private struct WhisperFactory {
     print("CHANGE THE STUFF")
   }
 
-  static func hideView() {
-    
+  static func hideView(after: NSTimeInterval) {
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(after * Double(NSEC_PER_SEC)))
+
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      UIView.animateWithDuration(AnimationTiming.movement, animations: {
+        self.whisperView.frame.size.height = 0
+        for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
+        }, completion: { _ in
+          self.whisperView.removeFromSuperview()
+      })
+    }
   }
 }
 
