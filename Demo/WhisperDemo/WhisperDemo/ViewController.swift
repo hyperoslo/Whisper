@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     let message = Message(title: "Sup", color: UIColor.redColor())
     
     Whisper(message, to: navigationController, action: .Present)
-    Silent(navigationController, after: 1.5)
+    Silent(navigationController, after: 3)
   }
 
   // MARK - Configuration

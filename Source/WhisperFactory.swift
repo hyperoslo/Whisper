@@ -46,7 +46,7 @@ private struct WhisperFactory {
     }
 
     if containsWhisper {
-      changeView(action)
+      changeView(message, action: action)
     } else {
       switch action {
       case .Present:
@@ -88,8 +88,10 @@ private struct WhisperFactory {
     })
   }
 
-  static func changeView(action: Action) {
-    print("CHANGE THE STUFF")
+  static func changeView(message: Message, action: Action) {
+    whisperView.backgroundColor = message.color
+    whisperView.titleLabel.text = message.title
+    print("Change view")
   }
 
   static func hideView(after: NSTimeInterval) {
