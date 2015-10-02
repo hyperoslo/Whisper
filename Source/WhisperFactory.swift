@@ -13,7 +13,7 @@ public func Silent(controller: UINavigationController, after: NSTimeInterval = 0
   WhisperFactory.silentWhisper(controller, after: after)
 }
 
-private struct WhisperFactory {
+class WhisperFactory: NSObject {
 
   struct AnimationTiming {
     static let movement: NSTimeInterval = 0.3
@@ -26,6 +26,7 @@ private struct WhisperFactory {
   static var navigationController = UINavigationController()
   static var edgeInsetHeight: CGFloat = 0
   static var whisperView: WhisperView!
+  static var delayTimer = NSTimer()
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
@@ -67,7 +68,9 @@ private struct WhisperFactory {
       }
     }
 
-    hideView(after)
+    delayTimer.invalidate()
+    delayTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self,
+      selector: "delayFired:", userInfo: nil, repeats: false)
   }
 
   // MARK: - Presentation
@@ -84,32 +87,38 @@ private struct WhisperFactory {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
       }, completion: { _ in
-        hideView(1.5)
+        delayTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self,
+          selector: "delayFired:", userInfo: nil, repeats: false)
     })
   }
 
   static func changeView(message: Message, action: Action) {
-    hideView(0)
-
-    whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
+    delayTimer.invalidate()
+    hideView()
     
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(AnimationTiming.movement * 1.5 * Double(NSEC_PER_SEC)))
     dispatch_after(delayTime, dispatch_get_main_queue()) {
+      whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
+      navigationController.navigationBar.addSubview(whisperView)
+      whisperView.frame.size.height = 0
+
       presentView()
     }
   }
 
-  static func hideView(after: NSTimeInterval) {
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(after * Double(NSEC_PER_SEC)))
+  static func hideView() {
+    UIView.animateWithDuration(AnimationTiming.movement, animations: {
+      self.whisperView.frame.size.height = 0
+      for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
+      }, completion: { _ in
+        self.whisperView.removeFromSuperview()
+    })
+  }
 
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      UIView.animateWithDuration(AnimationTiming.movement, animations: {
-        self.whisperView.frame.size.height = 0
-        for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
-        }, completion: { _ in
-          self.whisperView.removeFromSuperview()
-      })
-    }
+  // MARK: - Timer methods
+
+  static func delayFired(timer: NSTimer) {
+    hideView()
   }
 }
 
