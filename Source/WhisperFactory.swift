@@ -135,9 +135,7 @@ class WhisperFactory: NSObject {
   }
 
   static func performControllerMove(viewController: UIViewController) {
-    if let whisperMovable = viewController as? WhisperMovable {
-      whisperMovable.whisperWillSetContentTop(edgeInsetHeight)
-    } else if viewController is UITableViewController {
+    if viewController is UITableViewController {
       let tableView = viewController.view as! UITableView
       tableView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
     } else if viewController is UICollectionViewController {
@@ -145,8 +143,7 @@ class WhisperFactory: NSObject {
       collectionView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
     } else {
       for view in viewController.view.subviews {
-        if view is UIScrollView {
-          let scrollView = view as! UIScrollView
+        if let scrollView = view as? UIScrollView {
           scrollView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
         }
       }
