@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     return label
     }()
 
+  var shouldChange = false
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -35,9 +37,17 @@ class ViewController: UIViewController {
   override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     guard let navigationController = self.navigationController else { return }
     let message = Message(title: "Sup", color: UIColor.redColor())
-    
-    Whisper(message, to: navigationController, action: .Present)
-    Silent(navigationController, after: 3)
+    let secondMessage = Message(title: "Changing all the things", color: UIColor.blackColor())
+
+    shouldChange
+      ? Whisper(secondMessage, to: navigationController, action: .Present)
+      : Whisper(message, to: navigationController, action: .Present)
+
+    if shouldChange {
+      Silent(navigationController, after: 3)
+    }
+
+    shouldChange = !shouldChange
   }
 
   // MARK - Configuration
