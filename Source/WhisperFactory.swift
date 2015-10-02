@@ -89,9 +89,14 @@ private struct WhisperFactory {
   }
 
   static func changeView(message: Message, action: Action) {
-    whisperView.backgroundColor = message.color
-    whisperView.titleLabel.text = message.title
-    print("Change view")
+    hideView(0)
+
+    whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
+    
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(AnimationTiming.movement * 1.5 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      presentView()
+    }
   }
 
   static func hideView(after: NSTimeInterval) {

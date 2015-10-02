@@ -36,7 +36,6 @@ public class WhisperView: UIView {
   public weak var delegate: NotificationControllerDelegate?
   public var height: CGFloat
   var whisperImages: [UIImage]?
-  var showTimer = NSTimer()
 
   // MARK: - Initializers
 
@@ -65,13 +64,6 @@ public class WhisperView: UIView {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  // MARK: - Timer Methods
-
-  func delayFired(timer: NSTimer) {
-    delegate?.notificationControllerWillHide()
-    //removeView()
   }
 }
 
