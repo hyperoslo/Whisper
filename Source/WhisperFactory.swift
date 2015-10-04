@@ -27,6 +27,7 @@ class WhisperFactory: NSObject {
   var edgeInsetHeight: CGFloat = 0
   var whisperView: WhisperView!
   var delayTimer = NSTimer()
+  var presentTimer = NSTimer()
 
   func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
@@ -96,16 +97,18 @@ class WhisperFactory: NSObject {
 
   func changeView(message: Message, action: Action) {
     delayTimer.invalidate()
+    presentTimer.invalidate()
     hideView()
-    
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(AnimationTiming.movement * 1.5 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      self.whisperView = WhisperView(height: self.navigationController.navigationBar.frame.height, message: message)
-      self.navigationController.navigationBar.addSubview(self.whisperView)
-      self.whisperView.frame.size.height = 0
 
-      self.presentView()
-    }
+    let title = message.title
+    let color = message.color
+    let action = action.rawValue
+
+    var array = ["title": title, "color": color, "action": action]
+    if let images = message.images { array["images"] = images }
+
+    presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.5, target: self,
+      selector: "presentFired:", userInfo: array, repeats: false)
   }
 
   func hideView() {
@@ -121,6 +124,27 @@ class WhisperFactory: NSObject {
 
   func delayFired(timer: NSTimer) {
     hideView()
+  }
+
+  func presentFired(timer: NSTimer) {
+    print(timer.userInfo)
+    guard let userInfo = timer.userInfo,
+      title = userInfo["title"] as? String,
+      color = userInfo["color"] as? UIColor,
+      actionString = userInfo["action"] as? String else { return }
+
+    var images: [UIImage]? = nil
+
+    if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
+
+    let action = Action(rawValue: actionString)
+    let message = Message(title: title, color: color, images: images)
+
+    whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
+    navigationController.navigationBar.addSubview(whisperView)
+    whisperView.frame.size.height = 0
+
+    action == .Present ? presentView() : showView()
   }
 
   // MARK: - Navigation bar animations
