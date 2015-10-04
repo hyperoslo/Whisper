@@ -187,10 +187,16 @@ class WhisperFactory: NSObject {
 
 extension WhisperFactory: UINavigationControllerDelegate {
 
-  func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+  func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
+
     for subview in navigationController.navigationBar.subviews where subview is WhisperView {
       moveControllerViews(true)
-      break
+
+      if let index = navigationController.viewControllers.indexOf(viewController) where index > 0 {
+        edgeInsetHeight = -WhisperView.Dimensions.height
+        performControllerMove(navigationController.viewControllers[Int(index.value) - 1])
+        break
+      }
     }
   }
 }

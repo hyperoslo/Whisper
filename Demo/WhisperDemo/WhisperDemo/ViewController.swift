@@ -59,16 +59,16 @@ class ViewController: UIViewController {
     let message = Message(title: "Sup", color: UIColor.redColor())
     let secondMessage = Message(title: "Changing all the things", color: UIColor.blackColor())
 
-    shouldChange
-      ? Whisper(secondMessage, to: navigationController, action: .Present)
-      : Whisper(message, to: navigationController, action: .Present)
 
-    //    if shouldChange {
-    //      Silent(navigationController, after: 3)
-    //      let controller = ViewController()
-    //      controller.view.backgroundColor = UIColor.redColor()
-    //      navigationController.pushViewController(controller, animated: true)
-    //    }
+        if shouldChange {
+          //Silent(navigationController, after: 3)
+          let controller = ViewController()
+          navigationController.pushViewController(controller, animated: true)
+        } else {
+          Whisper(message, to: navigationController, action: .Present)
+    }
+
+//    if shouldChange { Silent(navigationController, after: 3) }
 
     shouldChange = !shouldChange
   }
