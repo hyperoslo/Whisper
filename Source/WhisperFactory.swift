@@ -6,11 +6,11 @@ public enum Action: String {
 }
 
 public func Whisper(message: Message, to: UINavigationController, action: Action = .Show) {
-  WhisperFactory.craft(message, navigationController: to, action: action)
+  WhisperFactory().craft(message, navigationController: to, action: action)
 }
 
 public func Silent(controller: UINavigationController, after: NSTimeInterval = 0) {
-  WhisperFactory.silentWhisper(controller, after: after)
+  WhisperFactory().silentWhisper(controller, after: after)
 }
 
 class WhisperFactory: NSObject {
@@ -23,14 +23,14 @@ class WhisperFactory: NSObject {
     static let totalDelay: NSTimeInterval = popUp + movement * 2
   }
 
-  static var navigationController = UINavigationController()
-  static var edgeInsetHeight: CGFloat = 0
-  static var whisperView: WhisperView!
-  static var delayTimer = NSTimer()
+  var navigationController = UINavigationController()
+  var edgeInsetHeight: CGFloat = 0
+  var whisperView: WhisperView!
+  var delayTimer = NSTimer()
 
-  static func craft(message: Message, navigationController: UINavigationController, action: Action) {
+  func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
-    //self.navigationController.delegate = WhisperFactory
+    self.navigationController.delegate = self
 
     var containsWhisper = false
     for subview in navigationController.navigationBar.subviews {
@@ -59,7 +59,7 @@ class WhisperFactory: NSObject {
     }
   }
 
-  static func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
+  func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
     navigationController = controller
 
     for subview in navigationController.navigationBar.subviews {
@@ -76,38 +76,38 @@ class WhisperFactory: NSObject {
 
   // MARK: - Presentation
 
-  static func presentView() {
+  func presentView() {
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
     })
   }
 
-  static func showView() {
+  func showView() {
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
       }, completion: { _ in
-        delayTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self,
+        self.delayTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self,
           selector: "delayFired:", userInfo: nil, repeats: false)
     })
   }
 
-  static func changeView(message: Message, action: Action) {
+  func changeView(message: Message, action: Action) {
     delayTimer.invalidate()
     hideView()
     
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(AnimationTiming.movement * 1.5 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
-      navigationController.navigationBar.addSubview(whisperView)
-      whisperView.frame.size.height = 0
+    dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+      self.whisperView = WhisperView(height: self.navigationController.navigationBar.frame.height, message: message)
+      self.navigationController.navigationBar.addSubview(self.whisperView)
+      self.whisperView.frame.size.height = 0
 
-      presentView()
+      self.presentView()
     }
   }
 
-  static func hideView() {
+  func hideView() {
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = 0
       for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
@@ -118,7 +118,7 @@ class WhisperFactory: NSObject {
 
   // MARK: - Timer methods
 
-  static func delayFired(timer: NSTimer) {
+  func delayFired(timer: NSTimer) {
     hideView()
   }
 
@@ -126,7 +126,7 @@ class WhisperFactory: NSObject {
 
   // MARK: - Animations
 
-  static func moveControllerViews(down: Bool) {
+  func moveControllerViews(down: Bool) {
     edgeInsetHeight = down ? WhisperView.Dimensions.height : 0
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
@@ -134,7 +134,7 @@ class WhisperFactory: NSObject {
       })
   }
 
-  static func performControllerMove(viewController: UIViewController) {
+  func performControllerMove(viewController: UIViewController) {
     if viewController is UITableViewController {
       let tableView = viewController.view as! UITableView
       tableView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
@@ -156,6 +156,6 @@ class WhisperFactory: NSObject {
 extension WhisperFactory: UINavigationControllerDelegate {
 
   func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-    WhisperFactory.performControllerMove(viewController)
+    WhisperFactory().performControllerMove(viewController)
   }
 }
