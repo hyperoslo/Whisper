@@ -188,6 +188,9 @@ class WhisperFactory: NSObject {
 extension WhisperFactory: UINavigationControllerDelegate {
 
   func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-    moveControllerViews(true)
+    for subview in navigationController.navigationBar.subviews where subview is WhisperView {
+      moveControllerViews(true)
+      break
+    }
   }
 }
