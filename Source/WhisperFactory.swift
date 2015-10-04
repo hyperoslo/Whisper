@@ -30,7 +30,7 @@ class WhisperFactory: NSObject {
 
   static func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
-    self.navigationController.delegate = self
+    //self.navigationController.delegate = WhisperFactory
 
     var containsWhisper = false
     for subview in navigationController.navigationBar.subviews {
@@ -156,6 +156,6 @@ class WhisperFactory: NSObject {
 extension WhisperFactory: UINavigationControllerDelegate {
 
   func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-    performControllerMove(viewController)
+    WhisperFactory.performControllerMove(viewController)
   }
 }
