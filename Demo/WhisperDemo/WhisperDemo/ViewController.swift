@@ -43,12 +43,12 @@ class ViewController: UIViewController {
       ? Whisper(secondMessage, to: navigationController, action: .Present)
       : Whisper(message, to: navigationController, action: .Present)
 
-    if shouldChange {
-      Silent(navigationController, after: 3)
-      let controller = ViewController()
-      controller.view.backgroundColor = UIColor.redColor()
-      navigationController.pushViewController(controller, animated: true)
-    }
+//    if shouldChange {
+//      Silent(navigationController, after: 3)
+//      let controller = ViewController()
+//      controller.view.backgroundColor = UIColor.redColor()
+//      navigationController.pushViewController(controller, animated: true)
+//    }
 
     shouldChange = !shouldChange
   }

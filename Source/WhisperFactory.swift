@@ -34,7 +34,8 @@ class WhisperFactory: NSObject {
 
     var containsWhisper = false
     for subview in navigationController.navigationBar.subviews {
-      if subview.classForCoder == WhisperView.classForCoder() {
+      if let whisper = subview as? WhisperView {
+        whisperView = whisper
         containsWhisper = true
         break
       }
@@ -98,7 +99,7 @@ class WhisperFactory: NSObject {
     hideView()
     
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(AnimationTiming.movement * 1.5 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) { [unowned self] in
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
       self.whisperView = WhisperView(height: self.navigationController.navigationBar.frame.height, message: message)
       self.navigationController.navigationBar.addSubview(self.whisperView)
       self.whisperView.frame.size.height = 0
