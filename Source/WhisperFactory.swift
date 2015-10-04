@@ -1,16 +1,18 @@
 import UIKit
 
+var whisperFactory: WhisperFactory = WhisperFactory()
+
 public enum Action: String {
   case Present = "Whisper.PresentNotification"
   case Show = "Whisper.ShowNotification"
 }
 
 public func Whisper(message: Message, to: UINavigationController, action: Action = .Show) {
-  WhisperFactory().craft(message, navigationController: to, action: action)
+  whisperFactory.craft(message, navigationController: to, action: action)
 }
 
 public func Silent(controller: UINavigationController, after: NSTimeInterval = 0) {
-  WhisperFactory().silentWhisper(controller, after: after)
+  whisperFactory.silentWhisper(controller, after: after)
 }
 
 class WhisperFactory: NSObject {
@@ -32,6 +34,7 @@ class WhisperFactory: NSObject {
   func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
     self.navigationController.delegate = self
+    presentTimer.invalidate()
 
     var containsWhisper = false
     for subview in navigationController.navigationBar.subviews {
@@ -96,8 +99,8 @@ class WhisperFactory: NSObject {
   }
 
   func changeView(message: Message, action: Action) {
-    delayTimer.invalidate()
     presentTimer.invalidate()
+    delayTimer.invalidate()
     hideView()
 
     let title = message.title
@@ -107,7 +110,7 @@ class WhisperFactory: NSObject {
     var array = ["title": title, "color": color, "action": action]
     if let images = message.images { array["images"] = images }
 
-    presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.5, target: self,
+    presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.1, target: self,
       selector: "presentFired:", userInfo: array, repeats: false)
   }
 
@@ -127,7 +130,6 @@ class WhisperFactory: NSObject {
   }
 
   func presentFired(timer: NSTimer) {
-    print(timer.userInfo)
     guard let userInfo = timer.userInfo,
       title = userInfo["title"] as? String,
       color = userInfo["color"] as? UIColor,
@@ -146,8 +148,6 @@ class WhisperFactory: NSObject {
 
     action == .Present ? presentView() : showView()
   }
-
-  // MARK: - Navigation bar animations
 
   // MARK: - Animations
 
