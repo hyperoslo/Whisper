@@ -1,11 +1,11 @@
 import UIKit
 
-var whisperFactory: WhisperFactory = WhisperFactory()
-
 public enum Action: String {
   case Present = "Whisper.PresentNotification"
   case Show = "Whisper.ShowNotification"
 }
+
+let whisperFactory: WhisperFactory = WhisperFactory()
 
 public func Whisper(message: Message, to: UINavigationController, action: Action = .Show) {
   whisperFactory.craft(message, navigationController: to, action: action)
@@ -82,6 +82,8 @@ class WhisperFactory: NSObject {
   // MARK: - Presentation
 
   func presentView() {
+    moveControllerViews(true)
+
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
@@ -89,6 +91,8 @@ class WhisperFactory: NSObject {
   }
 
   func showView() {
+    moveControllerViews(true)
+
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
@@ -115,6 +119,8 @@ class WhisperFactory: NSObject {
   }
 
   func hideView() {
+    moveControllerViews(false)
+
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = 0
       for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
@@ -152,24 +158,25 @@ class WhisperFactory: NSObject {
   // MARK: - Animations
 
   func moveControllerViews(down: Bool) {
-    edgeInsetHeight = down ? WhisperView.Dimensions.height : 0
+    guard let visibleController = navigationController.visibleViewController else { return }
+    edgeInsetHeight = down ? WhisperView.Dimensions.height : -WhisperView.Dimensions.height
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
-        self.performControllerMove(self.navigationController.visibleViewController!)
+        self.performControllerMove(visibleController)
       })
   }
 
   func performControllerMove(viewController: UIViewController) {
     if viewController is UITableViewController {
       let tableView = viewController.view as! UITableView
-      tableView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
+      tableView.contentInset = UIEdgeInsetsMake(tableView.contentInset.top + edgeInsetHeight, 0, 0, 0)
     } else if viewController is UICollectionViewController {
       let collectionView = viewController.view as! UICollectionView
-      collectionView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
+      collectionView.contentInset = UIEdgeInsetsMake(collectionView.contentInset.top + edgeInsetHeight, 0, 0, 0)
     } else {
       for view in viewController.view.subviews {
         if let scrollView = view as? UIScrollView {
-          scrollView.contentInset = UIEdgeInsetsMake(edgeInsetHeight, 0, 0, 0)
+          scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top + edgeInsetHeight, 0, 0, 0)
         }
       }
     }
@@ -181,6 +188,6 @@ class WhisperFactory: NSObject {
 extension WhisperFactory: UINavigationControllerDelegate {
 
   func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
-    WhisperFactory().performControllerMove(viewController)
+    moveControllerViews(true)
   }
 }
