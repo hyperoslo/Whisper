@@ -50,7 +50,10 @@ class WhisperFactory: NSObject {
       whisperView.frame.size.height = 0
       var maximumY = navigationController.navigationBar.frame.height
         - UIApplication.sharedApplication().statusBarFrame.height
-      for subview in whisperView.transformViews { subview.frame.origin.y = -20 }
+      for subview in whisperView.transformViews {
+        subview.frame.origin.y = -10
+        subview.alpha = 0
+      }
 
       for subview in navigationController.navigationBar.subviews {
         if subview.frame.maxY > maximumY { maximumY = subview.frame.maxY }
@@ -94,7 +97,10 @@ class WhisperFactory: NSObject {
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
-      for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+      for subview in self.whisperView.transformViews {
+        subview.frame.origin.y = 0
+        subview.alpha = 1
+      }
     })
   }
 
@@ -103,7 +109,10 @@ class WhisperFactory: NSObject {
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
-      for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+      for subview in self.whisperView.transformViews {
+        subview.frame.origin.y = 0
+        subview.alpha = 1
+      }
       }, completion: { _ in
         self.delayTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self,
           selector: "delayFired:", userInfo: nil, repeats: false)
@@ -131,7 +140,10 @@ class WhisperFactory: NSObject {
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = 0
-      for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
+      for subview in self.whisperView.transformViews {
+        subview.frame.origin.y = -10
+        subview.alpha = 0
+      }
       }, completion: { _ in
         self.whisperView.removeFromSuperview()
     })
