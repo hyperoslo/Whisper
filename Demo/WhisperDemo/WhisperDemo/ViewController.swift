@@ -86,7 +86,7 @@ class ViewController: UIViewController {
     navigationController.navigationBar.addSubview(containerView)
     containerView.frame = CGRect(x: 0,
       y: navigationController.navigationBar.frame.maxY - UIApplication.sharedApplication().statusBarFrame.height,
-      width: UIScreen.mainScreen().bounds.width, height: 100)
+      width: UIScreen.mainScreen().bounds.width, height: 75)
   }
 
   override func viewWillAppear(animated: Bool) {
