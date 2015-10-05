@@ -48,7 +48,18 @@ class WhisperFactory: NSObject {
     if !containsWhisper {
       whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
       whisperView.frame.size.height = 0
-      for subview in whisperView.transformViews { subview.frame.origin.y = -20 }
+      var maximumY = navigationController.navigationBar.frame.height
+        - UIApplication.sharedApplication().statusBarFrame.height
+      for subview in whisperView.transformViews {
+        subview.frame.origin.y = -10
+        subview.alpha = 0
+      }
+
+      for subview in navigationController.navigationBar.subviews {
+        if subview.frame.maxY > maximumY { maximumY = subview.frame.maxY }
+      }
+
+      whisperView.frame.origin.y = maximumY
       navigationController.navigationBar.addSubview(whisperView)
     }
 
@@ -86,7 +97,10 @@ class WhisperFactory: NSObject {
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
-      for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+      for subview in self.whisperView.transformViews {
+        subview.frame.origin.y = 0
+        subview.alpha = 1
+      }
     })
   }
 
@@ -95,7 +109,10 @@ class WhisperFactory: NSObject {
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
-      for subview in self.whisperView.transformViews { subview.frame.origin.y = 0 }
+      for subview in self.whisperView.transformViews {
+        subview.frame.origin.y = 0
+        subview.alpha = 1
+      }
       }, completion: { _ in
         self.delayTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self,
           selector: "delayFired:", userInfo: nil, repeats: false)
@@ -123,7 +140,10 @@ class WhisperFactory: NSObject {
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       self.whisperView.frame.size.height = 0
-      for subview in self.whisperView.transformViews { subview.frame.origin.y = -20 }
+      for subview in self.whisperView.transformViews {
+        subview.frame.origin.y = -10
+        subview.alpha = 0
+      }
       }, completion: { _ in
         self.whisperView.removeFromSuperview()
     })
@@ -151,6 +171,15 @@ class WhisperFactory: NSObject {
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
     navigationController.navigationBar.addSubview(whisperView)
     whisperView.frame.size.height = 0
+
+    var maximumY = navigationController.navigationBar.frame.height
+      - UIApplication.sharedApplication().statusBarFrame.height
+
+    for subview in navigationController.navigationBar.subviews {
+      if subview.frame.maxY > maximumY { maximumY = subview.frame.maxY }
+    }
+
+    whisperView.frame.origin.y = maximumY
 
     action == .Present ? presentView() : showView()
   }
@@ -186,6 +215,20 @@ class WhisperFactory: NSObject {
 // MARK: UINavigationControllerDelegate
 
 extension WhisperFactory: UINavigationControllerDelegate {
+
+  func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+    var maximumY = navigationController.navigationBar.frame.maxY - UIApplication.sharedApplication().statusBarFrame.height
+
+    for subview in navigationController.navigationBar.subviews {
+      if subview is WhisperView { navigationController.navigationBar.bringSubviewToFront(subview) }
+
+      if subview.frame.maxY > maximumY && !(subview is WhisperView) {
+        maximumY = subview.frame.maxY
+      }
+    }
+
+    whisperView.frame.origin.y = maximumY
+  }
 
   func navigationController(navigationController: UINavigationController, didShowViewController viewController: UIViewController, animated: Bool) {
 
