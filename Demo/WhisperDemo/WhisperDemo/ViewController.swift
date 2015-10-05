@@ -47,11 +47,22 @@ class ViewController: UIViewController {
     return button
     }()
 
+  lazy var newControllerButton: UIBarButtonItem = { [unowned self] in
+    let button = UIBarButtonItem()
+    button.title = "Next"
+    button.target = self
+    button.action = "nextButtonDidPress"
+
+    return button
+    }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    title = "Whisper".uppercaseString
     view.backgroundColor = UIColor.whiteColor()
+
+    navigationItem.rightBarButtonItem = newControllerButton
+    navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
 
     view.addSubview(scrollView)
     for subview in [icon, titleLabel, presentButton, showButton, presentPermanentButton] { scrollView.addSubview(subview) }
@@ -62,6 +73,11 @@ class ViewController: UIViewController {
       button.layer.borderWidth = 1.5
       button.layer.cornerRadius = 7.5
     }
+  }
+
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    title = "Whisper".uppercaseString
   }
 
   override func viewDidAppear(animated: Bool) {
@@ -91,6 +107,12 @@ class ViewController: UIViewController {
 
     let message = Message(title: "This is a permanent Whisper.", color: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1))
     Whisper(message, to: navigationController, action: .Present)
+  }
+
+  func nextButtonDidPress() {
+    let controller = DetailViewController()
+    title = ""
+    navigationController?.pushViewController(controller, animated: true)
   }
 
   // MARK - Configuration

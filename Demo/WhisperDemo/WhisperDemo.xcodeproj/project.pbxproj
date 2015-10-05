@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2977865E1BC30BEF0050D397 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2977865D1BC30BEF0050D397 /* DetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		29AD429E1BBC2BD2004292F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */; };
 		29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429F1BBC2BD2004292F1 /* ViewController.swift */; };
 		29AD42A51BBC2BD2004292F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A41BBC2BD2004292F1 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2977865D1BC30BEF0050D397 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		29AD429A1BBC2BD2004292F1 /* WhisperDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhisperDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29AD429F1BBC2BD2004292F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */,
 				29AD429F1BBC2BD2004292F1 /* ViewController.swift */,
+				2977865D1BC30BEF0050D397 /* DetailViewController.swift */,
 				29AD42A41BBC2BD2004292F1 /* Assets.xcassets */,
 				29AD42A61BBC2BD2004292F1 /* LaunchScreen.storyboard */,
 				29AD42A91BBC2BD2004292F1 /* Info.plist */,
@@ -205,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2977865E1BC30BEF0050D397 /* DetailViewController.swift in Sources */,
 				29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */,
 				29AD429E1BBC2BD2004292F1 /* AppDelegate.swift in Sources */,
 			);
