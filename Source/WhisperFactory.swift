@@ -162,7 +162,7 @@ class WhisperFactory: NSObject {
 
     var maximumY = navigationController.navigationBar.frame.height
       - UIApplication.sharedApplication().statusBarFrame.height
-    
+
     for subview in navigationController.navigationBar.subviews {
       if subview.frame.maxY > maximumY { maximumY = subview.frame.maxY }
     }
