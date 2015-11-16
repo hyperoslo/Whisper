@@ -21,7 +21,7 @@ public struct Announcement {
   public var duration: NSTimeInterval
   public var action: (() -> ())?
 
-  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: NSTimeInterval, action: (() -> ())?) {
+  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: NSTimeInterval = 2, action: (() -> ())?) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
