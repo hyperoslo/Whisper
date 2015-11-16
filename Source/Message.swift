@@ -12,3 +12,20 @@ public struct Message {
     self.images = images
   }
 }
+
+public struct Announcement {
+
+  public var title: String
+  public var subtitle: String?
+  public var image: UIImage?
+  public var duration: NSTimeInterval
+  public var action: (() -> ())?
+
+  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: NSTimeInterval, action: (() -> ())?) {
+    self.title = title
+    self.subtitle = subtitle
+    self.image = image
+    self.duration = duration
+    self.action = action
+  }
+}
