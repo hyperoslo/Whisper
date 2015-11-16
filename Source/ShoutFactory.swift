@@ -58,8 +58,13 @@ public class ShoutView: UIView {
 
   // MARK: - Initializers
 
-  public func init(announcement: Announcement) {
+  public init(announcement: Announcement) {
     self.announcement = announcement
+    super.init(frame: CGRectZero)
+  }
+
+  public required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Gesture methods
