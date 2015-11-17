@@ -18,7 +18,7 @@ Display a short message at the bottom of the navigation bar, this can be anythin
 
 ![In-App](https://github.com/hyperoslo/Whisper/blob/feature/README/Resources/in-app-notification.png)
 
-Fully customizable, from colors to fonts. This view will have an optional action that will be called if the user taps the view.
+Fully customizable, from colors to fonts. Shouts have an optional action that will be called if the user taps on it.
 
 The factory will handle the inset of the scroll view and adjust it to fit the Whisper, if you move from one view controller to another, it will animate the next controller's offset too.
 
