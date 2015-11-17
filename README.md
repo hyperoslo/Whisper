@@ -40,7 +40,7 @@ let announcement = Announcement(title: "Your title", subtitle: "Your subtitle", 
 Shout(announcement, to: self)
 ```
 
-Shouts let you add more properties like duration or action. With this last one, you'll get notified when the user **taps** the view.
+Shouts also have a duration property that allows you to pinpoint exactly how long the shout should be displayed.
 
 ## Installation
 
