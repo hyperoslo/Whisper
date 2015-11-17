@@ -22,6 +22,7 @@ public class ShoutView: UIView {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.background
     view.alpha = 0.98
+    view.clipsToBounds = true
 
     return view
     }()
@@ -101,11 +102,15 @@ public class ShoutView: UIView {
 
     addSubview(backgroundView)
     backgroundView.addSubview(blurView)
-    [indicatorView, gestureContainer, imageView, titleLabel, subtitleLabel].forEach {
+    [indicatorView, imageView, titleLabel, subtitleLabel, gestureContainer].forEach {
       blurView.addSubview($0) }
 
-    clipsToBounds = true
+    clipsToBounds = false
     userInteractionEnabled = true
+    layer.shadowColor = UIColor.blackColor().CGColor
+    layer.shadowOffset = CGSize(width: 0, height: 1.5)
+    layer.shadowOpacity = 0.15
+    layer.shadowRadius = 1.5
 
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
@@ -145,8 +150,10 @@ public class ShoutView: UIView {
     controller.view.addSubview(self)
 
     frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 0)
+    backgroundView.frame = CGRect(x: 0, y: 0, width: Dimensions.width, height: 0)
     UIView.animateWithDuration(0.35, animations: {
       self.frame.size.height = Dimensions.height
+      self.backgroundView.frame.size.height = self.frame.height
     })
   }
 
@@ -172,6 +179,7 @@ public class ShoutView: UIView {
   public func silent() {
     UIView.animateWithDuration(0.35, animations: {
       self.frame.size.height = 0
+      self.backgroundView.frame.size.height = self.frame.height
       }, completion: { finished in
         self.removeFromSuperview()
     })
