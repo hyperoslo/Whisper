@@ -9,7 +9,7 @@ public func Shout(announcement: Announcement, to: UIViewController) {
 public class ShoutView: UIView {
 
   public struct Dimensions {
-    public static let height: CGFloat = 72.5
+    public static let height: CGFloat = 75
     public static let width: CGFloat = UIScreen.mainScreen().bounds.width
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
@@ -18,7 +18,7 @@ public class ShoutView: UIView {
   public lazy var backgroundView: UIView = {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.background
-    view.alpha = 0.925
+    view.alpha = 0.98
 
     return view
     }()
@@ -101,6 +101,8 @@ public class ShoutView: UIView {
   public func craft(announcement: Announcement, to: UIViewController) {
     configureView(announcement)
     shout(to: to)
+
+    
   }
 
   public func configureView(announcement: Announcement) {
