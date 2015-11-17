@@ -196,12 +196,12 @@ class WhisperFactory: NSObject {
   }
 
   func performControllerMove(viewController: UIViewController) {
-    if viewController is UITableViewController {
-      let tableView = viewController.view as! UITableView
-      tableView.contentInset = UIEdgeInsetsMake(tableView.contentInset.top + edgeInsetHeight, 0, 0, 0)
-    } else if viewController is UICollectionViewController {
-      let collectionView = viewController.view as! UICollectionView
-      collectionView.contentInset = UIEdgeInsetsMake(collectionView.contentInset.top + edgeInsetHeight, 0, 0, 0)
+    if let tableView = viewController.view as? UITableView
+      where viewController is UITableViewController {
+        tableView.contentInset = UIEdgeInsetsMake(tableView.contentInset.top + edgeInsetHeight, 0, 0, 0)
+    } else if let collectionView = viewController.view as? UICollectionView
+      where viewController is UICollectionViewController {
+        collectionView.contentInset = UIEdgeInsetsMake(collectionView.contentInset.top + edgeInsetHeight, 0, 0, 0)
     } else {
       for view in viewController.view.subviews {
         if let scrollView = view as? UIScrollView {
