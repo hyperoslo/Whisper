@@ -95,10 +95,6 @@ class ViewController: UIViewController {
     setupFrames()
   }
 
-  override func viewDidLayoutSubviews() {
-    scrollView.contentSize = view.frame.size
-  }
-
   // MARK: Action methods
 
   func presentButtonDidPress(button: UIButton) {
