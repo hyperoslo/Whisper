@@ -58,7 +58,7 @@ In the future the idea is to keep improving and add some features:
 - Improve the offset detection and animation.
 - Add more UI related components into Whisper.
 - More customization points and more sizes for each whisper.
-- Actions to Whispers and Shouts.
+- Custom actions inside Whispers and Shouts.
 - We are open to new and awesome ideas, contribute if you like! :)
 
 ## Author
