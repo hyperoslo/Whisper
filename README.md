@@ -10,13 +10,13 @@ Break the silence of your UI, whispering or shouting at it. **Whisper** is a com
 
 #### Whispers
 
-![Whisper](https://github.com/hyperoslo/Whisper/blob/feature/README/Resources/permanent-whisper.png)
+![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/permanent-whisper.png)
 
 Display a short message at the bottom of the navigation bar, this can be anything, from a "Great Job!" to an error message. It can have images or even a loader.
 
 #### Shouts
 
-![In-App](https://github.com/hyperoslo/Whisper/blob/feature/README/Resources/in-app-notification.png)
+![In-App](https://github.com/hyperoslo/Whisper/blob/master/Resources/in-app-notification.png)
 
 Fully customizable, from colors to fonts. Shouts have an optional action that will be called if the user taps on it. Finally, if you want to set how long the Shout should be displayed, you have a duration property.
 
