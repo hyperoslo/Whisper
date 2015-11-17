@@ -107,6 +107,10 @@ class ViewController: UIViewController {
     setupFrames()
   }
 
+  override func viewDidLayoutSubviews() {
+    scrollView.contentSize = view.frame.size
+  }
+
   // MARK: Action methods
 
   func presentButtonDidPress(button: UIButton) {
@@ -148,11 +152,9 @@ class ViewController: UIViewController {
   // MARK - Configuration
 
   func setupFrames() {
-    guard let navigationHeight = navigationController?.navigationBar.frame.height else { return }
     let totalSize = UIScreen.mainScreen().bounds
-    let originY = navigationHeight + UIApplication.sharedApplication().statusBarFrame.height
 
-    scrollView.frame = CGRect(x: 0, y: originY, width: totalSize.width, height: totalSize.height - originY)
+    scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
     titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: totalSize.height / 2 - 250)
     presentButton.frame = CGRect(x: 50, y: titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
     showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
