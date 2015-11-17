@@ -6,19 +6,19 @@
 
 ## Description
 
-**Whisper** is a UI component that will make the task of display messages and in-app notifications simple. It has two different views.
+Break the silence of your UI whispering or shouting at it. **Whisper** is a component that will make the task of display messages and in-app notifications simple. It has two different views inside.
 
 #### Whispers
 
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/feature/README/Resources/permanent-whisper.png)
 
-Display a short message at the bottom of the navigation bar. It can have images or even a loader.
+Display a short message at the bottom of the navigation bar, this can be anything, from a "Great Job!" to an error message. It can have images or even a loader.
 
 #### Shouts
 
 ![In-App](https://github.com/hyperoslo/Whisper/blob/feature/README/Resources/in-app-notification.png)
 
-Fully customizable, from colors to fonts.
+Fully customizable, from colors to fonts. This view will have an optional action that will be called if the user taps the view.
 
 The factory will handle the inset of the scroll view and adjust it to fit the Whisper, if you move from one view controller to another, it will animate the next controller's offset too.
 
