@@ -4,6 +4,18 @@
 [![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 
+## Description
+
+**Whisper** is a UI component that will make the task of display messages and in-app notifications simple. It has two different views.
+
+#### Whisper itself
+
+Display a short message at the bottom of the navigation bar. It can have images or even a loader.
+
+#### In-app notification
+
+Fully customizable, from colors to fonts.
+
 ## Usage
 
 ```swift
