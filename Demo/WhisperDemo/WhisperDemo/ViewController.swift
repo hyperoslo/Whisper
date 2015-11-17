@@ -97,6 +97,15 @@ class ViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     setupFrames()
+
+    let announcement = Announcement(title: "First shout", action: {
+      print("Doing some action")
+    })
+
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      Shout(announcement, to: self)
+    }
   }
 
   // MARK: Action methods
