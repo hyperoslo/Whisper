@@ -15,7 +15,7 @@ public class ShoutView: UIView {
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
-    public static let textOffset: CGFloat = 75
+    public static var textOffset: CGFloat = 75
   }
 
   public lazy var backgroundView: UIView = {
@@ -53,7 +53,6 @@ public class ShoutView: UIView {
     imageView.layer.cornerRadius = Dimensions.imageSize / 2
     imageView.clipsToBounds = true
     imageView.contentMode = .ScaleAspectFill
-    imageView.backgroundColor = UIColor.blackColor()
 
     return imageView
     }()
@@ -132,11 +131,18 @@ public class ShoutView: UIView {
   public func configureView(announcement: Announcement) {
     self.announcement = announcement
     imageView.image = announcement.image
-    titleLabel.text = "Ramon Gilabert"
-    subtitleLabel.text = "Just commented a post in the Wall that you are following"
+    titleLabel.text = announcement.title
+    if let text = announcement.subtitle {
+      subtitleLabel.text = text
+    } else {
+      subtitleLabel.text = ""
+    }
+    
     [titleLabel, subtitleLabel].forEach {
       $0.sizeToFit()
     }
+
+    if imageView.image == nil { Dimensions.textOffset = 18 }
 
     displayTimer.invalidate()
     displayTimer = NSTimer.scheduledTimerWithTimeInterval(announcement.duration,
@@ -169,6 +175,10 @@ public class ShoutView: UIView {
       width: Dimensions.imageSize, height: Dimensions.imageSize)
     titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
     subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
+
+    if let text = subtitleLabel.text where text.isEmpty {
+      titleLabel.center.y = imageView.center.y - 2.5
+    }
 
     [titleLabel, subtitleLabel].forEach {
       $0.frame.size.width = Dimensions.width - Dimensions.imageSize - (Dimensions.imageOffset * 2) }

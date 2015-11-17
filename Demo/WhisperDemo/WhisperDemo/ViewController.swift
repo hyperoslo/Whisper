@@ -136,9 +136,7 @@ class ViewController: UIViewController {
   }
 
   func presentNotificationDidPress(button: UIButton) {
-    let announcement = Announcement(title: "First shout", action: {
-      print("Doing some action")
-    })
+    let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
 
     Shout(announcement, to: self)
   }
