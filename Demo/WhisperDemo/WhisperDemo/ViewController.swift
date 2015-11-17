@@ -55,15 +55,6 @@ class ViewController: UIViewController {
     return button
     }()
 
-  lazy var newControllerButton: UIBarButtonItem = { [unowned self] in
-    let button = UIBarButtonItem()
-    button.title = "Next"
-    button.target = self
-    button.action = "nextButtonDidPress"
-
-    return button
-    }()
-
   lazy var containerView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.grayColor()
@@ -75,9 +66,6 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.whiteColor()
-
-    navigationItem.rightBarButtonItem = newControllerButton
-    navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
 
     view.addSubview(scrollView)
     for subview in [icon, titleLabel, presentButton, showButton, presentPermanentButton, notificationButton] { scrollView.addSubview(subview) }
@@ -139,12 +127,6 @@ class ViewController: UIViewController {
     let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
 
     Shout(announcement, to: self)
-  }
-
-  func nextButtonDidPress() {
-    let controller = DetailViewController()
-    title = ""
-    navigationController?.pushViewController(controller, animated: true)
   }
 
   // MARK - Configuration
