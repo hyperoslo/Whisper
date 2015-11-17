@@ -39,6 +39,7 @@ public class ShoutView: UIView {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.dragIndicator
     view.layer.cornerRadius = Dimensions.indicatorHeight / 2
+    view.userInteractionEnabled = true
 
     return view
     }()
@@ -81,14 +82,14 @@ public class ShoutView: UIView {
 
     addSubview(backgroundView)
     backgroundView.addSubview(blurView)
-    [gestureContainer, indicatorView, imageView, titleLabel, subtitleLabel].forEach {
+    [indicatorView, gestureContainer, imageView, titleLabel, subtitleLabel].forEach {
       blurView.addSubview($0) }
 
     clipsToBounds = true
     userInteractionEnabled = true
 
-    gestureContainer.addGestureRecognizer(panGestureRecognizer)
     addGestureRecognizer(tapGestureRecognizer)
+    gestureContainer.addGestureRecognizer(panGestureRecognizer)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -113,7 +114,7 @@ public class ShoutView: UIView {
     controller.view.addSubview(self)
 
     frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 0)
-    UIView.animateWithDuration(0.7, animations: {
+    UIView.animateWithDuration(0.35, animations: {
       self.frame.size.height = Dimensions.height
     })
   }
@@ -134,7 +135,7 @@ public class ShoutView: UIView {
   // MARK: - Actions
 
   public func silent() {
-    UIView.animateWithDuration(0.7, animations: {
+    UIView.animateWithDuration(0.35, animations: {
       self.frame.size.height = 0
       }, completion: { finished in
         self.removeFromSuperview()
@@ -146,10 +147,33 @@ public class ShoutView: UIView {
   public func handleTapGestureRecognizer() {
     guard let announcement = announcement else { return }
     announcement.action?()
-    silent()
+    //silent()
   }
 
   public func handlePanGestureRecognizer() {
-    print("Pan")
+    let translation = panGestureRecognizer.translationInView(self)
+    var duration: NSTimeInterval = 0
+
+    if panGestureRecognizer.state == .Changed || panGestureRecognizer.state == .Began {
+      if translation.y >= 12 {
+        frame.size.height = Dimensions.height + 12 + (translation.y) / 15
+      } else {
+        frame.size.height = Dimensions.height + translation.y
+      }
+    } else {
+      let height = translation.y < -5 ? 0 : Dimensions.height
+
+      duration = 0.2
+      UIView.animateWithDuration(duration, animations: {
+        self.frame.size.height = height
+        }, completion: { _ in if translation.y < -5 { self.removeFromSuperview() }})
+    }
+
+    UIView.animateWithDuration(duration, animations: {
+      self.backgroundView.frame.size.height = self.frame.height
+      self.blurView.frame.size.height = self.frame.height
+      self.gestureContainer.frame.origin.y = self.frame.height - 20
+      self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
+    })
   }
 }
