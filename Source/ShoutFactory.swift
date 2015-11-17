@@ -132,11 +132,7 @@ public class ShoutView: UIView {
     self.announcement = announcement
     imageView.image = announcement.image
     titleLabel.text = announcement.title
-    if let text = announcement.subtitle {
-      subtitleLabel.text = text
-    } else {
-      subtitleLabel.text = ""
-    }
+    subtitleLabel.text = announcement.subtitle ?? ""
     
     [titleLabel, subtitleLabel].forEach {
       $0.sizeToFit()
@@ -201,7 +197,7 @@ public class ShoutView: UIView {
   public func displayTimerDidFire() {
     shouldSilent = true
 
-    guard !panGestureActive else { return }
+    if panGestureActive { return }
     silent()
   }
 
