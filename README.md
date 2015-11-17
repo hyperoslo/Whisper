@@ -6,7 +6,7 @@
 
 ## Description
 
-Break the silence of your UI whispering or shouting at it. **Whisper** is a component that will make the task of display messages and in-app notifications simple. It has two different views inside.
+Break the silence of your UI, whispering or shouting at it. **Whisper** is a component that will make the task of display messages and in-app notifications simple. It has two different views inside.
 
 #### Whispers
 
