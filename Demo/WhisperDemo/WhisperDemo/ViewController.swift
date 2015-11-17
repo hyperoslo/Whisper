@@ -47,6 +47,14 @@ class ViewController: UIViewController {
     return button
     }()
 
+  lazy var notificationButton: UIButton = { [unowned self] in
+    let button = UIButton()
+    button.addTarget(self, action: "presentNotificationDidPress:", forControlEvents: .TouchUpInside)
+    button.setTitle("Notification", forState: .Normal)
+
+    return button
+    }()
+
   lazy var newControllerButton: UIBarButtonItem = { [unowned self] in
     let button = UIBarButtonItem()
     button.title = "Next"
@@ -72,9 +80,9 @@ class ViewController: UIViewController {
     navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .Plain, target: nil, action: nil)
 
     view.addSubview(scrollView)
-    for subview in [icon, titleLabel, presentButton, showButton, presentPermanentButton] { scrollView.addSubview(subview) }
+    for subview in [icon, titleLabel, presentButton, showButton, presentPermanentButton, notificationButton] { scrollView.addSubview(subview) }
 
-    for button in [presentButton, showButton, presentPermanentButton] {
+    for button in [presentButton, showButton, presentPermanentButton, notificationButton] {
       button.setTitleColor(UIColor.grayColor(), forState: .Normal)
       button.layer.borderColor = UIColor.grayColor().CGColor
       button.layer.borderWidth = 1.5
@@ -86,7 +94,7 @@ class ViewController: UIViewController {
     navigationController.navigationBar.addSubview(containerView)
     containerView.frame = CGRect(x: 0,
       y: navigationController.navigationBar.frame.maxY - UIApplication.sharedApplication().statusBarFrame.height,
-      width: UIScreen.mainScreen().bounds.width, height: 75)
+      width: UIScreen.mainScreen().bounds.width, height: 0)
   }
 
   override func viewWillAppear(animated: Bool) {
@@ -97,15 +105,6 @@ class ViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     setupFrames()
-
-    let announcement = Announcement(title: "First shout", action: {
-      print("Doing some action")
-    })
-
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      Shout(announcement, to: self)
-    }
   }
 
   // MARK: Action methods
@@ -132,6 +131,14 @@ class ViewController: UIViewController {
     Whisper(message, to: navigationController, action: .Present)
   }
 
+  func presentNotificationDidPress(button: UIButton) {
+    let announcement = Announcement(title: "First shout", action: {
+      print("Doing some action")
+    })
+
+    Shout(announcement, to: self)
+  }
+
   func nextButtonDidPress() {
     let controller = DetailViewController()
     title = ""
@@ -146,10 +153,11 @@ class ViewController: UIViewController {
     let originY = navigationHeight + UIApplication.sharedApplication().statusBarFrame.height
 
     scrollView.frame = CGRect(x: 0, y: originY, width: totalSize.width, height: totalSize.height - originY)
-    titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: totalSize.height / 2 - 200)
+    titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: totalSize.height / 2 - 250)
     presentButton.frame = CGRect(x: 50, y: titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
     showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
   }
 }
 

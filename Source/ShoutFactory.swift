@@ -9,10 +9,13 @@ public func Shout(announcement: Announcement, to: UIViewController) {
 public class ShoutView: UIView {
 
   public struct Dimensions {
-    public static let height: CGFloat = 75
+    public static let height: CGFloat = 80
     public static let width: CGFloat = UIScreen.mainScreen().bounds.width
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
+    public static let imageSize: CGFloat = 48
+    public static let imageOffset: CGFloat = 18
+    public static let textOffset: CGFloat = 75
   }
 
   public lazy var backgroundView: UIView = {
@@ -46,16 +49,29 @@ public class ShoutView: UIView {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
+    imageView.layer.cornerRadius = Dimensions.imageSize / 2
+    imageView.clipsToBounds = true
+    imageView.contentMode = .ScaleAspectFill
+    imageView.backgroundColor = UIColor.blackColor()
+
     return imageView
     }()
 
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
+    label.font = FontList.Shout.title
+    label.tintColor = ColorList.Shout.title
+    label.numberOfLines = 1
+
     return label
     }()
 
   public lazy var subtitleLabel: UILabel = {
     let label = UILabel()
+    label.font = FontList.Shout.subtitle
+    label.tintColor = ColorList.Shout.subtitle
+    label.numberOfLines = 1
+
     return label
     }()
 
@@ -74,6 +90,9 @@ public class ShoutView: UIView {
     }()
 
   public var announcement: Announcement?
+  public var displayTimer = NSTimer()
+  public var panGestureActive = false
+  public var shouldSilent = false
 
   // MARK: - Initializers
 
@@ -99,14 +118,24 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController) {
+    panGestureActive = false
+    shouldSilent = false
     configureView(announcement)
     shout(to: to)
-
-    
   }
 
   public func configureView(announcement: Announcement) {
     self.announcement = announcement
+    imageView.image = announcement.image
+    titleLabel.text = "Ramon Gilabert"
+    subtitleLabel.text = "Just commented a post in the Wall that you are following"
+    [titleLabel, subtitleLabel].forEach {
+      $0.sizeToFit()
+    }
+
+    displayTimer.invalidate()
+    displayTimer = NSTimer.scheduledTimerWithTimeInterval(announcement.duration,
+      target: self, selector: "displayTimerDidFire", userInfo: nil, repeats: false)
     setupFrames()
   }
 
@@ -129,9 +158,13 @@ public class ShoutView: UIView {
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: Dimensions.width, height: 20)
     indicatorView.frame = CGRect(x: (Dimensions.width - Dimensions.indicatorWidth) / 2,
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
-    imageView.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-    titleLabel.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-    subtitleLabel.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + 5,
+      width: Dimensions.imageSize, height: Dimensions.imageSize)
+    titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
+    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
+
+    [titleLabel, subtitleLabel].forEach {
+      $0.frame.size.width = Dimensions.width - Dimensions.imageSize - (Dimensions.imageOffset * 2) }
   }
 
   // MARK: - Actions
@@ -144,12 +177,21 @@ public class ShoutView: UIView {
     })
   }
 
+  // MARK: - Timer methods
+
+  public func displayTimerDidFire() {
+    shouldSilent = true
+
+    guard !panGestureActive else { return }
+    silent()
+  }
+
   // MARK: - Gesture methods
 
   public func handleTapGestureRecognizer() {
     guard let announcement = announcement else { return }
     announcement.action?()
-    //silent()
+    silent()
   }
 
   public func handlePanGestureRecognizer() {
@@ -157,13 +199,15 @@ public class ShoutView: UIView {
     var duration: NSTimeInterval = 0
 
     if panGestureRecognizer.state == .Changed || panGestureRecognizer.state == .Began {
+      panGestureActive = true
       if translation.y >= 12 {
-        frame.size.height = Dimensions.height + 12 + (translation.y) / 15
+        frame.size.height = Dimensions.height + 12 + (translation.y) / 25
       } else {
         frame.size.height = Dimensions.height + translation.y
       }
     } else {
-      let height = translation.y < -5 ? 0 : Dimensions.height
+      panGestureActive = false
+      let height = translation.y < -5 || shouldSilent ? 0 : Dimensions.height
 
       duration = 0.2
       UIView.animateWithDuration(duration, animations: {
