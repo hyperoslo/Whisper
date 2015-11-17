@@ -166,7 +166,7 @@ public class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
-    backgroundView.frame = CGRect(x: 0, y: 0, width: Dimensions.width, height: Dimensions.height)
+    backgroundView.frame.size = CGSize(width: Dimensions.width, height: Dimensions.height)
     blurView.frame = backgroundView.bounds
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: Dimensions.width, height: 20)
     indicatorView.frame = CGRect(x: (Dimensions.width - Dimensions.indicatorWidth) / 2,
