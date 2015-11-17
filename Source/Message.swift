@@ -19,9 +19,9 @@ public struct Announcement {
   public var subtitle: String?
   public var image: UIImage?
   public var duration: NSTimeInterval
-  public var action: (() -> ())?
+  public var action: (() -> Void)?
 
-  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: NSTimeInterval = 2, action: (() -> ())? = nil) {
+  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: NSTimeInterval = 2, action: (() -> Void)? = nil) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
