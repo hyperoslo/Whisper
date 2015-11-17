@@ -18,7 +18,7 @@ Display a short message at the bottom of the navigation bar, this can be anythin
 
 ![In-App](https://github.com/hyperoslo/Whisper/blob/feature/README/Resources/in-app-notification.png)
 
-Fully customizable, from colors to fonts. Shouts have an optional action that will be called if the user taps on it.
+Fully customizable, from colors to fonts. Shouts have an optional action that will be called if the user taps on it. Finally, if you want to set how long the Shout should be displayed, you have a duration property.
 
 There is no need to think about scroll view insets anymore, this will be handled automatically by Whisper. As and added bonus, when transitioning from one view controller to another, the next controllers offset will be adjusted like you would except. It just works!
 
@@ -39,8 +39,6 @@ Whisper(message, to: navigationController, action: .Present)
 let announcement = Announcement(title: "Your title", subtitle: "Your subtitle", image: UIImage(named: "avatar"))
 Shout(announcement, to: self)
 ```
-
-Shouts also have a duration property that allows you to pinpoint exactly how long the shout should be displayed.
 
 ## Installation
 
