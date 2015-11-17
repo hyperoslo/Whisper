@@ -20,7 +20,7 @@ Display a short message at the bottom of the navigation bar, this can be anythin
 
 Fully customizable, from colors to fonts. Shouts have an optional action that will be called if the user taps on it.
 
-The factory will handle the inset of the scroll view and adjust it to fit the Whisper, if you move from one view controller to another, it will animate the next controller's offset too.
+There is no need to think about scroll view insets anymore, this will be handled automatically by Whisper. As and added bonus, when transitioning from one view controller to another, the next controllers offset will be adjusted like you would except. It just works!
 
 ## Usage
 
