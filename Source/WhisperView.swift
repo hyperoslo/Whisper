@@ -16,7 +16,7 @@ public class WhisperView: UIView {
 
   lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
 
-  lazy var titleLabel: UILabel = {
+  public lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
     label.textColor = UIColor.whiteColor()
@@ -60,6 +60,7 @@ public class WhisperView: UIView {
 
     titleLabel.sizeToFit()
     setupFrames()
+    clipsToBounds = true
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -80,11 +81,10 @@ extension WhisperView {
         height: frame.height)
 
       complementImageView.frame = CGRect(
-        x: titleLabel.frame.origin.y - Dimensions.imageSize - Dimensions.loaderTitleOffset,
-        y: (frame.height - Dimensions.imageSize) / 2,
+        x: titleLabel.frame.origin.x - Dimensions.imageSize - Dimensions.loaderTitleOffset,
+        y: (Dimensions.height - Dimensions.imageSize) / 2,
         width: Dimensions.imageSize,
         height: Dimensions.imageSize)
-
     } else {
       titleLabel.frame = CGRect(
         x: (frame.width - titleLabel.frame.width) / 2,

@@ -99,6 +99,11 @@ class WhisperFactory: NSObject {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews {
         subview.frame.origin.y = 0
+
+        if subview == self.whisperView.complementImageView {
+          subview.frame.origin.y = (WhisperView.Dimensions.height - WhisperView.Dimensions.imageSize) / 2
+        }
+
         subview.alpha = 1
       }
     })
@@ -111,6 +116,11 @@ class WhisperFactory: NSObject {
       self.whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in self.whisperView.transformViews {
         subview.frame.origin.y = 0
+
+        if subview == self.whisperView.complementImageView {
+          subview.frame.origin.y = (WhisperView.Dimensions.height - WhisperView.Dimensions.imageSize) / 2
+        }
+
         subview.alpha = 1
       }
       }, completion: { _ in
@@ -191,8 +201,8 @@ class WhisperFactory: NSObject {
     edgeInsetHeight = down ? WhisperView.Dimensions.height : -WhisperView.Dimensions.height
 
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
-        self.performControllerMove(visibleController)
-      })
+      self.performControllerMove(visibleController)
+    })
   }
 
   func performControllerMove(viewController: UIViewController) {
