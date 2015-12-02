@@ -2,8 +2,8 @@ import UIKit
 
 let whistleFactory = WhistleFactory()
 
-public func Whistle(murmur: Murmur) {
-  whistleFactory.whistler(murmur)
+public func Whistle(murmur: Murmur, to: UIViewController) {
+  whistleFactory.whistler(murmur, controller: to)
 }
 
 public class WhistleFactory: UIView {
@@ -15,7 +15,18 @@ public class WhistleFactory: UIView {
     return label
     }()
 
+  public lazy var blurView: UIVisualEffectView = {
+    let view = UIVisualEffectView()
+    return view
+    }()
+
+  public lazy var statusBarSnapshot: UIImageView = {
+    let view = UIImageView()
+    return view
+    }()
+
   public var duration: NSTimeInterval = 2
+  public var viewController: UIViewController?
 
   // MARK: - Initializers
 
@@ -31,11 +42,12 @@ public class WhistleFactory: UIView {
 
   // MARK: - Configuration
 
-  public func whistler(murmur: Murmur) {
+  public func whistler(murmur: Murmur, controller: UIViewController) {
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
     backgroundColor = murmur.backgroundColor
+    viewController = controller
 
     setupFrames()
     present()
@@ -48,14 +60,25 @@ public class WhistleFactory: UIView {
 
     titleLabel.sizeToFit()
 
-    frame = CGRect(x: 0, y: 0, width: barFrame.width, height: barFrame.height)
+    var yValue: CGFloat = 0
+    if let _ = viewController?.navigationController { yValue = -barFrame.height }
+
+    frame = CGRect(x: 0, y: yValue, width: barFrame.width, height: barFrame.height)
     titleLabel.frame = bounds
   }
 
   // MARK: - Movement methods
 
   public func present() {
-    addSubview(titleLabel)
+    guard let controller = viewController else { return }
+
+    if let navigationController = controller.navigationController {
+      navigationController.navigationBar.addSubview(self)
+    } else {
+      controller.view.addSubview(self)
+    }
+
+    window?.windowLevel = UIWindowLevelStatusBar + 1
   }
 
   public func hide() {

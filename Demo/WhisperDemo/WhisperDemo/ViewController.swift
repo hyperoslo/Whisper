@@ -135,7 +135,9 @@ class ViewController: UIViewController {
   }
 
   func statusBarButtonDidPress(button: UIButton) {
+    let murmur = Murmur(title: "This is a small whistle")
 
+    Whistle(murmur, to: self)
   }
 
   // MARK - Configuration
