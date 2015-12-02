@@ -61,7 +61,8 @@ public class WhistleFactory: UIView {
     titleLabel.sizeToFit()
 
     var yValue: CGFloat = 0
-    if let _ = viewController?.navigationController { yValue = -barFrame.height }
+    if let navigationController = viewController?.navigationController
+      where !navigationController.navigationBarHidden { yValue = -barFrame.height }
 
     frame = CGRect(x: 0, y: yValue, width: barFrame.width, height: barFrame.height)
     titleLabel.frame = bounds
@@ -72,8 +73,9 @@ public class WhistleFactory: UIView {
   public func present() {
     guard let controller = viewController else { return }
 
-    if let navigationController = controller.navigationController {
-      navigationController.navigationBar.addSubview(self)
+    if let navigationController = controller.navigationController
+      where !navigationController.navigationBarHidden {
+        navigationController.navigationBar.addSubview(self)
     } else {
       controller.view.addSubview(self)
     }
