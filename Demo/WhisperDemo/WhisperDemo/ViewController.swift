@@ -55,6 +55,14 @@ class ViewController: UIViewController {
     return button
     }()
 
+  lazy var statusBarButton: UIButton = { [unowned self] in
+    let button = UIButton()
+    button.addTarget(self, action: "statusBarButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.setTitle("Status bar", forState: .Normal)
+
+    return button
+    }()
+
   lazy var containerView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.grayColor()
@@ -68,9 +76,10 @@ class ViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
 
     view.addSubview(scrollView)
-    for subview in [icon, titleLabel, presentButton, showButton, presentPermanentButton, notificationButton] { scrollView.addSubview(subview) }
+    for subview in [icon, titleLabel, presentButton, showButton,
+      presentPermanentButton, notificationButton, statusBarButton] { scrollView.addSubview(subview) }
 
-    for button in [presentButton, showButton, presentPermanentButton, notificationButton] {
+    for button in [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton] {
       button.setTitleColor(UIColor.grayColor(), forState: .Normal)
       button.layer.borderColor = UIColor.grayColor().CGColor
       button.layer.borderWidth = 1.5
@@ -125,6 +134,10 @@ class ViewController: UIViewController {
     Shout(announcement, to: self)
   }
 
+  func statusBarButtonDidPress(button: UIButton) {
+
+  }
+
   // MARK - Configuration
 
   func setupFrames() {
@@ -136,6 +149,7 @@ class ViewController: UIViewController {
     showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    statusBarButton.frame = CGRect(x: 50, y: notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
   }
 }
 
