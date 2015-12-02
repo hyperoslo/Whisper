@@ -129,13 +129,16 @@ class ViewController: UIViewController {
   }
 
   func presentNotificationDidPress(button: UIButton) {
-    let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
+    let announcement = Announcement(title: "Ramon Gilabert",
+
+    subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
 
     Shout(announcement, to: self)
   }
 
   func statusBarButtonDidPress(button: UIButton) {
-    let murmur = Murmur(title: "This is a small whistle")
+    let murmur = Murmur(title: "This is a small whistle",
+      backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
 
     Whistle(murmur, to: self)
   }

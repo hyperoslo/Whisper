@@ -15,11 +15,6 @@ public class WhistleFactory: UIView {
     return label
     }()
 
-  public lazy var blurView: UIVisualEffectView = {
-    let view = UIVisualEffectView()
-    return view
-    }()
-
   public lazy var statusBarSnapshot: UIImageView = {
     let view = UIImageView()
     return view
@@ -33,7 +28,7 @@ public class WhistleFactory: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
-    addSubview(titleLabel)
+    [titleLabel, statusBarSnapshot].forEach { addSubview($0) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -81,9 +76,16 @@ public class WhistleFactory: UIView {
     }
 
     window?.windowLevel = UIWindowLevelStatusBar + 1
+
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      self.hide()
+    }
   }
 
   public func hide() {
-    
+    removeFromSuperview()
+
+    window?.windowLevel = UIWindowLevelStatusBar
   }
 }
