@@ -1,15 +1,17 @@
 import UIKit
 
-let whitleFactory = WhistleFactory()
+let whistleFactory = WhistleFactory()
 
 public func Whistle(murmur: Murmur) {
-  whistleFactory.configureWhistle(murmur)
+  whistleFactory.whistler(murmur)
 }
 
 public class WhistleFactory: UIView {
 
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
+    label.textAlignment = .Center
+
     return label
     }()
 
@@ -29,27 +31,31 @@ public class WhistleFactory: UIView {
 
   // MARK: - Configuration
 
-  public func configureWhistle(murmur: Murmur) {
+  public func whistler(murmur: Murmur) {
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
     backgroundColor = murmur.backgroundColor
 
     setupFrames()
+    present()
   }
 
   // MARK: - Setup
 
   public func setupFrames() {
+    let barFrame = UIApplication.sharedApplication().statusBarFrame
+
     titleLabel.sizeToFit()
 
-
+    frame = CGRect(x: 0, y: 0, width: barFrame.width, height: barFrame.height)
+    titleLabel.frame = bounds
   }
 
   // MARK: - Movement methods
 
   public func present() {
-
+    addSubview(titleLabel)
   }
 
   public func hide() {
