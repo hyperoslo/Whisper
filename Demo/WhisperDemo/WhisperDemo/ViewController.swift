@@ -140,7 +140,7 @@ class ViewController: UIViewController {
     let murmur = Murmur(title: "This is a small whistle",
       backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
 
-    Whistle(murmur, to: self)
+    Whistle(murmur)
   }
 
   // MARK - Configuration

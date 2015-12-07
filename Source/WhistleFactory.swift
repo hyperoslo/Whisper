@@ -2,8 +2,8 @@ import UIKit
 
 let whistleFactory = WhistleFactory()
 
-public func Whistle(murmur: Murmur, to: UIViewController) {
-  whistleFactory.whistler(murmur, controller: to)
+public func Whistle(murmur: Murmur) {
+  whistleFactory.whistler(murmur)
 }
 
 public class WhistleFactory: UIView {
@@ -29,6 +29,7 @@ public class WhistleFactory: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
+    setupWindow()
     clipsToBounds = true
     [titleLabel].forEach { addSubview($0) }
   }
@@ -39,14 +40,13 @@ public class WhistleFactory: UIView {
 
   // MARK: - Configuration
 
-  public func whistler(murmur: Murmur, controller: UIViewController) {
+  public func whistler(murmur: Murmur) {
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
     backgroundColor = murmur.backgroundColor
-    viewController = controller
+    whistleWindow.backgroundColor = murmur.backgroundColor
 
-    setupWindow()
     setupFrames()
     present()
   }
@@ -54,19 +54,17 @@ public class WhistleFactory: UIView {
   // MARK: - Setup
 
   public func setupWindow() {
-
+    whistleWindow.addSubview(self)
+    whistleWindow.windowLevel = UIWindowLevelAlert
+    whistleWindow.clipsToBounds = true
   }
 
   public func setupFrames() {
-    let barFrame = UIApplication.sharedApplication().statusBarFrame
-
     titleLabel.sizeToFit()
 
-    var yValue: CGFloat = 0
-    if let navigationController = viewController?.navigationController
-      where !navigationController.navigationBarHidden { yValue = -barFrame.height }
-
-    frame = CGRect(x: 0, y: yValue, width: barFrame.width, height: barFrame.height)
+    whistleWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width,
+      height: UIApplication.sharedApplication().statusBarFrame.height)
+    frame = whistleWindow.bounds
     titleLabel.frame = bounds
   }
 
@@ -75,24 +73,12 @@ public class WhistleFactory: UIView {
   public func present() {
     hideTimer.invalidate()
 
-    guard let controller = viewController else { return }
-
-    if let navigationController = controller.navigationController
-      where !navigationController.navigationBarHidden {
-        navigationController.navigationBar.addSubview(self)
-    } else {
-      controller.view.addSubview(self)
-    }
-
-    let initialOrigin = frame.origin.y
-    frame.origin.y = initialOrigin - UIApplication.sharedApplication().statusBarFrame.height
-    alpha = 1
+    let initialOrigin = whistleWindow.frame.origin.y
+    whistleWindow.frame.origin.y = initialOrigin - UIApplication.sharedApplication().statusBarFrame.height
+    whistleWindow.makeKeyAndVisible()
     UIView.animateWithDuration(0.2, animations: {
-      self.frame.origin.y = initialOrigin
-      self.alpha = 1
+      self.whistleWindow.frame.origin.y = initialOrigin
     })
-
-    window?.windowLevel = UIWindowLevelStatusBar + 1
 
     hideTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
   }
@@ -100,11 +86,9 @@ public class WhistleFactory: UIView {
   public func hide() {
     let finalOrigin = frame.origin.y - UIApplication.sharedApplication().statusBarFrame.height
     UIView.animateWithDuration(0.2, animations: {
-      self.frame.origin.y = finalOrigin
-      self.alpha = 0
+      self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
-        self.window?.windowLevel = UIWindowLevelNormal
-        self.removeFromSuperview()
+        self.window?.makeKeyAndVisible()
     })
   }
 
