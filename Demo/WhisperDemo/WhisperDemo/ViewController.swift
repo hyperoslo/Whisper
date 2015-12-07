@@ -86,6 +86,8 @@ class ViewController: UIViewController {
       button.layer.cornerRadius = 7.5
     }
 
+    scrollView.contentInset = UIEdgeInsetsMake(0, 0, 1, 0)
+    scrollView.contentView.frame = CGRect(
     guard let navigationController = navigationController else { return }
 
     navigationController.navigationBar.addSubview(containerView)
@@ -129,9 +131,7 @@ class ViewController: UIViewController {
   }
 
   func presentNotificationDidPress(button: UIButton) {
-    let announcement = Announcement(title: "Ramon Gilabert",
-
-    subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
+    let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
 
     Shout(announcement, to: self)
   }
