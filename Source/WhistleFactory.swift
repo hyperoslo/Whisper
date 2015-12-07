@@ -15,11 +15,6 @@ public class WhistleFactory: UIView {
     return label
     }()
 
-  public lazy var statusBarSnapshot: UIImageView = {
-    let view = UIImageView()
-    return view
-    }()
-
   public var duration: NSTimeInterval = 2
   public var viewController: UIViewController?
 
@@ -29,7 +24,7 @@ public class WhistleFactory: UIView {
     super.init(frame: frame)
 
     clipsToBounds = true
-    [titleLabel, statusBarSnapshot].forEach { addSubview($0) }
+    [titleLabel].forEach { addSubview($0) }
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -76,16 +71,12 @@ public class WhistleFactory: UIView {
       controller.view.addSubview(self)
     }
 
-    takeStatusBarSnapshot()
-
     let initialOrigin = frame.origin.y
-    frame.origin.y = initialOrigin - 10
-    alpha = 0
+    frame.origin.y = initialOrigin
+    alpha = 1
     UIView.animateWithDuration(0.2, animations: {
       self.frame.origin.y = initialOrigin
       self.alpha = 1
-      self.statusBarSnapshot.alpha = 1
-      self.statusBarSnapshot.frame.origin.y = UIApplication.sharedApplication().statusBarFrame.height
     })
 
     window?.windowLevel = UIWindowLevelStatusBar + 1
@@ -99,23 +90,5 @@ public class WhistleFactory: UIView {
   public func hide() {
     window?.windowLevel = UIWindowLevelNormal
     removeFromSuperview()
-  }
-
-  // MARK: - Helper methods
-
-  public func takeStatusBarSnapshot() {
-    UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, true, 2)
-
-    guard let controller = viewController, context = UIGraphicsGetCurrentContext() else { return }
-    controller.view.layer.renderInContext(context)
-
-    let snapshotImage = UIGraphicsGetImageFromCurrentImageContext()
-
-    UIGraphicsEndImageContext()
-
-    statusBarSnapshot.image = snapshotImage
-    statusBarSnapshot.frame = CGRect(x: 0, y: 0,
-      width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
-    statusBarSnapshot.alpha = 0
   }
 }
