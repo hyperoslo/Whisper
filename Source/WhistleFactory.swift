@@ -28,6 +28,7 @@ public class WhistleFactory: UIView {
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
+    clipsToBounds = true
     [titleLabel, statusBarSnapshot].forEach { addSubview($0) }
   }
 
@@ -75,6 +76,14 @@ public class WhistleFactory: UIView {
       controller.view.addSubview(self)
     }
 
+    let initialOrigin = frame.origin.y
+    frame.origin.y = initialOrigin - 10
+    alpha = 0
+    UIView.animateWithDuration(0.2, animations: {
+      self.frame.origin.y = initialOrigin
+      self.alpha = 1
+    })
+
     window?.windowLevel = UIWindowLevelStatusBar + 1
 
     let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
@@ -84,8 +93,7 @@ public class WhistleFactory: UIView {
   }
 
   public func hide() {
+    window?.windowLevel = UIWindowLevelNormal
     removeFromSuperview()
-
-    window?.windowLevel = UIWindowLevelStatusBar
   }
 }
