@@ -8,6 +8,11 @@ public func Whistle(murmur: Murmur, to: UIViewController) {
 
 public class WhistleFactory: UIView {
 
+  public lazy var whistleWindow: UIWindow = {
+    let window = UIWindow()
+    return window
+    }()
+
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
@@ -17,6 +22,7 @@ public class WhistleFactory: UIView {
 
   public var duration: NSTimeInterval = 2
   public var viewController: UIViewController?
+  public var hideTimer = NSTimer()
 
   // MARK: - Initializers
 
@@ -40,11 +46,16 @@ public class WhistleFactory: UIView {
     backgroundColor = murmur.backgroundColor
     viewController = controller
 
+    setupWindow()
     setupFrames()
     present()
   }
 
   // MARK: - Setup
+
+  public func setupWindow() {
+
+  }
 
   public func setupFrames() {
     let barFrame = UIApplication.sharedApplication().statusBarFrame
@@ -62,6 +73,8 @@ public class WhistleFactory: UIView {
   // MARK: - Movement methods
 
   public func present() {
+    hideTimer.invalidate()
+
     guard let controller = viewController else { return }
 
     if let navigationController = controller.navigationController
@@ -72,7 +85,7 @@ public class WhistleFactory: UIView {
     }
 
     let initialOrigin = frame.origin.y
-    frame.origin.y = initialOrigin
+    frame.origin.y = initialOrigin - UIApplication.sharedApplication().statusBarFrame.height
     alpha = 1
     UIView.animateWithDuration(0.2, animations: {
       self.frame.origin.y = initialOrigin
@@ -81,14 +94,23 @@ public class WhistleFactory: UIView {
 
     window?.windowLevel = UIWindowLevelStatusBar + 1
 
-    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-    dispatch_after(delayTime, dispatch_get_main_queue()) {
-      self.hide()
-    }
+    hideTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
   }
 
   public func hide() {
-    window?.windowLevel = UIWindowLevelNormal
-    removeFromSuperview()
+    let finalOrigin = frame.origin.y - UIApplication.sharedApplication().statusBarFrame.height
+    UIView.animateWithDuration(0.2, animations: {
+      self.frame.origin.y = finalOrigin
+      self.alpha = 0
+      }, completion: { _ in
+        self.window?.windowLevel = UIWindowLevelNormal
+        self.removeFromSuperview()
+    })
+  }
+
+  // MARK: - Timer methods
+
+  public func timerDidFire() {
+    hide()
   }
 }
