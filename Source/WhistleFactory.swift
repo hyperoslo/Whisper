@@ -90,6 +90,7 @@ public class WhistleFactory: UIViewController {
     UIView.animateWithDuration(0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
+        self.whistleWindow.resignKeyWindow()
         self.view.window?.makeKeyAndVisible()
     })
   }
