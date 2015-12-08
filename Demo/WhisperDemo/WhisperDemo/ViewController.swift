@@ -76,14 +76,14 @@ class ViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
 
     view.addSubview(scrollView)
-    for subview in [icon, titleLabel, presentButton, showButton,
-      presentPermanentButton, notificationButton, statusBarButton] { scrollView.addSubview(subview) }
+    [icon, titleLabel, presentButton, showButton,
+      presentPermanentButton, notificationButton, statusBarButton].forEach { scrollView.addSubview($0) }
 
-    for button in [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton] {
-      button.setTitleColor(UIColor.grayColor(), forState: .Normal)
-      button.layer.borderColor = UIColor.grayColor().CGColor
-      button.layer.borderWidth = 1.5
-      button.layer.cornerRadius = 7.5
+    [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton].forEach {
+      $0.setTitleColor(UIColor.grayColor(), forState: .Normal)
+      $0.layer.borderColor = UIColor.grayColor().CGColor
+      $0.layer.borderWidth = 1.5
+      $0.layer.cornerRadius = 7.5
     }
 
     guard let navigationController = navigationController else { return }
