@@ -86,8 +86,6 @@ class ViewController: UIViewController {
       $0.layer.cornerRadius = 7.5
     }
 
-    navigationController?.navigationBarHidden = true
-    UIApplication.sharedApplication().statusBarHidden = true
     guard let navigationController = navigationController else { return }
 
     navigationController.navigationBar.addSubview(containerView)

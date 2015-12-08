@@ -101,7 +101,9 @@ public class WhistleFactory: UIViewController {
   }
 
   public override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-    setupFrames()
-    hide()
+    if whistleWindow.keyWindow {
+      setupFrames()
+      hide()
+    }
   }
 }
