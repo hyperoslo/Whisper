@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
 
+    UIApplication.sharedApplication().statusBarHidden = true
+    UIApplication.sharedApplication().statusBarHidden = false
+
     return true
   }
 }

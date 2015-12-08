@@ -86,9 +86,6 @@ class ViewController: UIViewController {
       $0.layer.cornerRadius = 7.5
     }
 
-    UIApplication.sharedApplication().statusBarHidden = true
-    UIApplication.sharedApplication().statusBarHidden = false
-
     guard let navigationController = navigationController else { return }
 
     navigationController.navigationBar.addSubview(containerView)
@@ -167,10 +164,6 @@ class ViewController: UIViewController {
       let height = self.statusBarButton.frame.maxY >= totalSize.height ? self.statusBarButton.frame.maxY + 35 : totalSize.height
       self.scrollView.contentSize = CGSize(width: totalSize.width, height: height)
     })
-  }
-
-  override func prefersStatusBarHidden() -> Bool {
-    return false
   }
 }
 
