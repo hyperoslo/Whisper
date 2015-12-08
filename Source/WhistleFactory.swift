@@ -6,12 +6,13 @@ public func Whistle(murmur: Murmur) {
   whistleFactory.whistler(murmur)
 }
 
-public class WhistleFactory: UIView {
+public class WhistleFactory: UIViewController {
 
-  public lazy var whistleWindow: UIWindow = {
-    let window = UIWindow()
-    return window
-    }()
+  public struct Dimensions {
+    public static let height: CGFloat = 20
+  }
+
+  public lazy var whistleWindow: UIWindow = UIWindow()
 
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -26,12 +27,12 @@ public class WhistleFactory: UIView {
 
   // MARK: - Initializers
 
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nil, bundle: nil)
 
     setupWindow()
-    clipsToBounds = true
-    [titleLabel].forEach { addSubview($0) }
+    view.clipsToBounds = true
+    view.addSubview(titleLabel)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -44,7 +45,7 @@ public class WhistleFactory: UIView {
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
-    backgroundColor = murmur.backgroundColor
+    view.backgroundColor = murmur.backgroundColor
     whistleWindow.backgroundColor = murmur.backgroundColor
 
     setupFrames()
@@ -54,18 +55,19 @@ public class WhistleFactory: UIView {
   // MARK: - Setup
 
   public func setupWindow() {
-    whistleWindow.addSubview(self)
-    whistleWindow.windowLevel = UIWindowLevelAlert
+    whistleWindow.addSubview(self.view)
+    whistleWindow.windowLevel = UIWindowLevelStatusBar
     whistleWindow.clipsToBounds = true
   }
 
   public func setupFrames() {
     titleLabel.sizeToFit()
 
+    whistleWindow.rootViewController = self
     whistleWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width,
-      height: UIApplication.sharedApplication().statusBarFrame.height)
-    frame = whistleWindow.bounds
-    titleLabel.frame = bounds
+      height: Dimensions.height)
+    view.frame = whistleWindow.bounds
+    titleLabel.frame = view.bounds
   }
 
   // MARK: - Movement methods
@@ -74,7 +76,7 @@ public class WhistleFactory: UIView {
     hideTimer.invalidate()
 
     let initialOrigin = whistleWindow.frame.origin.y
-    whistleWindow.frame.origin.y = initialOrigin - UIApplication.sharedApplication().statusBarFrame.height
+    whistleWindow.frame.origin.y = initialOrigin - Dimensions.height
     whistleWindow.makeKeyAndVisible()
     UIView.animateWithDuration(0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
@@ -84,17 +86,22 @@ public class WhistleFactory: UIView {
   }
 
   public func hide() {
-    let finalOrigin = frame.origin.y - UIApplication.sharedApplication().statusBarFrame.height
+    let finalOrigin = view.frame.origin.y - Dimensions.height
     UIView.animateWithDuration(0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
-        self.window?.makeKeyAndVisible()
+        self.view.window?.makeKeyAndVisible()
     })
   }
 
   // MARK: - Timer methods
 
   public func timerDidFire() {
+    hide()
+  }
+
+  public override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    setupFrames()
     hide()
   }
 }
