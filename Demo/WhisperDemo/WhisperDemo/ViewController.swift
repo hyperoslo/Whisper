@@ -86,8 +86,6 @@ class ViewController: UIViewController {
       button.layer.cornerRadius = 7.5
     }
 
-    scrollView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
-    scrollView.contentInset = UIEdgeInsetsMake(0, 0, 1, 0)
     guard let navigationController = navigationController else { return }
 
     navigationController.navigationBar.addSubview(containerView)
@@ -115,7 +113,7 @@ class ViewController: UIViewController {
   // MARK: Action methods
 
   func presentButtonDidPress(button: UIButton) {
-    guard let navigationController = self.navigationController else { return }
+    guard let navigationController = navigationController else { return }
     let message = Message(title: "This message will silent in 3 seconds.", color: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
 
     Whisper(message, to: navigationController, action: .Present)
@@ -123,14 +121,14 @@ class ViewController: UIViewController {
   }
 
   func showButtonDidPress(button: UIButton) {
-    guard let navigationController = self.navigationController else { return }
+    guard let navigationController = navigationController else { return }
 
     let message = Message(title: "Showing all the things.", color: UIColor.blackColor())
     Whisper(message, to: navigationController)
   }
 
   func presentPermanentButtonDidPress(button: UIButton) {
-    guard let navigationController = self.navigationController else { return }
+    guard let navigationController = navigationController else { return }
 
     let message = Message(title: "This is a permanent Whisper.", color: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1))
     Whisper(message, to: navigationController, action: .Present)
@@ -162,7 +160,7 @@ class ViewController: UIViewController {
       self.presentPermanentButton.frame = CGRect(x: 50, y: self.showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
       self.notificationButton.frame = CGRect(x: 50, y: self.presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
       self.statusBarButton.frame = CGRect(x: 50, y: self.notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-      
+
       let height = self.statusBarButton.frame.maxY >= totalSize.height ? self.statusBarButton.frame.maxY + 35 : totalSize.height
       self.scrollView.contentSize = CGSize(width: totalSize.width, height: height)
     })
