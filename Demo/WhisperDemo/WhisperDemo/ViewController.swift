@@ -86,8 +86,8 @@ class ViewController: UIViewController {
       button.layer.cornerRadius = 7.5
     }
 
+    scrollView.contentSize = CGSize(width: UIScreen.mainScreen().bounds.width, height: UIScreen.mainScreen().bounds.height)
     scrollView.contentInset = UIEdgeInsetsMake(0, 0, 1, 0)
-    scrollView.contentView.frame = CGRect(
     guard let navigationController = navigationController else { return }
 
     navigationController.navigationBar.addSubview(containerView)
@@ -103,6 +103,12 @@ class ViewController: UIViewController {
 
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
+    setupFrames()
+  }
+
+  // MARK: - Orientation changes
+
+  override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
     setupFrames()
   }
 
@@ -148,13 +154,18 @@ class ViewController: UIViewController {
   func setupFrames() {
     let totalSize = UIScreen.mainScreen().bounds
 
-    scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
-    titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: totalSize.height / 2 - 250)
-    presentButton.frame = CGRect(x: 50, y: titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
-    showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-    presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-    notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-    statusBarButton.frame = CGRect(x: 50, y: notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    UIView.animateWithDuration(0.3, animations: {
+      self.scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
+      self.titleLabel.frame.origin = CGPoint(x: (totalSize.width - self.titleLabel.frame.width) / 2, y: 60)
+      self.presentButton.frame = CGRect(x: 50, y: self.titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
+      self.showButton.frame = CGRect(x: 50, y: self.presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      self.presentPermanentButton.frame = CGRect(x: 50, y: self.showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      self.notificationButton.frame = CGRect(x: 50, y: self.presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      self.statusBarButton.frame = CGRect(x: 50, y: self.notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      
+      let height = self.statusBarButton.frame.maxY >= totalSize.height ? self.statusBarButton.frame.maxY + 35 : totalSize.height
+      self.scrollView.contentSize = CGSize(width: totalSize.width, height: height)
+    })
   }
 }
 
