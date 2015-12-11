@@ -29,3 +29,20 @@ public struct Announcement {
     self.action = action
   }
 }
+
+public struct Murmur {
+
+  public var title: String
+  public var duration: NSTimeInterval
+  public var backgroundColor: UIColor
+  public var titleColor: UIColor
+  public var font: UIFont
+
+  public init(title: String, duration: NSTimeInterval = 1.5, backgroundColor: UIColor = ColorList.Whistle.background, titleColor: UIColor = ColorList.Whistle.title, font: UIFont = FontList.Whistle.title) {
+    self.title = title
+    self.duration = duration
+    self.backgroundColor = backgroundColor
+    self.titleColor = titleColor
+    self.font = font
+  }
+}

@@ -55,6 +55,14 @@ class ViewController: UIViewController {
     return button
     }()
 
+  lazy var statusBarButton: UIButton = { [unowned self] in
+    let button = UIButton()
+    button.addTarget(self, action: "statusBarButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.setTitle("Status bar", forState: .Normal)
+
+    return button
+    }()
+
   lazy var containerView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.grayColor()
@@ -68,13 +76,14 @@ class ViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
 
     view.addSubview(scrollView)
-    for subview in [icon, titleLabel, presentButton, showButton, presentPermanentButton, notificationButton] { scrollView.addSubview(subview) }
+    [icon, titleLabel, presentButton, showButton,
+      presentPermanentButton, notificationButton, statusBarButton].forEach { scrollView.addSubview($0) }
 
-    for button in [presentButton, showButton, presentPermanentButton, notificationButton] {
-      button.setTitleColor(UIColor.grayColor(), forState: .Normal)
-      button.layer.borderColor = UIColor.grayColor().CGColor
-      button.layer.borderWidth = 1.5
-      button.layer.cornerRadius = 7.5
+    [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton].forEach {
+      $0.setTitleColor(UIColor.grayColor(), forState: .Normal)
+      $0.layer.borderColor = UIColor.grayColor().CGColor
+      $0.layer.borderWidth = 1.5
+      $0.layer.cornerRadius = 7.5
     }
 
     guard let navigationController = navigationController else { return }
@@ -95,10 +104,16 @@ class ViewController: UIViewController {
     setupFrames()
   }
 
+  // MARK: - Orientation changes
+
+  override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    setupFrames()
+  }
+
   // MARK: Action methods
 
   func presentButtonDidPress(button: UIButton) {
-    guard let navigationController = self.navigationController else { return }
+    guard let navigationController = navigationController else { return }
     let message = Message(title: "This message will silent in 3 seconds.", color: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
 
     Whisper(message, to: navigationController, action: .Present)
@@ -106,14 +121,14 @@ class ViewController: UIViewController {
   }
 
   func showButtonDidPress(button: UIButton) {
-    guard let navigationController = self.navigationController else { return }
+    guard let navigationController = navigationController else { return }
 
     let message = Message(title: "Showing all the things.", color: UIColor.blackColor())
     Whisper(message, to: navigationController)
   }
 
   func presentPermanentButtonDidPress(button: UIButton) {
-    guard let navigationController = self.navigationController else { return }
+    guard let navigationController = navigationController else { return }
 
     let message = Message(title: "This is a permanent Whisper.", color: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1))
     Whisper(message, to: navigationController, action: .Present)
@@ -127,17 +142,30 @@ class ViewController: UIViewController {
     })
   }
 
+  func statusBarButtonDidPress(button: UIButton) {
+    let murmur = Murmur(title: "This is a small whistle",
+      backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
+
+    Whistle(murmur)
+  }
+
   // MARK - Configuration
 
   func setupFrames() {
     let totalSize = UIScreen.mainScreen().bounds
 
-    scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
-    titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: totalSize.height / 2 - 250)
-    presentButton.frame = CGRect(x: 50, y: titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
-    showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-    presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-    notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    UIView.animateWithDuration(0.3, animations: {
+      self.scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
+      self.titleLabel.frame.origin = CGPoint(x: (totalSize.width - self.titleLabel.frame.width) / 2, y: 60)
+      self.presentButton.frame = CGRect(x: 50, y: self.titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
+      self.showButton.frame = CGRect(x: 50, y: self.presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      self.presentPermanentButton.frame = CGRect(x: 50, y: self.showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      self.notificationButton.frame = CGRect(x: 50, y: self.presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+      self.statusBarButton.frame = CGRect(x: 50, y: self.notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+
+      let height = self.statusBarButton.frame.maxY >= totalSize.height ? self.statusBarButton.frame.maxY + 35 : totalSize.height
+      self.scrollView.contentSize = CGSize(width: totalSize.width, height: height)
+    })
   }
 }
 
