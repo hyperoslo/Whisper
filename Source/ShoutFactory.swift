@@ -2,8 +2,8 @@ import UIKit
 
 let shout = ShoutView()
 
-public func Shout(announcement: Announcement, to: UIViewController) {
-  shout.craft(announcement, to: to)
+public func Shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
+  shout.craft(announcement, to: to, completion: completion)
 }
 
 public class ShoutView: UIView {
@@ -93,6 +93,7 @@ public class ShoutView: UIView {
   public var displayTimer = NSTimer()
   public var panGestureActive = false
   public var shouldSilent = false
+  public var completion: (() -> ())?
 
   // MARK: - Initializers
 
@@ -121,11 +122,13 @@ public class ShoutView: UIView {
 
   // MARK: - Configuration
 
-  public func craft(announcement: Announcement, to: UIViewController) {
+  public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
     shout(to: to)
+
+    self.completion = completion
   }
 
   public func configureView(announcement: Announcement) {
@@ -187,6 +190,7 @@ public class ShoutView: UIView {
       self.frame.size.height = 0
       self.backgroundView.frame.size.height = self.frame.height
       }, completion: { finished in
+        self.completion?()
         self.displayTimer.invalidate()
         self.removeFromSuperview()
     })
@@ -227,7 +231,7 @@ public class ShoutView: UIView {
       duration = 0.2
       UIView.animateWithDuration(duration, animations: {
         self.frame.size.height = height
-        }, completion: { _ in if translation.y < -5 { self.removeFromSuperview() }})
+        }, completion: { _ in if translation.y < -5 { self.completion?(); self.removeFromSuperview() }})
     }
 
     UIView.animateWithDuration(duration, animations: {
