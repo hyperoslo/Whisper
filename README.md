@@ -84,8 +84,8 @@ In the future the idea is to keep improving and add some features:
 
 ## Contribute
 
-We would love you to contribute to **ImagePicker**, check the [CONTRIBUTING](https://github.com/hyperoslo/ImagePicker/blob/master/CONTRIBUTING.md) file for more info.
+We would love you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
 
 ## License
 
-**ImagePicker** is available under the MIT license. See the [LICENSE](https://github.com/hyperoslo/ImagePicker/blob/master/LICENSE.md) file for more info.
+**Whisper** is available under the MIT license. See the [LICENSE](https://github.com/hyperoslo/Whisper/blob/master/LICENSE.md) file for more info.
