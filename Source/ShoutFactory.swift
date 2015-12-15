@@ -108,9 +108,9 @@ public class ShoutView: UIView {
     clipsToBounds = false
     userInteractionEnabled = true
     layer.shadowColor = UIColor.blackColor().CGColor
-    layer.shadowOffset = CGSize(width: 0, height: 1.5)
-    layer.shadowOpacity = 0.15
-    layer.shadowRadius = 1.5
+    layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    layer.shadowOpacity = 0.1
+    layer.shadowRadius = 0.5
 
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
