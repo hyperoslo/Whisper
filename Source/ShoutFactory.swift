@@ -175,7 +175,7 @@ public class ShoutView: UIView {
     blurView.frame = backgroundView.bounds
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
     indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
-      y: Dimensions.height - Dimensions.indicatorHeight - 3, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
+      y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
     imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + offset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
     titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
