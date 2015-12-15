@@ -5,11 +5,6 @@ class ViewController: UIViewController {
 
   lazy var scrollView: UIScrollView = UIScrollView()
 
-  lazy var icon: UIImageView = {
-    let imageView = UIImageView()
-    return imageView
-    }()
-
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.text = "Welcome to the magic of a tiny Whisper... 🍃"
@@ -77,7 +72,7 @@ class ViewController: UIViewController {
     title = "Whisper".uppercaseString
 
     view.addSubview(scrollView)
-    [icon, titleLabel, presentButton, showButton,
+    [titleLabel, presentButton, showButton,
       presentPermanentButton, notificationButton, statusBarButton].forEach { scrollView.addSubview($0) }
 
     [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton].forEach {
