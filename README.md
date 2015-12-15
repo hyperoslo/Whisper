@@ -80,8 +80,12 @@ In the future the idea is to keep improving and add some features:
 
 ## Author
 
-Hyper Interaktiv AS, ios@hyper.no
+[Hyper](http://hyper.no) made this with ❤️. If you’re using this library we probably want to [hire you](https://github.com/hyperoslo/iOS-playbook/blob/master/HYPER_RECIPES.md)! Send us an email at ios@hyper.no.
+
+## Contribute
+
+We would love you to contribute to **ImagePicker**, check the [CONTRIBUTING](https://github.com/hyperoslo/ImagePicker/blob/master/CONTRIBUTING.md) file for more info.
 
 ## License
 
-**Whisper** is available under the MIT license. See the LICENSE file for more information.
+**ImagePicker** is available under the MIT license. See the [LICENSE](https://github.com/hyperoslo/ImagePicker/blob/master/LICENSE.md) file for more info.
