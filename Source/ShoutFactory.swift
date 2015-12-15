@@ -123,7 +123,7 @@ public class ShoutView: UIView {
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
     Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
-    
+
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
