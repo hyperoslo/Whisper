@@ -50,6 +50,7 @@ class WhisperTests: XCTestCase {
     let app = XCUIApplication()
 
     app.buttons["Status bar"].tap()
+    sleep(1)
     XCTAssert(app.staticTexts["This is a small whistle..."].exists)
   }
 }
