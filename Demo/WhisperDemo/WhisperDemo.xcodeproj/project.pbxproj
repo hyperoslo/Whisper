@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290531451C206B1100FB382C /* WhisperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290531421C206A6400FB382C /* WhisperTests.swift */; };
 		29AD429E1BBC2BD2004292F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */; };
 		29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429F1BBC2BD2004292F1 /* ViewController.swift */; };
 		29AD42A51BBC2BD2004292F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A41BBC2BD2004292F1 /* Assets.xcassets */; };
@@ -14,7 +15,20 @@
 		D01A974C417D6227CDD6240A /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0DEAB1F8C735F802579CE1 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2905313B1C206A3800FB382C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29AD42921BBC2BD2004292F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29AD42991BBC2BD2004292F1;
+			remoteInfo = WhisperDemo;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		290531361C206A3800FB382C /* WhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		290531411C206A6400FB382C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		290531421C206A6400FB382C /* WhisperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhisperTests.swift; sourceTree = "<group>"; };
 		29AD429A1BBC2BD2004292F1 /* WhisperDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhisperDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29AD429F1BBC2BD2004292F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -27,6 +41,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		290531331C206A3800FB382C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29AD42971BBC2BD2004292F1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -46,10 +67,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		290531401C206A6400FB382C /* WhisperTests */ = {
+			isa = PBXGroup;
+			children = (
+				290531411C206A6400FB382C /* Info.plist */,
+				290531421C206A6400FB382C /* WhisperTests.swift */,
+			);
+			path = WhisperTests;
+			sourceTree = "<group>";
+		};
 		29AD42911BBC2BD2004292F1 = {
 			isa = PBXGroup;
 			children = (
 				29AD429C1BBC2BD2004292F1 /* WhisperDemo */,
+				290531401C206A6400FB382C /* WhisperTests */,
 				29AD429B1BBC2BD2004292F1 /* Products */,
 				3FD1061CCFD319AE1B0565AB /* Pods */,
 				029D90BE27CCA78731543D55 /* Frameworks */,
@@ -60,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				29AD429A1BBC2BD2004292F1 /* WhisperDemo.app */,
+				290531361C206A3800FB382C /* WhisperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +120,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		290531351C206A3800FB382C /* WhisperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2905313F1C206A3800FB382C /* Build configuration list for PBXNativeTarget "WhisperTests" */;
+			buildPhases = (
+				290531321C206A3800FB382C /* Sources */,
+				290531331C206A3800FB382C /* Frameworks */,
+				290531341C206A3800FB382C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2905313C1C206A3800FB382C /* PBXTargetDependency */,
+			);
+			name = WhisperTests;
+			productName = WhisperTests;
+			productReference = 290531361C206A3800FB382C /* WhisperTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		29AD42991BBC2BD2004292F1 /* WhisperDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29AD42AC1BBC2BD2004292F1 /* Build configuration list for PBXNativeTarget "WhisperDemo" */;
@@ -114,9 +164,14 @@
 		29AD42921BBC2BD2004292F1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Ramon Gilabert Llop";
 				TargetAttributes = {
+					290531351C206A3800FB382C = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 29AD42991BBC2BD2004292F1;
+					};
 					29AD42991BBC2BD2004292F1 = {
 						CreatedOnToolsVersion = 7.0;
 					};
@@ -136,11 +191,19 @@
 			projectRoot = "";
 			targets = (
 				29AD42991BBC2BD2004292F1 /* WhisperDemo */,
+				290531351C206A3800FB382C /* WhisperTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		290531341C206A3800FB382C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29AD42981BBC2BD2004292F1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -201,6 +264,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		290531321C206A3800FB382C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				290531451C206B1100FB382C /* WhisperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		29AD42961BBC2BD2004292F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -211,6 +282,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2905313C1C206A3800FB382C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29AD42991BBC2BD2004292F1 /* WhisperDemo */;
+			targetProxy = 2905313B1C206A3800FB382C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		29AD42A61BBC2BD2004292F1 /* LaunchScreen.storyboard */ = {
@@ -224,6 +303,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2905313D1C206A3800FB382C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WhisperTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WhisperDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		2905313E1C206A3800FB382C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WhisperTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = WhisperDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		29AD42AA1BBC2BD2004292F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -334,6 +439,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2905313F1C206A3800FB382C /* Build configuration list for PBXNativeTarget "WhisperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2905313D1C206A3800FB382C /* Debug */,
+				2905313E1C206A3800FB382C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		29AD42951BBC2BD2004292F1 /* Build configuration list for PBXProject "WhisperDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
