@@ -9,8 +9,7 @@ public func Shout(announcement: Announcement, to: UIViewController, completion: 
 public class ShoutView: UIView {
 
   public struct Dimensions {
-    public static let height: CGFloat = 80
-    public static let width: CGFloat = UIScreen.mainScreen().bounds.width
+    public static let height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
@@ -156,6 +155,7 @@ public class ShoutView: UIView {
 
     frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 0)
     backgroundView.frame = CGRect(x: 0, y: 0, width: Dimensions.width, height: 0)
+
     UIView.animateWithDuration(0.35, animations: {
       self.frame.size.height = Dimensions.height
       self.backgroundView.frame.size.height = self.frame.height
@@ -165,12 +165,13 @@ public class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
+    let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
     backgroundView.frame.size = CGSize(width: Dimensions.width, height: Dimensions.height)
     blurView.frame = backgroundView.bounds
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: Dimensions.width, height: 20)
     indicatorView.frame = CGRect(x: (Dimensions.width - Dimensions.indicatorWidth) / 2,
-      y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
-    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + 5,
+      y: Dimensions.height - Dimensions.indicatorHeight - 3, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
+    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + offset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
     titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
     subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
