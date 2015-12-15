@@ -5,19 +5,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  lazy var navigationController: UINavigationController = {
-    let navigationController = UINavigationController(rootViewController: ViewController())
-    
-    return navigationController
-    }()
+  lazy var navigationController: UINavigationController = UINavigationController(rootViewController: ViewController())
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow()
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
-
-    UIApplication.sharedApplication().statusBarHidden = true
-    UIApplication.sharedApplication().statusBarHidden = false
 
     return true
   }

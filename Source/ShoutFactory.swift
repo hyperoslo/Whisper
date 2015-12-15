@@ -9,12 +9,11 @@ public func Shout(announcement: Announcement, to: UIViewController, completion: 
 public class ShoutView: UIView {
 
   public struct Dimensions {
-    public static let height: CGFloat = 80
-    public static let width: CGFloat = UIScreen.mainScreen().bounds.width
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
+    public static var height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
     public static var textOffset: CGFloat = 75
   }
 
@@ -108,9 +107,9 @@ public class ShoutView: UIView {
     clipsToBounds = false
     userInteractionEnabled = true
     layer.shadowColor = UIColor.blackColor().CGColor
-    layer.shadowOffset = CGSize(width: 0, height: 1.5)
-    layer.shadowOpacity = 0.15
-    layer.shadowRadius = 1.5
+    layer.shadowOffset = CGSize(width: 0, height: 0.5)
+    layer.shadowOpacity = 0.1
+    layer.shadowRadius = 0.5
 
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
@@ -123,6 +122,8 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
+    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
@@ -152,10 +153,12 @@ public class ShoutView: UIView {
   public func shout(to controller: UIViewController) {
     guard let controller = controller.navigationController else { fatalError("The controller must contain a navigation bar") }
 
+    let width = UIScreen.mainScreen().bounds.width
     controller.view.addSubview(self)
 
-    frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 0)
-    backgroundView.frame = CGRect(x: 0, y: 0, width: Dimensions.width, height: 0)
+    frame = CGRect(x: 0, y: 0, width: width, height: 0)
+    backgroundView.frame = CGRect(x: 0, y: 0, width: width, height: 0)
+
     UIView.animateWithDuration(0.35, animations: {
       self.frame.size.height = Dimensions.height
       self.backgroundView.frame.size.height = self.frame.height
@@ -165,12 +168,15 @@ public class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
-    backgroundView.frame.size = CGSize(width: Dimensions.width, height: Dimensions.height)
+    let totalWidth = UIScreen.mainScreen().bounds.width
+    let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
+
+    backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
     blurView.frame = backgroundView.bounds
-    gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: Dimensions.width, height: 20)
-    indicatorView.frame = CGRect(x: (Dimensions.width - Dimensions.indicatorWidth) / 2,
+    gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
+    indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
-    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + 5,
+    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + offset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
     titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
     subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
@@ -180,7 +186,7 @@ public class ShoutView: UIView {
     }
 
     [titleLabel, subtitleLabel].forEach {
-      $0.frame.size.width = Dimensions.width - Dimensions.imageSize - (Dimensions.imageOffset * 2) }
+      $0.frame.size.width = totalWidth - Dimensions.imageSize - (Dimensions.imageOffset * 2) }
   }
 
   // MARK: - Actions

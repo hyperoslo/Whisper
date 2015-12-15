@@ -74,6 +74,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.whiteColor()
+    title = "Whisper".uppercaseString
 
     view.addSubview(scrollView)
     [icon, titleLabel, presentButton, showButton,
@@ -92,11 +93,6 @@ class ViewController: UIViewController {
     containerView.frame = CGRect(x: 0,
       y: navigationController.navigationBar.frame.maxY - UIApplication.sharedApplication().statusBarFrame.height,
       width: UIScreen.mainScreen().bounds.width, height: 0)
-  }
-
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    title = "Whisper".uppercaseString
   }
 
   override func viewDidAppear(animated: Bool) {
@@ -143,7 +139,7 @@ class ViewController: UIViewController {
   }
 
   func statusBarButtonDidPress(button: UIButton) {
-    let murmur = Murmur(title: "This is a small whistle",
+    let murmur = Murmur(title: "This is a small whistle...",
       backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
 
     Whistle(murmur)
@@ -154,18 +150,16 @@ class ViewController: UIViewController {
   func setupFrames() {
     let totalSize = UIScreen.mainScreen().bounds
 
-    UIView.animateWithDuration(0.3, animations: {
-      self.scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
-      self.titleLabel.frame.origin = CGPoint(x: (totalSize.width - self.titleLabel.frame.width) / 2, y: 60)
-      self.presentButton.frame = CGRect(x: 50, y: self.titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
-      self.showButton.frame = CGRect(x: 50, y: self.presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-      self.presentPermanentButton.frame = CGRect(x: 50, y: self.showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-      self.notificationButton.frame = CGRect(x: 50, y: self.presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-      self.statusBarButton.frame = CGRect(x: 50, y: self.notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    scrollView.frame = CGRect(x: 0, y: 0, width: totalSize.width, height: totalSize.height)
+    titleLabel.frame.origin = CGPoint(x: (totalSize.width - titleLabel.frame.width) / 2, y: 60)
+    presentButton.frame = CGRect(x: 50, y: titleLabel.frame.maxY + 75, width: totalSize.width - 100, height: 50)
+    showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    statusBarButton.frame = CGRect(x: 50, y: notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
 
-      let height = self.statusBarButton.frame.maxY >= totalSize.height ? self.statusBarButton.frame.maxY + 35 : totalSize.height
-      self.scrollView.contentSize = CGSize(width: totalSize.width, height: height)
-    })
+    let height = statusBarButton.frame.maxY >= totalSize.height ? statusBarButton.frame.maxY + 35 : totalSize.height
+    scrollView.contentSize = CGSize(width: totalSize.width, height: height)
   }
 }
 

@@ -7,7 +7,6 @@ public protocol NotificationControllerDelegate: class {
 public class WhisperView: UIView {
 
   struct Dimensions {
-    static let width: CGFloat = UIScreen.mainScreen().bounds.width
     static let height: CGFloat = 24
     static let offsetHeight: CGFloat = height * 2
     static let imageSize: CGFloat = 14
@@ -55,7 +54,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, height, Dimensions.width, Dimensions.height)
+    frame = CGRectMake(0, height, UIScreen.mainScreen().bounds.width, Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
