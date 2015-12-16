@@ -1,13 +1,11 @@
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
-# Whisper :leaves:
-
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 
-## Description
+## Description :leaves:
 
 Break the silence of your UI, whispering, shouting or whistling at it. **Whisper** is a component that will make the task of display messages and in-app notifications simple. It has three different views inside.
 
