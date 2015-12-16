@@ -1,3 +1,5 @@
+![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whistle-cover.png)
+
 # Whisper :leaves:
 
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
