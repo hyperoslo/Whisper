@@ -1,4 +1,4 @@
-![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whistle-cover.png)
+![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
 # Whisper :leaves:
 
