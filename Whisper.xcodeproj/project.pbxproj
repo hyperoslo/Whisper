@@ -14,7 +14,6 @@
 		290531131C20517E00FB382C /* WhisperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310B1C20517E00FB382C /* WhisperFactory.swift */; };
 		290531141C20517E00FB382C /* WhisperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310C1C20517E00FB382C /* WhisperView.swift */; };
 		290531151C20517E00FB382C /* WhistleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310D1C20517E00FB382C /* WhistleFactory.swift */; };
-		290531181C2051F400FB382C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 290531171C2051F400FB382C /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,7 +154,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				290531181C2051F400FB382C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
