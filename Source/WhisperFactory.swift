@@ -31,6 +31,11 @@ class WhisperFactory: NSObject {
   var delayTimer = NSTimer()
   var presentTimer = NSTimer()
 
+  override init() {
+    super.init()
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+  }
+
   func craft(message: Message, navigationController: UINavigationController, action: Action) {
     self.navigationController = navigationController
     self.navigationController.delegate = self
@@ -217,6 +222,26 @@ class WhisperFactory: NSObject {
           scrollView.contentInset = UIEdgeInsetsMake(scrollView.contentInset.top + edgeInsetHeight, 0, 0, 0)
         }
       }
+    }
+  }
+
+  // MARK: - Handling screen orientation
+
+  func orientationDidChange() {
+    for subview in navigationController.navigationBar.subviews {
+      guard let whisper = subview as? WhisperView else { continue }
+
+      var maximumY = navigationController.navigationBar.frame.height
+      for subview in navigationController.navigationBar.subviews where subview != whisper {
+        if subview.frame.maxY > maximumY && subview.frame.height > 0 { maximumY = subview.frame.maxY }
+      }
+
+      whisper.frame = CGRect(
+        x: whisper.frame.origin.x,
+        y: maximumY,
+        width: UIScreen.mainScreen().bounds.width,
+        height: whisper.frame.size.height)
+      whisper.setupFrames()
     }
   }
 }
