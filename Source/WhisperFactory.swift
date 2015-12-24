@@ -31,9 +31,15 @@ class WhisperFactory: NSObject {
   var delayTimer = NSTimer()
   var presentTimer = NSTimer()
 
+  // MARK: - Initializers
+
   override init() {
     super.init()
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+  }
+
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   func craft(message: Message, navigationController: UINavigationController, action: Action) {

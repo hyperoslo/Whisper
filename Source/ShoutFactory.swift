@@ -121,6 +121,10 @@ public class ShoutView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+  }
+
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
