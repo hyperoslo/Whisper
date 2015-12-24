@@ -113,10 +113,16 @@ public class ShoutView: UIView {
 
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   // MARK: - Configuration
@@ -246,5 +252,12 @@ public class ShoutView: UIView {
       self.gestureContainer.frame.origin.y = self.frame.height - 20
       self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
     })
+  }
+
+
+  // MARK: - Handling screen orientation
+
+  func orientationDidChange() {
+    setupFrames()
   }
 }
