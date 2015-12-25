@@ -33,10 +33,16 @@ public class WhistleFactory: UIViewController {
     setupWindow()
     view.clipsToBounds = true
     view.addSubview(titleLabel)
+
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   // MARK: - Configuration
@@ -102,7 +108,7 @@ public class WhistleFactory: UIViewController {
     hide()
   }
 
-  public override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+  func orientationDidChange() {
     if whistleWindow.keyWindow {
       setupFrames()
       hide()
