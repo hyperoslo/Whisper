@@ -88,14 +88,20 @@ class WhisperFactory: NSObject {
 
   func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
     navigationController = controller
-
+    
+    var whisperSubview: WhisperView? = nil
     for subview in navigationController.navigationBar.subviews {
       if let whisper = subview as? WhisperView {
-        whisperView = whisper
+        whisperSubview = whisper
         break
       }
     }
 
+    if whisperSubview == nil {
+        return
+    }
+
+    whisperView = whisperSubview
     delayTimer.invalidate()
     delayTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self,
       selector: "delayFired:", userInfo: nil, repeats: false)
