@@ -69,7 +69,6 @@ public class WhistleFactory: UIViewController {
   public func setupFrames() {
     titleLabel.sizeToFit()
 
-    whistleWindow.rootViewController = self
     whistleWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width,
       height: Dimensions.height)
     view.frame = whistleWindow.bounds
