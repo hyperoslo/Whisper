@@ -17,7 +17,7 @@ public class ShoutView: UIView {
     public static var textOffset: CGFloat = 75
   }
 
-  public lazy var backgroundView: UIView = {
+  public private(set) lazy var backgroundView: UIView = {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.background
     view.alpha = 0.98
@@ -26,19 +26,19 @@ public class ShoutView: UIView {
     return view
     }()
 
-  public lazy var blurView: UIVisualEffectView = {
+  public private(set) lazy var blurView: UIVisualEffectView = {
     let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight))
     return blurView
     }()
 
-  public lazy var gestureContainer: UIView = {
+  public private(set) lazy var gestureContainer: UIView = {
     let view = UIView()
     view.userInteractionEnabled = true
 
     return view
     }()
 
-  public lazy var indicatorView: UIView = {
+  public private(set) lazy var indicatorView: UIView = {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.dragIndicator
     view.layer.cornerRadius = Dimensions.indicatorHeight / 2
@@ -47,7 +47,7 @@ public class ShoutView: UIView {
     return view
     }()
 
-  public lazy var imageView: UIImageView = {
+  public private(set) lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = Dimensions.imageSize / 2
     imageView.clipsToBounds = true
@@ -56,7 +56,7 @@ public class ShoutView: UIView {
     return imageView
     }()
 
-  public lazy var titleLabel: UILabel = {
+  public private(set) lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.title
     label.tintColor = ColorList.Shout.title
@@ -65,7 +65,7 @@ public class ShoutView: UIView {
     return label
     }()
 
-  public lazy var subtitleLabel: UILabel = {
+  public private(set) lazy var subtitleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.subtitle
     label.tintColor = ColorList.Shout.subtitle
@@ -74,25 +74,25 @@ public class ShoutView: UIView {
     return label
     }()
 
-  public lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+  public private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: "handleTapGestureRecognizer")
 
     return gesture
     }()
 
-  public lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
+  public private(set) lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
     let gesture = UIPanGestureRecognizer()
     gesture.addTarget(self, action: "handlePanGestureRecognizer")
 
     return gesture
     }()
 
-  public var announcement: Announcement?
-  public var displayTimer = NSTimer()
-  public var panGestureActive = false
-  public var shouldSilent = false
-  public var completion: (() -> ())?
+  public private(set) var announcement: Announcement?
+  public private(set) var displayTimer = NSTimer()
+  public private(set) var panGestureActive = false
+  public private(set) var shouldSilent = false
+  public private(set) var completion: (() -> ())?
 
   // MARK: - Initializers
 
@@ -219,13 +219,13 @@ public class ShoutView: UIView {
 
   // MARK: - Gesture methods
 
-  public func handleTapGestureRecognizer() {
+  @objc private func handleTapGestureRecognizer() {
     guard let announcement = announcement else { return }
     announcement.action?()
     silent()
   }
 
-  public func handlePanGestureRecognizer() {
+  @objc private func handlePanGestureRecognizer() {
     let translation = panGestureRecognizer.translationInView(self)
     var duration: NSTimeInterval = 0
 
