@@ -214,11 +214,14 @@ class WhisperFactory: NSObject {
 
   func moveControllerViews(down: Bool) {
     guard let visibleController = navigationController.visibleViewController else { return }
-    edgeInsetHeight = down ? WhisperView.Dimensions.height : -WhisperView.Dimensions.height
 
-    UIView.animateWithDuration(AnimationTiming.movement, animations: {
-      self.performControllerMove(visibleController)
-    })
+    if !(edgeInsetHeight == WhisperView.Dimensions.height && down) {
+      edgeInsetHeight = down ? WhisperView.Dimensions.height : -WhisperView.Dimensions.height
+
+      UIView.animateWithDuration(AnimationTiming.movement, animations: {
+        self.performControllerMove(visibleController)
+      })
+    }
   }
 
   func performControllerMove(viewController: UIViewController) {
