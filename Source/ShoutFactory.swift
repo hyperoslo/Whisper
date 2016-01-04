@@ -26,11 +26,6 @@ public class ShoutView: UIView {
     return view
     }()
 
-  public private(set) lazy var blurView: UIVisualEffectView = {
-    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .ExtraLight))
-    return blurView
-    }()
-
   public private(set) lazy var gestureContainer: UIView = {
     let view = UIView()
     view.userInteractionEnabled = true
@@ -59,7 +54,7 @@ public class ShoutView: UIView {
   public private(set) lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.title
-    label.tintColor = ColorList.Shout.title
+    label.textColor = ColorList.Shout.title
     label.numberOfLines = 1
 
     return label
@@ -68,7 +63,7 @@ public class ShoutView: UIView {
   public private(set) lazy var subtitleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.subtitle
-    label.tintColor = ColorList.Shout.subtitle
+    label.textColor = ColorList.Shout.subtitle
     label.numberOfLines = 1
 
     return label
@@ -100,9 +95,8 @@ public class ShoutView: UIView {
     super.init(frame: frame)
 
     addSubview(backgroundView)
-    backgroundView.addSubview(blurView)
     [indicatorView, imageView, titleLabel, subtitleLabel, gestureContainer].forEach {
-      blurView.addSubview($0) }
+      backgroundView.addSubview($0) }
 
     clipsToBounds = false
     userInteractionEnabled = true
@@ -178,7 +172,6 @@ public class ShoutView: UIView {
     let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
 
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
-    blurView.frame = backgroundView.bounds
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
     indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
@@ -248,7 +241,6 @@ public class ShoutView: UIView {
 
     UIView.animateWithDuration(duration, animations: {
       self.backgroundView.frame.size.height = self.frame.height
-      self.blurView.frame.size.height = self.frame.height
       self.gestureContainer.frame.origin.y = self.frame.height - 20
       self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
     })
