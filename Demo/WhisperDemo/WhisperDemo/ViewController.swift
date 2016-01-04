@@ -65,11 +65,22 @@ class ViewController: UIViewController {
     return view
     }()
 
+  lazy var nextButton: UIBarButtonItem = { [unowned self] in
+    let button = UIBarButtonItem()
+    button.title = "Next"
+    button.style = .Plain
+    button.target = self
+    button.action = "nextButtonDidPress"
+
+    return button
+    }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.whiteColor()
     title = "Whisper".uppercaseString
+    navigationItem.rightBarButtonItem = nextButton
 
     view.addSubview(scrollView)
     [titleLabel, presentButton, showButton,
@@ -131,6 +142,11 @@ class ViewController: UIViewController {
     Shout(announcement, to: self, completion: {
       print("The shout was silent.")
     })
+  }
+
+  func nextButtonDidPress() {
+    let controller = TableViewController()
+    navigationController?.pushViewController(controller, animated: true)
   }
 
   func statusBarButtonDidPress(button: UIButton) {
