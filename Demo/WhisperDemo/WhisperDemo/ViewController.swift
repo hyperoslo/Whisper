@@ -93,12 +93,6 @@ class ViewController: UIViewController {
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     setupFrames()
-
-    guard let navigationController = navigationController else { return }
-    let message = Message(title: "This message will silent in 3 seconds.", color: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
-
-    Whisper(message, to: navigationController, action: .Present)
-    Silent(navigationController, after: 3)
   }
 
   // MARK: - Orientation changes
