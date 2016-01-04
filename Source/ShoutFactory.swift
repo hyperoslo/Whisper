@@ -54,7 +54,7 @@ public class ShoutView: UIView {
   public private(set) lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.title
-    label.tintColor = ColorList.Shout.title
+    label.textColor = ColorList.Shout.title
     label.numberOfLines = 1
 
     return label
@@ -63,7 +63,7 @@ public class ShoutView: UIView {
   public private(set) lazy var subtitleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.subtitle
-    label.tintColor = ColorList.Shout.subtitle
+    label.textColor = ColorList.Shout.subtitle
     label.numberOfLines = 1
 
     return label
