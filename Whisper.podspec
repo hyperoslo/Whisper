@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Whisper"
   s.summary          = "Whisper is a component that will make the task of display messages and in-app notifications simple."
-  s.version          = "1.0.0"
+  s.version          = "1.1.0"
   s.homepage         = "https://github.com/hyperoslo/Whisper"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Source/**/*'
   s.resource_bundles = { 'Whisper' => ['Images/*.{png}'] }
-  
+
   s.frameworks = 'UIKit', 'Foundation'
 end
