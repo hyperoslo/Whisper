@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		290531451C206B1100FB382C /* WhisperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290531421C206A6400FB382C /* WhisperTests.swift */; };
+		2928E6791C3A6B840024FFBD /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2928E6781C3A6B840024FFBD /* TableViewController.swift */; };
 		29AD429E1BBC2BD2004292F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */; };
 		29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429F1BBC2BD2004292F1 /* ViewController.swift */; };
 		29AD42A51BBC2BD2004292F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A41BBC2BD2004292F1 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		290531361C206A3800FB382C /* WhisperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhisperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		290531411C206A6400FB382C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		290531421C206A6400FB382C /* WhisperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhisperTests.swift; sourceTree = "<group>"; };
+		2928E6781C3A6B840024FFBD /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		29AD429A1BBC2BD2004292F1 /* WhisperDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhisperDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29AD429F1BBC2BD2004292F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			children = (
 				29AD429D1BBC2BD2004292F1 /* AppDelegate.swift */,
 				29AD429F1BBC2BD2004292F1 /* ViewController.swift */,
+				2928E6781C3A6B840024FFBD /* TableViewController.swift */,
 				29AD42A41BBC2BD2004292F1 /* Assets.xcassets */,
 				29AD42A61BBC2BD2004292F1 /* LaunchScreen.storyboard */,
 				29AD42A91BBC2BD2004292F1 /* Info.plist */,
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */,
+				2928E6791C3A6B840024FFBD /* TableViewController.swift in Sources */,
 				29AD429E1BBC2BD2004292F1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,6 +450,7 @@
 				2905313E1C206A3800FB382C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		29AD42951BBC2BD2004292F1 /* Build configuration list for PBXProject "WhisperDemo" */ = {
 			isa = XCConfigurationList;
