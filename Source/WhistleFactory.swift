@@ -55,7 +55,7 @@ public class WhistleFactory: UIViewController {
     whistleWindow.backgroundColor = murmur.backgroundColor
 
     setupFrames()
-    present()
+    present(duration: murmur.duration)
   }
 
   // MARK: - Setup
@@ -77,7 +77,7 @@ public class WhistleFactory: UIViewController {
 
   // MARK: - Movement methods
 
-  public func present() {
+  public func present(duration duration: NSTimeInterval) {
     hideTimer.invalidate()
 
     let initialOrigin = whistleWindow.frame.origin.y
@@ -87,7 +87,7 @@ public class WhistleFactory: UIViewController {
       self.whistleWindow.frame.origin.y = initialOrigin
     })
 
-    hideTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
+    hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
   }
 
   public func hide() {
