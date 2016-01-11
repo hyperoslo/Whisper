@@ -19,7 +19,7 @@ public class WhistleFactory: UIViewController {
     label.textAlignment = .Center
 
     return label
-    }()
+  }()
 
   public var duration: NSTimeInterval = 2
   public var viewController: UIViewController?
