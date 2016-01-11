@@ -54,6 +54,7 @@ public class WhistleFactory: UIViewController {
     view.backgroundColor = murmur.backgroundColor
     whistleWindow.backgroundColor = murmur.backgroundColor
 
+    moveWhistleWindowToFront()
     setupFrames()
     present(duration: murmur.duration)
   }
@@ -62,8 +63,14 @@ public class WhistleFactory: UIViewController {
 
   public func setupWindow() {
     whistleWindow.addSubview(self.view)
-    whistleWindow.windowLevel = UIWindowLevelStatusBar
     whistleWindow.clipsToBounds = true
+    moveWhistleWindowToFront()
+  }
+  
+  func moveWindowToFront() {
+    let currentStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
+    whistleWindow.windowLevel = UIWindowLevelStatusBar
+    UIApplication.sharedApplication().setStatusBarStyle(currentStatusBarStyle, animated: false)
   }
 
   public func setupFrames() {
@@ -97,6 +104,8 @@ public class WhistleFactory: UIViewController {
       }, completion: { _ in
         if let window = UIApplication.sharedApplication().windows.filter({ $0 != self.whistleWindow }).first {
           window.makeKeyAndVisible()
+          self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
+          window.rootViewController!.setNeedsStatusBarAppearanceUpdate()
         }
     })
   }
