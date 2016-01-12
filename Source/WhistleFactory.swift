@@ -54,7 +54,7 @@ public class WhistleFactory: UIViewController {
     view.backgroundColor = murmur.backgroundColor
     whistleWindow.backgroundColor = murmur.backgroundColor
 
-    moveWhistleWindowToFront()
+    moveWindowToFront()
     setupFrames()
     present(duration: murmur.duration)
   }
@@ -64,7 +64,7 @@ public class WhistleFactory: UIViewController {
   public func setupWindow() {
     whistleWindow.addSubview(self.view)
     whistleWindow.clipsToBounds = true
-    moveWhistleWindowToFront()
+    moveWindowToFront()
   }
   
   func moveWindowToFront() {
