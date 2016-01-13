@@ -60,6 +60,29 @@ let murmur = Murmur(title: "This is a small whistle...")
 Whistle(murmur)
 ```
 
+### Using Whisper in Objective-C
+
+**Whisper** does not support Objective-C out of the box, but it can be used if you add an Objective-C bridge for it.
+
+Thanks [@bcbroom](https://github.com/bcbroom) coming up with this [solution](https://github.com/hyperoslo/Whisper/issues/28#issuecomment-169143886).
+```swift
+// WhisperBridge.swift
+import Foundation
+import Whisper
+
+@objc public class WhisperBridge: NSObject {
+
+  static public func whisper(text: String, backgroundColor: UIColor, toNavigationController: UINavigationController, silenceAfter: NSTimeInterval) {
+    let message = Message(title: text, color: backgroundColor)
+    Whisper(message, to: toNavigationController)
+
+    if silenceAfter > 0.1 {
+      Silent(toNavigationController, after: silenceAfter)
+    }
+  }
+}
+```
+
 ## Installation
 
 **Whisper** is available through [CocoaPods](http://cocoapods.org). To install
