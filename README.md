@@ -60,6 +60,8 @@ let murmur = Murmur(title: "This is a small whistle...")
 Whistle(murmur)
 ```
 
+If you want to use **Whisper** with Objective-C, you can find information about it [here](https://github.com/hyperoslo/Whisper/wiki/Using-Whisper-in-Objective-C).
+
 ## Installation
 
 **Whisper** is available through [CocoaPods](http://cocoapods.org). To install
