@@ -45,6 +45,7 @@ public class WhisperView: UIView {
 
     titleLabel.text = message.title
     backgroundColor = message.color
+    titleLabel.textColor = message.textColor
 
     if let images = whisperImages where images.count > 1 {
       complementImageView.animationImages = images
