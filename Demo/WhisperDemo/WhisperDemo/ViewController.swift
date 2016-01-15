@@ -116,7 +116,7 @@ class ViewController: UIViewController {
 
   func presentButtonDidPress(button: UIButton) {
     guard let navigationController = navigationController else { return }
-    let message = Message(title: "This message will silent in 3 seconds.", color: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
+    let message = Message(title: "This message will silent in 3 seconds.", backgroundColor: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
 
     Whisper(message, to: navigationController, action: .Present)
     Silent(navigationController, after: 3)
@@ -125,14 +125,15 @@ class ViewController: UIViewController {
   func showButtonDidPress(button: UIButton) {
     guard let navigationController = navigationController else { return }
 
-    let message = Message(title: "Showing all the things.", color: UIColor.blackColor())
+    let message = Message(title: "Showing all the things.", backgroundColor: UIColor.blackColor())
     Whisper(message, to: navigationController)
   }
 
   func presentPermanentButtonDidPress(button: UIButton) {
     guard let navigationController = navigationController else { return }
 
-    let message = Message(title: "This is a permanent Whisper.", color: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1))
+    let message = Message(title: "This is a permanent Whisper.", textColor: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1),
+      backgroundColor: UIColor(red:1.000, green:0.973, blue:0.733, alpha: 1))
     Whisper(message, to: navigationController, action: .Present)
   }
 
