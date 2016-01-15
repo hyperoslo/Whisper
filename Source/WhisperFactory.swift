@@ -88,7 +88,7 @@ class WhisperFactory: NSObject {
 
   func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
     navigationController = controller
-    
+
     var whisperSubview: WhisperView? = nil
     for subview in navigationController.navigationBar.subviews {
       if let whisper = subview as? WhisperView {
@@ -152,10 +152,11 @@ class WhisperFactory: NSObject {
     hideView()
 
     let title = message.title
-    let color = message.color
+    let textColor = message.textColor
+    let backgroundColor = message.backgroundColor
     let action = action.rawValue
 
-    var array = ["title": title, "color": color, "action": action]
+    var array = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "action": action]
     if let images = message.images { array["images"] = images }
 
     presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.1, target: self,
@@ -185,7 +186,8 @@ class WhisperFactory: NSObject {
   func presentFired(timer: NSTimer) {
     guard let userInfo = timer.userInfo,
       title = userInfo["title"] as? String,
-      color = userInfo["color"] as? UIColor,
+      textColor = userInfo["textColor"] as? UIColor,
+      backgroundColor = userInfo["backgroundColor"] as? UIColor,
       actionString = userInfo["action"] as? String else { return }
 
     var images: [UIImage]? = nil
@@ -193,7 +195,7 @@ class WhisperFactory: NSObject {
     if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
 
     let action = Action(rawValue: actionString)
-    let message = Message(title: title, color: color, images: images)
+    let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images)
 
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
     navigationController.navigationBar.addSubview(whisperView)
