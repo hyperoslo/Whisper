@@ -43,7 +43,7 @@ The usage of the component is so simple, you just create a message in the case o
 ##### For a Whisper:
 
 ```swift
-let message = Message(title: "Enter your message here.", color: UIColor.redColor())
+let message = Message(title: "Enter your message here.", backgroundColor: UIColor.redColor())
 Whisper(message, to: navigationController, action: .Present)
 ```
 
