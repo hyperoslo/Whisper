@@ -30,6 +30,7 @@ class WhisperFactory: NSObject {
   var whisperView: WhisperView!
   var delayTimer = NSTimer()
   var presentTimer = NSTimer()
+  var navigationStackCount = 0
 
   // MARK: - Initializers
 
@@ -216,6 +217,14 @@ class WhisperFactory: NSObject {
 
   func moveControllerViews(down: Bool) {
     guard let visibleController = navigationController.visibleViewController else { return }
+
+    let stackCount = navigationController.viewControllers.count
+
+    if down {
+      navigationStackCount = stackCount
+    } else if navigationStackCount != stackCount {
+      return
+    }
 
     if !(edgeInsetHeight == WhisperView.Dimensions.height && down) {
       edgeInsetHeight = down ? WhisperView.Dimensions.height : -WhisperView.Dimensions.height
