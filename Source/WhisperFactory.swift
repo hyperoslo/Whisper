@@ -216,8 +216,9 @@ class WhisperFactory: NSObject {
   // MARK: - Animations
 
   func moveControllerViews(down: Bool) {
-    guard Config.modifyInset else { return }
-    guard let visibleController = navigationController.visibleViewController else { return }
+    guard let visibleController = navigationController.visibleViewController
+      where Config.modifyInset
+      else { return }
 
     let stackCount = navigationController.viewControllers.count
 
@@ -237,6 +238,8 @@ class WhisperFactory: NSObject {
   }
 
   func performControllerMove(viewController: UIViewController) {
+    guard Config.modifyInset else { return }
+
     if let tableView = viewController.view as? UITableView
       where viewController is UITableViewController {
         tableView.contentInset = UIEdgeInsetsMake(tableView.contentInset.top + edgeInsetHeight, 0, 0, 0)
