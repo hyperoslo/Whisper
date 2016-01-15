@@ -216,7 +216,7 @@ class WhisperFactory: NSObject {
   // MARK: - Animations
 
   func moveControllerViews(down: Bool) {
-    guard Config.move else { return }
+    guard Config.modifyInset else { return }
     guard let visibleController = navigationController.visibleViewController else { return }
 
     let stackCount = navigationController.viewControllers.count
