@@ -3,12 +3,14 @@ import UIKit
 public struct Message {
 
   public var title: String
-  public var color: UIColor
+  public var textColor: UIColor
+  public var backgroundColor: UIColor
   public var images: [UIImage]?
 
-  public init(title: String, color: UIColor = UIColor.lightGrayColor(), images: [UIImage]? = nil) {
+  public init(title: String, textColor: UIColor = UIColor.whiteColor(), backgroundColor: UIColor = UIColor.lightGrayColor(), images: [UIImage]? = nil) {
     self.title = title
-    self.color = color
+    self.textColor = textColor
+    self.backgroundColor = backgroundColor
     self.images = images
   }
 }
