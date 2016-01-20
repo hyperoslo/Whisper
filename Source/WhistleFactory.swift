@@ -73,6 +73,7 @@ public class WhistleFactory: UIViewController {
 
   public func setupFrames() {
     let labelWidth = UIScreen.mainScreen().bounds.width
+    
     if let text = titleLabel.text {
         let neededDimensions =
             NSString(string: text).boundingRectWithSize(
