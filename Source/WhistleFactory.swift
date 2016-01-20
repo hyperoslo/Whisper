@@ -8,11 +8,9 @@ public func Whistle(murmur: Murmur) {
 
 public class WhistleFactory: UIViewController {
 
-  public struct Dimensions {
-    public static let height: CGFloat = 20
-  }
-
   public lazy var whistleWindow: UIWindow = UIWindow()
+    
+    public lazy var titleLabelHeight = CGFloat(20.0)
 
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -74,10 +72,23 @@ public class WhistleFactory: UIViewController {
   }
 
   public func setupFrames() {
-    titleLabel.sizeToFit()
+    let labelWidth = UIScreen.mainScreen().bounds.width
+    if let text = titleLabel.text {
+        let neededDimensions =
+            NSString(string: text).boundingRectWithSize(
+                CGSize(width: labelWidth, height: CGFloat.infinity),
+                options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+                attributes: [NSFontAttributeName: titleLabel.font],
+                context: nil
+            )
+        titleLabelHeight = CGFloat(neededDimensions.size.height)
+        titleLabel.numberOfLines = 0
+    } else {
+        titleLabel.sizeToFit()
+    }
 
-    whistleWindow.frame = CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width,
-      height: Dimensions.height)
+    whistleWindow.frame = CGRect(x: 0, y: 0, width: labelWidth,
+      height: titleLabelHeight)
     view.frame = whistleWindow.bounds
     titleLabel.frame = view.bounds
   }
@@ -88,7 +99,7 @@ public class WhistleFactory: UIViewController {
     hideTimer.invalidate()
 
     let initialOrigin = whistleWindow.frame.origin.y
-    whistleWindow.frame.origin.y = initialOrigin - Dimensions.height
+    whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight
     whistleWindow.makeKeyAndVisible()
     UIView.animateWithDuration(0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
@@ -98,7 +109,7 @@ public class WhistleFactory: UIViewController {
   }
 
   public func hide() {
-    let finalOrigin = view.frame.origin.y - Dimensions.height
+    let finalOrigin = view.frame.origin.y - titleLabelHeight
     UIView.animateWithDuration(0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
