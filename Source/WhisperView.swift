@@ -71,6 +71,10 @@ public class WhisperView: UIView {
       self.setupFrames() 
     }
   }
+  
+  public func calculatedHeight() -> CGFloat {
+    return Dimensions.height
+  }
 }
 
 // MARK: - Layout

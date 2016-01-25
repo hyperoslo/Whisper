@@ -8,6 +8,43 @@ extension UINavigationController {
 }
 
 class ViewController: UIViewController {
+  
+  // MARK: contentInset methods
+  
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  init() {
+    super.init(nibName: nil, bundle: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "whisperWillAppear:", name:WhisperNotifications.willAppearNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "whisperWillDisappear:", name:WhisperNotifications.willDisappearNotification, object: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
+  
+  func whisperWillAppear(notification: NSNotification?) {
+    guard let duration = notification?.userInfo?["duration"] as? NSTimeInterval,
+      whisperView = self.navigationController?.whisper else { return }
+    self.animateInsetChange(duration, height: whisperView.calculatedHeight())
+  }
+  
+  func whisperWillDisappear(notification: NSNotification?) {
+    guard let duration = notification?.userInfo?["duration"] as? NSTimeInterval else {return}
+    self.animateInsetChange(duration, height: 0)
+  }
+  
+  func animateInsetChange(duration: NSTimeInterval, height: CGFloat) {
+    UIView.animateWithDuration(duration, animations: {
+      var inset = self.scrollView.contentInset
+      inset.top = self.topLayoutGuide.length + height
+      self.scrollView.contentInset = inset
+    })
+  }
+  
+  // MARK: UI
 
   lazy var scrollView: UIScrollView = UIScrollView()
 

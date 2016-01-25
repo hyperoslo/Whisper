@@ -5,6 +5,11 @@ public enum Action: String {
   case Show = "Whisper.ShowNotification"
 }
 
+public struct WhisperNotifications {
+  public static let willAppearNotification : String = "WhisperWillAppearNotification"
+  public static let willDisappearNotification : String = "WhisperWillDisappearNotification"
+}
+
 @objc public protocol WhisperHandler {
   var whisper: WhisperView? { get }
   func whisperYPosition() -> CGFloat
@@ -78,6 +83,7 @@ class WhisperFactory: NSObject {
   func showView<T:UIViewController where T:WhisperHandler>(controller: T, completion: ((Bool) -> Void)?) {
     guard let whisperView = controller.whisper else {return}
     
+    NSNotificationCenter.defaultCenter().postNotificationName(WhisperNotifications.willAppearNotification, object: nil, userInfo:["duration": AnimationTiming.movement])
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       whisperView.frame.size.height = WhisperView.Dimensions.height
       for subview in whisperView.transformViews {
@@ -112,6 +118,7 @@ class WhisperFactory: NSObject {
   }
 
   func hideView(whisperView: WhisperView) {
+    NSNotificationCenter.defaultCenter().postNotificationName(WhisperNotifications.willDisappearNotification, object: nil, userInfo:["duration": AnimationTiming.movement])
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
       for subview in whisperView.transformViews {
         subview.frame.origin.y = -10
