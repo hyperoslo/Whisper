@@ -20,7 +20,7 @@ class WhisperTests: XCTestCase {
 
     XCTAssert(app.navigationBars["Whisper".uppercaseString].exists)
     XCTAssert(app.staticTexts["Welcome to the magic of a tiny Whisper... 🍃"].exists)
-    XCTAssertEqual(app.buttons.count, 7)
+    XCTAssertEqual(app.buttons.count, 8)
   }
 
   func testWhisper() {
@@ -28,6 +28,19 @@ class WhisperTests: XCTestCase {
 
     app.buttons["Present and silent"].tap()
     XCTAssert(app.staticTexts["This message will silent in 3 seconds."].exists)
+  
+    let expectation = expectationWithDescription("Test bottom whisper")
+    app.buttons["Present at the bottom and silent"].tap()
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.3 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+      XCTAssert(app.staticTexts["Bottom message that will silent in 3 seconds."].exists)
+      expectation.fulfill()
+    }
+    
+    waitForExpectationsWithTimeout(0.5) { (error) -> Void in
+      if nil != error {
+        XCTFail("Expectation failed with error - \(error)")
+      }
+    }
 
     app.buttons["Show"].tap()
     sleep(1)

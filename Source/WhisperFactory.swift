@@ -5,6 +5,11 @@ public enum Action: String {
   case Show = "Whisper.ShowNotification"
 }
 
+@objc public enum Direction: Int {
+  case Down = 0
+  case Up
+}
+
 public struct WhisperNotifications {
   public static let willAppearNotification : String = "WhisperWillAppearNotification"
   public static let willDisappearNotification : String = "WhisperWillDisappearNotification"
@@ -12,11 +17,15 @@ public struct WhisperNotifications {
 
 @objc public protocol WhisperHandler {
   var whisper: WhisperView? { get }
-  func whisperYPosition() -> CGFloat
+  func whisperYPosition(direction: Direction) -> CGFloat
 }
 
 public func Whisper<T:UIViewController where T:WhisperHandler>(message: Message, to: T, action: Action = .Show) {
-  whisperFactory.craft(message, controller: to, action: action)
+  whisperFactory.craft(message, controller: to, action: action, direction: .Down)
+}
+
+public func Whisper<T:UIViewController where T:WhisperHandler>(message: Message, to: T, action: Action = .Show, direction: Direction) {
+  whisperFactory.craft(message, controller: to, action: action, direction: direction)
 }
 
 public func Silent<T:UIViewController where T:WhisperHandler>(controller: T, after: NSTimeInterval = 0) {
@@ -38,18 +47,18 @@ class WhisperFactory: NSObject {
   var delayTimer = NSTimer()
   var presentTimer = NSTimer()
 
-  func craft<T:UIViewController where T:WhisperHandler>(message: Message, controller: T, action: Action) {
+  func craft<T:UIViewController where T:WhisperHandler>(message: Message, controller: T, action: Action, direction: Direction) {
     presentTimer.invalidate()
 
     if nil != controller.whisper {
-      changeView(message, controller:controller, action: action)
+      changeView(message, controller:controller, action: action, direction: direction)
     } else {
-      presentView(message, controller:controller, action:action)
+      presentView(message, controller:controller, action:action, direction: direction)
     }
   }
   
-  func presentView<T:UIViewController where T:WhisperHandler>(message: Message, controller: T, action: Action) {
-    let whisperView = WhisperView(height: controller.whisperYPosition(), message: message)
+  func presentView<T:UIViewController where T:WhisperHandler>(message: Message, controller: T, action: Action, direction: Direction) {
+    let whisperView = WhisperView(height: controller.whisperYPosition(direction), message: message, direction: direction)
     whisperView.frame.size.height = 0
     
     whisperView.transformViews.forEach {
@@ -57,7 +66,7 @@ class WhisperFactory: NSObject {
       $0.alpha = 0
     }
     
-    whisperView.frame.origin.y = controller.whisperYPosition()
+    whisperView.frame.origin.y = controller.whisperYPosition(direction)
     whisperView.tag = WhisperFactory.whisperTag;
     controller.view.addSubview(whisperView)
     
@@ -85,7 +94,10 @@ class WhisperFactory: NSObject {
     
     NSNotificationCenter.defaultCenter().postNotificationName(WhisperNotifications.willAppearNotification, object: nil, userInfo:["duration": AnimationTiming.movement])
     UIView.animateWithDuration(AnimationTiming.movement, animations: {
-      whisperView.frame.size.height = WhisperView.Dimensions.height
+      whisperView.frame.size.height = whisperView.calculatedHeight()
+      if (whisperView.direction == .Up){
+        whisperView.frame.origin.y = CGRectGetMinY(whisperView.frame) - whisperView.calculatedHeight()
+      }
       for subview in whisperView.transformViews {
         subview.frame.origin.y = 0
 
@@ -98,7 +110,7 @@ class WhisperFactory: NSObject {
       }, completion: completion)
   }
 
-  func changeView<T:UIViewController where T:WhisperHandler>(message: Message, controller:T, action: Action) {
+  func changeView<T:UIViewController where T:WhisperHandler>(message: Message, controller:T, action: Action, direction: Direction) {
     if nil == controller.whisper {return}
     
     presentTimer.invalidate()
@@ -109,8 +121,9 @@ class WhisperFactory: NSObject {
     let textColor = message.textColor
     let backgroundColor = message.backgroundColor
     let action = action.rawValue
+    let dir = direction.rawValue
 
-    var array = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "controller": controller, "action": action]
+    var array = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "controller": controller, "action": action, "direction": dir]
     if let images = message.images { array["images"] = images }
 
     presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.1, target: self,
@@ -125,6 +138,10 @@ class WhisperFactory: NSObject {
         subview.alpha = 0
       }
       whisperView.frame.size.height = 0
+      if (whisperView.direction == .Up){
+        whisperView.frame.origin.y = CGRectGetMinY(whisperView.frame) + whisperView.calculatedHeight()
+        whisperView.isClosing = true
+      }
     }, completion: { _ in
         whisperView.removeFromSuperview()
     })
@@ -145,15 +162,17 @@ class WhisperFactory: NSObject {
       textColor = userInfo["textColor"] as? UIColor,
       backgroundColor = userInfo["backgroundColor"] as? UIColor,
       actionString = userInfo["action"] as? String,
+      directionInt = userInfo["direction"] as? Int,
       controller = userInfo["controller"] as? UIViewController else { return }
 
     var images: [UIImage]? = nil
     if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
 
     let action = Action(rawValue: actionString)
+    let direction = Direction(rawValue: directionInt)
     let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images)
     
-    presentView(message, controller: controller, action: action!)
+    presentView(message, controller: controller, action: action!, direction: direction!)
   }
 }
 
@@ -163,8 +182,12 @@ extension UIViewController : WhisperHandler {
       return view.viewWithTag(WhisperFactory.whisperTag) as? WhisperView
     }
   }
-  public func whisperYPosition() -> CGFloat {
-    return max(CGRectGetMinY(view.bounds), self.topLayoutGuide.length)
+  public func whisperYPosition(direction: Direction) -> CGFloat {
+    if direction == .Down {
+      return max(CGRectGetMinY(view.bounds), self.topLayoutGuide.length)
+    }else{
+      return min(CGRectGetMaxY(view.bounds), self.bottomLayoutGuide.length)
+    }
   }
   
   public override class func initialize() {
@@ -198,10 +221,12 @@ extension UIViewController : WhisperHandler {
   
   public func whisper_viewWillLayoutSubviews() {
     self.whisper_viewWillLayoutSubviews() //Call original method
-    if var frame = self.whisper?.frame {
-      frame.origin.y = self.whisperYPosition()
-      frame.size.width = CGRectGetWidth(view.bounds)
-      self.whisper?.frame = frame
+    guard let whisperView = self.whisper else {return}
+    if (whisperView.direction == .Up && !whisperView.isClosing){
+      whisperView.frame.origin.y = self.whisperYPosition(whisperView.direction) - whisperView.calculatedHeight()
+    }else{
+      whisperView.frame.origin.y = self.whisperYPosition(whisperView.direction)
     }
+    whisperView.frame.size.width = CGRectGetWidth(view.bounds)
   }
 }
