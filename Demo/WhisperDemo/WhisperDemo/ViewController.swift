@@ -1,6 +1,12 @@
 import UIKit
 import Whisper
 
+extension UINavigationController {
+  public override func whisperYPosition() -> CGFloat {
+    return CGRectGetMaxY(self.navigationBar.frame);
+  }
+}
+
 class ViewController: UIViewController {
 
   lazy var scrollView: UIScrollView = UIScrollView()
@@ -100,16 +106,10 @@ class ViewController: UIViewController {
       y: navigationController.navigationBar.frame.maxY - UIApplication.sharedApplication().statusBarFrame.height,
       width: UIScreen.mainScreen().bounds.width, height: 0)
   }
-
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    setupFrames()
-  }
-
-  // MARK: - Orientation changes
-
-  override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-    setupFrames()
+  
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    self.setupFrames()
   }
 
   // MARK: Action methods

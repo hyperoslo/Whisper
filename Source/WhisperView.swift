@@ -58,12 +58,18 @@ public class WhisperView: UIView {
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
-    setupFrames()
     clipsToBounds = true
   }
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    if (CGRectGetHeight(self.bounds) > 0){
+      self.setupFrames() 
+    }
   }
 }
 
