@@ -20,7 +20,7 @@ class WhisperTests: XCTestCase {
 
     XCTAssert(app.navigationBars["Whisper".uppercaseString].exists)
     XCTAssert(app.staticTexts["Welcome to the magic of a tiny Whisper... 🍃"].exists)
-    XCTAssertEqual(app.buttons.count, 6)
+    XCTAssertEqual(app.buttons.count, 7)
   }
 
   func testWhisper() {
