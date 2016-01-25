@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var navigationController: UINavigationController = UINavigationController(rootViewController: ViewController())
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    window = UIWindow()
+    window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
 
