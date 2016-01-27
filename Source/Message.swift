@@ -48,3 +48,20 @@ public struct Murmur {
     self.font = font
   }
 }
+
+public struct Secret {
+  
+  public var title: String
+  public var duration: NSTimeInterval
+  public var textColor: UIColor
+  public var backgroundColor: UIColor
+  
+  
+  public init(title: String, duration: NSTimeInterval = 1.5, textColor: UIColor = ColorList.Disclosure.title, backgroundColor: UIColor = ColorList.Disclosure.background) {
+    
+    self.title = title
+    self.duration = duration
+    self.textColor = textColor
+    self.backgroundColor = backgroundColor
+  }
+}
