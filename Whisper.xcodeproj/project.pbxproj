@@ -14,7 +14,7 @@
 		290531131C20517E00FB382C /* WhisperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310B1C20517E00FB382C /* WhisperFactory.swift */; };
 		290531141C20517E00FB382C /* WhisperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310C1C20517E00FB382C /* WhisperView.swift */; };
 		290531151C20517E00FB382C /* WhistleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310D1C20517E00FB382C /* WhistleFactory.swift */; };
-		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; settings = {ASSET_TAGS = (); }; };
+		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,7 +48,9 @@
 				290531041C20517E00FB382C /* Source */,
 				290530FA1C20511C00FB382C /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		290530FA1C20511C00FB382C /* Products */ = {
 			isa = PBXGroup;
