@@ -73,19 +73,24 @@ public class WhistleFactory: UIViewController {
 
   public func setupFrames() {
     let labelWidth = UIScreen.mainScreen().bounds.width
+    let defaultHeight = titleLabelHeight
     
     if let text = titleLabel.text {
-        let neededDimensions =
-            NSString(string: text).boundingRectWithSize(
-                CGSize(width: labelWidth, height: CGFloat.infinity),
-                options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-                attributes: [NSFontAttributeName: titleLabel.font],
-                context: nil
-            )
-        titleLabelHeight = CGFloat(neededDimensions.size.height)
-        titleLabel.numberOfLines = 0
+      let neededDimensions =
+        NSString(string: text).boundingRectWithSize(
+          CGSize(width: labelWidth, height: CGFloat.infinity),
+          options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+          attributes: [NSFontAttributeName: titleLabel.font],
+          context: nil
+        )
+      titleLabelHeight = CGFloat(neededDimensions.size.height)
+      titleLabel.numberOfLines = 0 // Allows unwrapping
+      
+      if titleLabelHeight < defaultHeight {
+        titleLabelHeight = defaultHeight
+      }
     } else {
-        titleLabel.sizeToFit()
+      titleLabel.sizeToFit()
     }
 
     whistleWindow.frame = CGRect(x: 0, y: 0, width: labelWidth,
