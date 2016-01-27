@@ -12,4 +12,9 @@ public struct FontList {
 
     public static let title = UIFont.systemFontOfSize(12)
   }
+  
+  public struct Disclosure {
+    
+    public static let title = UIFont.boldSystemFontOfSize(14)
+  }
 }

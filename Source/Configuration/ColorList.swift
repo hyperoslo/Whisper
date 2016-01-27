@@ -14,4 +14,10 @@ public struct ColorList {
     public static var background = UIColor.whiteColor()
     public static var title = UIColor.blackColor()
   }
+  
+  public struct Disclosure {
+    
+    public static var background = UIColor.whiteColor()
+    public static var title = UIColor.blackColor()
+  }
 }
