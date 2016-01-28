@@ -11,6 +11,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow()
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
+    
+    // For iOS 8
+    window?.frame = UIScreen.mainScreen().bounds
 
     return true
   }
