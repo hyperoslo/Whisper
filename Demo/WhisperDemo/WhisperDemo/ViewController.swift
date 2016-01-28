@@ -74,6 +74,25 @@ class ViewController: UIViewController {
 
     return button
     }()
+  
+  lazy var disclosureButton: UIButton = { [unowned self] in
+    let button = UIButton()
+    button.addTarget(self, action: "presentDisclosureButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.setTitle("Disclosure", forState: .Normal)
+    
+    return button
+    }()
+  
+  lazy var modalViewButton: UIBarButtonItem = { [unowned self] in
+    let button = UIBarButtonItem()
+    button.title = "Modal view"
+    button.style = .Plain
+    button.target = self
+    button.action = "modalViewButtonDidPress"
+    
+    return button
+    }()
+  
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -81,12 +100,13 @@ class ViewController: UIViewController {
     view.backgroundColor = UIColor.whiteColor()
     title = "Whisper".uppercaseString
     navigationItem.rightBarButtonItem = nextButton
+    navigationItem.leftBarButtonItem = modalViewButton
 
     view.addSubview(scrollView)
     [titleLabel, presentButton, showButton,
-      presentPermanentButton, notificationButton, statusBarButton].forEach { scrollView.addSubview($0) }
+      presentPermanentButton, notificationButton, statusBarButton, disclosureButton].forEach { scrollView.addSubview($0) }
 
-    [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton].forEach {
+    [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton, disclosureButton].forEach {
       $0.setTitleColor(UIColor.grayColor(), forState: .Normal)
       $0.layer.borderColor = UIColor.grayColor().CGColor
       $0.layer.borderWidth = 1.5
@@ -156,6 +176,35 @@ class ViewController: UIViewController {
 
     Whistle(murmur)
   }
+  
+  func presentDisclosureButtonDidPress(button: UIButton) {
+    var secret = Secret(title: "This is a secret revealed!")
+    secret.textColor = view.tintColor
+    
+    // It can also be used self instead of navigationController
+    Disclosure(secret, toViewController: navigationController!, completion: {
+      print("The disclosure was silent")
+    })
+  }
+  
+  func modalViewButtonDidPress() {
+    let modalViewController = ModalViewController()
+    
+    let modelNavigationController = UINavigationController(rootViewController: modalViewController)
+    
+    let tabBarController = UITabBarController()
+    
+    tabBarController.viewControllers = [modelNavigationController]
+    
+    let tabBarItem = tabBarController.tabBar.items![0]
+    tabBarItem.title = "Whisper"
+    
+    if let image =  UIImage(named: "Whisper.png")?.imageWithRenderingMode(.AlwaysOriginal) {
+      tabBarItem.image = image
+    }
+        
+    navigationController?.presentViewController(tabBarController, animated: true, completion: nil)
+  }
 
   // MARK - Configuration
 
@@ -169,8 +218,9 @@ class ViewController: UIViewController {
     presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     statusBarButton.frame = CGRect(x: 50, y: notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    disclosureButton.frame = CGRect(x: 50, y: statusBarButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
 
-    let height = statusBarButton.frame.maxY >= totalSize.height ? statusBarButton.frame.maxY + 35 : totalSize.height
+    let height = disclosureButton.frame.maxY >= totalSize.height ? disclosureButton.frame.maxY + 35 : totalSize.height
     scrollView.contentSize = CGSize(width: totalSize.width, height: height)
   }
 }

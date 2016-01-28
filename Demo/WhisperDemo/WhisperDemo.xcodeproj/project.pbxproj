@@ -14,6 +14,7 @@
 		29AD42A51BBC2BD2004292F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A41BBC2BD2004292F1 /* Assets.xcassets */; };
 		29AD42A81BBC2BD2004292F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A61BBC2BD2004292F1 /* LaunchScreen.storyboard */; };
 		927D368A05BDABD5E87F619D /* Pods_WhisperDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3921969B70815F246AED7F27 /* Pods_WhisperDemo.framework */; };
+		F4F6299E1C5A60F8009D23BA /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6299D1C5A60F8009D23BA /* ModalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +42,7 @@
 		6F0DEAB1F8C735F802579CE1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		955FFF144EC297785D2EF6F9 /* Pods-WhisperDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhisperDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		E7E536866D2D92CA0E048ABC /* Pods-WhisperDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhisperDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo.release.xcconfig"; sourceTree = "<group>"; };
+		F4F6299D1C5A60F8009D23BA /* ModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +91,9 @@
 				029D90BE27CCA78731543D55 /* Frameworks */,
 				C6105C06E05EE7306BB12C3D /* Pods */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		29AD429B1BBC2BD2004292F1 /* Products */ = {
 			isa = PBXGroup;
@@ -109,6 +113,7 @@
 				29AD42A41BBC2BD2004292F1 /* Assets.xcassets */,
 				29AD42A61BBC2BD2004292F1 /* LaunchScreen.storyboard */,
 				29AD42A91BBC2BD2004292F1 /* Info.plist */,
+				F4F6299D1C5A60F8009D23BA /* ModalViewController.swift */,
 			);
 			path = WhisperDemo;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4F6299E1C5A60F8009D23BA /* ModalViewController.swift in Sources */,
 				29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */,
 				2928E6791C3A6B840024FFBD /* TableViewController.swift in Sources */,
 				29AD429E1BBC2BD2004292F1 /* AppDelegate.swift in Sources */,
