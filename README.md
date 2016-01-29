@@ -28,6 +28,12 @@ Let the users know that something happened inside the app with this beautiful cu
 
 This is the smallest of all, a beautiful discretion in your UI.
 
+#### Disclosures
+
+![Disclosure](https://github.com/hyperoslo/Whisper/blob/master/Resources/disclosure.png)
+
+Show a message at the bottom of the screen (it can be above the tab bar) to inform your users that something happened inside the app.
+
 ##### Bonus
 
 All the sounds are fully customizable, from colors to fonts.
@@ -38,7 +44,7 @@ In Whisper, there is no need to think about scroll view insets anymore, this wil
 
 ## Usage
 
-The usage of the component is so simple, you just create a message in the case of Whisper, an announcement in the case of a Shout or a Murmur in the case of a Whistle, it's done like this:
+The usage of the component is so simple, you just create a message in the case of Whisper, an announcement in the case of a Shout, a Murmur in the case of a Whistle or a Secret in the case of a Disclosure, it's done like this:
 
 ##### For a Whisper:
 
@@ -60,6 +66,14 @@ Shout(announcement, to: self)
 let murmur = Murmur(title: "This is a small whistle...")
 Whistle(murmur)
 ```
+
+##### For a Disclosure:
+
+```swift
+let secret = Secret(title: "This is a secret revealed!")
+Disclosure(secret, toViewController: self)
+```
+
 
 If you want to use **Whisper** with Objective-C, you can find information about it [here](https://github.com/hyperoslo/Whisper/wiki/Using-Whisper-in-Objective-C).
 
