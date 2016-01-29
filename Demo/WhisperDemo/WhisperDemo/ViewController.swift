@@ -182,7 +182,7 @@ class ViewController: UIViewController {
     secret.textColor = view.tintColor
     
     // It can also be used self instead of navigationController
-    Disclosure(secret, toViewController: navigationController!, completion: {
+    Disclosure(secret, to: navigationController!, completion: {
       print("The disclosure was silent")
     })
   }

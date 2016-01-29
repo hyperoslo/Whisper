@@ -59,7 +59,7 @@ class ModalViewController: UIViewController {
     secret.textColor = UIColor.whiteColor()
     secret.backgroundColor = UIColor.brownColor()
     
-    Disclosure(secret, toViewController: tabBarController!, completion: {
+    Disclosure(secret, to: tabBarController!, completion: {
       print("The disclosure was silent")
     })
   }
