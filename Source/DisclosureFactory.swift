@@ -2,8 +2,8 @@ import UIKit
 
 let disclosure = DisclosureView()
 
-public func Disclosure(secret: Secret, toViewController viewContoller: UIViewController, completion: (() -> Void)? = {}) {
-  disclosure.craft(secret, toViewController: viewContoller, completion: completion)
+public func Disclosure(secret: Secret, to: UIViewController, completion: (() -> Void)? = {}) {
+  disclosure.craft(secret, toViewController: to, completion: completion)
 }
 
 
