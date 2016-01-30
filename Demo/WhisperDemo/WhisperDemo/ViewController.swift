@@ -9,7 +9,7 @@ class ViewController: UIViewController {
     let label = UILabel()
     label.text = "Welcome to the magic of a tiny Whisper... 🍃"
     label.font = UIFont(name: "HelveticaNeue-Medium", size: 20)!
-    label.textColor = UIColor(red:0.86, green:0.86, blue:0.86, alpha:1)
+    label.textColor = UIColor(red: 0.86, green: 0.86, blue: 0.86, alpha: 1)
     label.textAlignment = .Center
     label.numberOfLines = 0
     label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
@@ -116,7 +116,7 @@ class ViewController: UIViewController {
 
   func presentButtonDidPress(button: UIButton) {
     guard let navigationController = navigationController else { return }
-    let message = Message(title: "This message will silent in 3 seconds.", backgroundColor: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
+    let message = Message(title: "This message will silent in 3 seconds.", backgroundColor: UIColor(red: 0.89, green: 0.09, blue: 0.44, alpha: 1))
 
     Whisper(message, to: navigationController, action: .Present)
     Silent(navigationController, after: 3)
@@ -132,8 +132,8 @@ class ViewController: UIViewController {
   func presentPermanentButtonDidPress(button: UIButton) {
     guard let navigationController = navigationController else { return }
 
-    let message = Message(title: "This is a permanent Whisper.", textColor: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1),
-      backgroundColor: UIColor(red:1.000, green:0.973, blue:0.733, alpha: 1))
+    let message = Message(title: "This is a permanent Whisper.", textColor: UIColor(red: 0.87, green: 0.34, blue: 0.05, alpha: 1),
+      backgroundColor: UIColor(red: 1.000, green: 0.973, blue: 0.733, alpha: 1))
     Whisper(message, to: navigationController, action: .Present)
   }
 
