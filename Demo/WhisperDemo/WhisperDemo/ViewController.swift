@@ -5,7 +5,7 @@ class ViewController: UIViewController {
 
   lazy var scrollView = UIScrollView()
 
-  lazy var titleLabel: UILabel = {
+  lazy var titleLabel: UILabel = { [unowned self] in
     let label = UILabel()
     label.text = "Welcome to the magic of a tiny Whisper... 🍃"
     label.font = UIFont(name: "HelveticaNeue-Medium", size: 20)!
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     return button
     }()
 
-  lazy var containerView: UIView = {
+  lazy var containerView: UIView = { [unowned self] in
     let view = UIView()
     view.backgroundColor = UIColor.grayColor()
 
