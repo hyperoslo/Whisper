@@ -3,7 +3,7 @@ import Whisper
 
 class ViewController: UIViewController {
 
-  lazy var scrollView: UIScrollView = UIScrollView()
+  lazy var scrollView = UIScrollView()
 
   lazy var titleLabel: UILabel = {
     let label = UILabel()
