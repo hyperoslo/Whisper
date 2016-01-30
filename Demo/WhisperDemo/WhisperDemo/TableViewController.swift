@@ -45,9 +45,8 @@ class TableViewController: UITableViewController {
   }
 
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCellWithIdentifier(TableViewController.reusableIdentifier)
-      else { return UITableViewCell() }
-
+    let cell = tableView.dequeueReusableCellWithIdentifier(TableViewController.reusableIdentifier, forIndexPath: indexPath)
+    
     let number = Int(arc4random_uniform(UInt32(colors.count)))
     cell.backgroundColor = colors[number]
     cell.selectionStyle = .None
