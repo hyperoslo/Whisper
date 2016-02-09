@@ -94,7 +94,7 @@ In the future the idea is to keep improving and add some features:
 
 ## Contribute
 
-We would love you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
+We would love for you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
 
 ## License
 
