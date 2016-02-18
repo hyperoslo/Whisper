@@ -65,6 +65,7 @@ public class ShoutView: UIView {
     label.font = FontList.Shout.subtitle
     label.textColor = ColorList.Shout.subtitle
     label.numberOfLines = 0
+    label.lineBreakMode = NSLineBreakMode.ByWordWrapping
     
     return label
   }()
@@ -130,7 +131,7 @@ public class ShoutView: UIView {
     shouldSilent = false
     configureView(announcement)
     shout(to: to)
-    
+
     self.completion = completion
   }
   
@@ -139,10 +140,6 @@ public class ShoutView: UIView {
     imageView.image = announcement.image
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle ?? ""
-    
-    [titleLabel, subtitleLabel].forEach {
-      $0.sizeToFit()
-    }
     
     if imageView.image == nil { Dimensions.textOffset = 18 }
     
@@ -171,14 +168,16 @@ public class ShoutView: UIView {
   
   public func setupFrames() {
     let totalWidth = UIScreen.mainScreen().bounds.width
-    let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
+     let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
+    
+    [titleLabel, subtitleLabel].forEach {
+      $0.frame.size.width = totalWidth - Dimensions.imageSize - (Dimensions.imageOffset * 2)
+      $0.sizeToFit()
+    }
     
     if let text = subtitleLabel.text where text.isEmpty {
       titleLabel.center.y = imageView.center.y - 2.5
     }
-    
-    [titleLabel, subtitleLabel].forEach {
-      $0.frame.size.width = totalWidth - Dimensions.imageSize - (Dimensions.imageOffset * 2) }
     
     if let text = subtitleLabel.text {
       let neededDimensions =
@@ -193,9 +192,6 @@ public class ShoutView: UIView {
     
     let contentHeight = self.titleLabel.frame.height + 2.5 + subtitleLabelHeight
     
-    titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
-    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
-    
     Dimensions.height += subtitleLabelHeight
     
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
@@ -204,6 +200,9 @@ public class ShoutView: UIView {
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
     imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - max(contentHeight, Dimensions.imageSize)) / 2 + offset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
+    
+    titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
+    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
   }
   
   // MARK: - Actions
