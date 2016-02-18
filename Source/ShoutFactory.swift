@@ -175,10 +175,6 @@ public class ShoutView: UIView {
       $0.sizeToFit()
     }
     
-    if let text = subtitleLabel.text where text.isEmpty {
-      titleLabel.center.y = imageView.center.y - 2.5
-    }
-    
     if let text = subtitleLabel.text {
       let neededDimensions =
       NSString(string: text).boundingRectWithSize(
@@ -201,8 +197,13 @@ public class ShoutView: UIView {
     imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - max(contentHeight, Dimensions.imageSize)) / 2 + offset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
     
-    titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
-    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
+    if let text = subtitleLabel.text where text.isEmpty {
+      titleLabel.center.y = imageView.center.y - 2.5
+      titleLabel.frame.origin.x = Dimensions.textOffset
+    } else {
+      titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
+      subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
+    }
   }
   
   // MARK: - Actions
