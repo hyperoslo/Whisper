@@ -122,7 +122,7 @@ public class WhistleFactory: UIViewController {
         if let window = UIApplication.sharedApplication().windows.filter({ $0 != self.whistleWindow }).first {
           window.makeKeyAndVisible()
           self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
-          window.rootViewController!.setNeedsStatusBarAppearanceUpdate()
+          window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
         }
     })
   }
