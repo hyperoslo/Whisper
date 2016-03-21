@@ -1,13 +1,36 @@
 import UIKit
 
-let shout = ShoutView()
-
 public func Shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
-  shout.craft(announcement, to: to, completion: completion)
+  ShoutFactory.newShout(announcement, to: to, completion: completion)
+}
+
+public class ShoutFactory {
+  public static var displaying = false
+  private static var queue = [ShoutView]()
+  
+  public static func newShout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
+    let shout = ShoutView(announcement: announcement, to: to, completion: completion)
+    if self.displaying {
+      self.queue += [shout]
+    }
+    else {
+      self.displaying = true
+      shout.craft(announcement, to: to, completion: completion)
+    }
+  }
+  
+  public static func displayNext() {
+    self.displaying = false
+    if !self.queue.isEmpty {
+      self.displaying = true
+      let not = self.queue[0]
+      not.craft(not.announcement!, to: not.to!, completion: not.completion)
+      self.queue.removeAtIndex(0)
+    }
+  }
 }
 
 public class ShoutView: UIView {
-
   public struct Dimensions {
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
