@@ -142,6 +142,10 @@ public class ShoutView: UIView {
   convenience init(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
     self.init()
 
+    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+
+    panGestureActive = false
+    shouldSilent = false
     self.announcement = announcement
     self.to = to
     self.completion = completion
@@ -154,14 +158,6 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
-
-    panGestureActive = false
-    shouldSilent = false
-    self.to = to
-    self.completion = completion
-    self.announcement = announcement
-
     configureView(announcement)
     shout(to: to)
   }
