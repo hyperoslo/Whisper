@@ -7,7 +7,7 @@ public func Shout(announcement: Announcement, to: UIViewController, completion: 
 public class ShoutFactory {
   public static var displaying = false
   private static var queue = [ShoutView]()
-  
+
   public static func newShout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
     let shout = ShoutView(announcement: announcement, to: to, completion: completion)
     if self.displaying {
@@ -18,7 +18,7 @@ public class ShoutFactory {
       shout.craft(announcement, to: to, completion: completion)
     }
   }
-  
+
   public static func displayNext() {
     self.displaying = false
     if !self.queue.isEmpty {
@@ -47,14 +47,14 @@ public class ShoutView: UIView {
     view.clipsToBounds = true
 
     return view
-    }()
+  }()
 
   public private(set) lazy var gestureContainer: UIView = {
     let view = UIView()
     view.userInteractionEnabled = true
 
     return view
-    }()
+  }()
 
   public private(set) lazy var indicatorView: UIView = {
     let view = UIView()
@@ -63,7 +63,7 @@ public class ShoutView: UIView {
     view.userInteractionEnabled = true
 
     return view
-    }()
+  }()
 
   public private(set) lazy var imageView: UIImageView = {
     let imageView = UIImageView()
@@ -72,7 +72,7 @@ public class ShoutView: UIView {
     imageView.contentMode = .ScaleAspectFill
 
     return imageView
-    }()
+  }()
 
   public private(set) lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -81,7 +81,7 @@ public class ShoutView: UIView {
     label.numberOfLines = 1
 
     return label
-    }()
+  }()
 
   public private(set) lazy var subtitleLabel: UILabel = {
     let label = UILabel()
@@ -90,7 +90,7 @@ public class ShoutView: UIView {
     label.numberOfLines = 1
 
     return label
-    }()
+  }()
 
   public private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
@@ -107,6 +107,7 @@ public class ShoutView: UIView {
     }()
 
   public private(set) var announcement: Announcement?
+  public private(set) var to: UIViewController?
   public private(set) var displayTimer = NSTimer()
   public private(set) var panGestureActive = false
   public private(set) var shouldSilent = false
@@ -138,6 +139,14 @@ public class ShoutView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  convenience init(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
+    self.init()
+
+    self.announcement = announcement
+    self.to = to
+    self.completion = completion
+  }
+
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
@@ -149,18 +158,19 @@ public class ShoutView: UIView {
 
     panGestureActive = false
     shouldSilent = false
+    self.to = to
+    self.completion = completion
+    self.announcement = announcement
+
     configureView(announcement)
     shout(to: to)
-
-    self.completion = completion
   }
 
   public func configureView(announcement: Announcement) {
-    self.announcement = announcement
     imageView.image = announcement.image
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle ?? ""
-    
+
     [titleLabel, subtitleLabel].forEach {
       $0.sizeToFit()
     }
@@ -222,6 +232,7 @@ public class ShoutView: UIView {
         self.displayTimer.invalidate()
         self.removeFromSuperview()
     })
+    ShoutFactory.displayNext()
   }
 
   // MARK: - Timer methods
