@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 
   lazy var presentButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "presentButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(presentButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Present and silent", forState: .Normal)
 
     return button
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
 
   lazy var showButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "showButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(showButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Show", forState: .Normal)
 
     return button
@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
   lazy var presentPermanentButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "presentPermanentButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(presentPermanentButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Present permanent Whisper", forState: .Normal)
 
     return button
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
 
   lazy var notificationButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "presentNotificationDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(presentNotificationDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Notification", forState: .Normal)
 
     return button
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
 
   lazy var statusBarButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: "statusBarButtonDidPress:", forControlEvents: .TouchUpInside)
+    button.addTarget(self, action: #selector(statusBarButtonDidPress(_:)), forControlEvents: .TouchUpInside)
     button.setTitle("Status bar", forState: .Normal)
 
     return button
@@ -70,7 +70,7 @@ class ViewController: UIViewController {
     button.title = "Next"
     button.style = .Plain
     button.target = self
-    button.action = "nextButtonDidPress"
+    button.action = #selector(nextButtonDidPress)
 
     return button
     }()
