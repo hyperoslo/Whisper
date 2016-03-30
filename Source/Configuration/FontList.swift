@@ -10,4 +10,9 @@ public struct FontList {
   public struct Whistle {
     public static var title = UIFont.systemFontOfSize(12)
   }
+    
+  public struct Message {
+      public static var title = UIFont.systemFontOfSize(13)
+  }
+    
 }
