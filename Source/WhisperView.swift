@@ -10,7 +10,7 @@ public class WhisperView: UIView {
     static let height: CGFloat = 24
     static let offsetHeight: CGFloat = height * 2
     static let imageSize: CGFloat = 14
-    static let loaderTitleOffset: CGFloat = 5
+    static let loaderTitleOffset: CGFloat = 10
   }
 
   lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
@@ -74,7 +74,7 @@ extension WhisperView {
   func setupFrames() {
     if whisperImages != nil {
       titleLabel.frame = CGRect(
-        x: (frame.width - titleLabel.frame.width) / 2 + 20,
+        x: (frame.width - titleLabel.frame.width) / 2 + Dimensions.imageSize,
         y: 0,
         width: titleLabel.frame.width,
         height: frame.height)
