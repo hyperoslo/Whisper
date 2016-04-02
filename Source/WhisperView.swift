@@ -18,7 +18,7 @@ public class WhisperView: UIView {
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
-    label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
+    label.frame.size.width = self.bounds.width - 60
 
     return label
     }()
@@ -36,7 +36,7 @@ public class WhisperView: UIView {
 
   // MARK: - Initializers
 
-  init(height: CGFloat, message: Message) {
+  init(height: CGFloat, width: CGFloat, message: Message) {
     self.height = height
     self.whisperImages = message.images
     super.init(frame: CGRectZero)
@@ -54,7 +54,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, height, UIScreen.mainScreen().bounds.width, Dimensions.height)
+    frame = CGRectMake(0, height, width, Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
