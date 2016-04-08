@@ -10,7 +10,7 @@ public class WhisperView: UIView {
     static let height: CGFloat = 24
     static let offsetHeight: CGFloat = height * 2
     static let imageSize: CGFloat = 14
-    static let loaderTitleOffset: CGFloat = 5
+    static let loaderTitleOffset: CGFloat = 10
   }
 
   lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
@@ -18,8 +18,7 @@ public class WhisperView: UIView {
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
-    label.font = UIFont(name: "HelveticaNeue", size: 13)
-    label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
+    label.frame.size.width = self.bounds.width - 60
 
     return label
     }()
@@ -37,13 +36,14 @@ public class WhisperView: UIView {
 
   // MARK: - Initializers
 
-  init(height: CGFloat, message: Message) {
+  init(height: CGFloat, width: CGFloat, message: Message) {
     self.height = height
     self.whisperImages = message.images
     super.init(frame: CGRectZero)
 
     titleLabel.text = message.title
     titleLabel.textColor = message.textColor
+    titleLabel.font = message.font
     backgroundColor = message.backgroundColor
 
     if let images = whisperImages where images.count > 1 {
@@ -54,7 +54,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, height, UIScreen.mainScreen().bounds.width, Dimensions.height)
+    frame = CGRectMake(0, height, width, Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
@@ -74,7 +74,7 @@ extension WhisperView {
   func setupFrames() {
     if whisperImages != nil {
       titleLabel.frame = CGRect(
-        x: (frame.width - titleLabel.frame.width) / 2 + 20,
+        x: (frame.width - titleLabel.frame.width) / 2 + Dimensions.imageSize,
         y: 0,
         width: titleLabel.frame.width,
         height: frame.height)

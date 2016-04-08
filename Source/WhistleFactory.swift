@@ -6,6 +6,10 @@ public func Whistle(murmur: Murmur) {
   whistleFactory.whistler(murmur)
 }
 
+public func Silent(after: NSTimeInterval = 0) {
+  whistleFactory.silentWhistle(after)
+}
+
 public class WhistleFactory: UIViewController {
 
   public lazy var whistleWindow: UIWindow = UIWindow()
@@ -55,6 +59,11 @@ public class WhistleFactory: UIViewController {
     moveWindowToFront()
     setupFrames()
     present(duration: murmur.duration)
+  }
+  
+  func silentWhistle(after: NSTimeInterval) {
+    hideTimer.invalidate()
+    hideTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
   }
 
   // MARK: - Setup
@@ -111,7 +120,9 @@ public class WhistleFactory: UIViewController {
       self.whistleWindow.frame.origin.y = initialOrigin
     })
 
-    hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
+    if duration > 0.0 {
+        hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
+    }
   }
 
   public func hide() {
