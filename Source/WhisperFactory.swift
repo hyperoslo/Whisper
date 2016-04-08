@@ -103,9 +103,16 @@ class WhisperFactory: NSObject {
     }
 
     whisperView = whisperSubview
+    
     delayTimer.invalidate()
-    delayTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self,
-      selector: "delayFired:", userInfo: nil, repeats: false)
+    if after > 0.0 {
+      delayTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self,
+        selector: "delayFired:", userInfo: nil, repeats: false)
+    } else {
+      // Directly hide the view if no delay was requested so that it happens in current runloop. Causes state based issues otherwise when hide and display are called successively.
+      hideView()
+    }
+    
   }
 
   // MARK: - Presentation
