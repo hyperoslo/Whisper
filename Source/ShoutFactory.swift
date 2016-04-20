@@ -151,7 +151,10 @@ public class ShoutView: UIView {
   }
 
   public func shout(to controller: UIViewController) {
-    guard let controller = controller.navigationController else { fatalError("The controller must contain a navigation bar") }
+    guard let controller = controller.navigationController else {
+      assertionFailure("The controller must contain a navigation bar")
+      return
+    }
 
     let width = UIScreen.mainScreen().bounds.width
     controller.view.addSubview(self)
