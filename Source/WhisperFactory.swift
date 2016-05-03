@@ -1,13 +1,13 @@
 import UIKit
 
-public enum Action: String {
+public enum WhisperAction: String {
   case Present = "Whisper.PresentNotification"
   case Show = "Whisper.ShowNotification"
 }
 
 let whisperFactory: WhisperFactory = WhisperFactory()
 
-public func Whisper(message: Message, to: UINavigationController, action: Action = .Show) {
+public func Whisper(message: Message, to: UINavigationController, action: WhisperAction = .Show) {
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 
@@ -43,7 +43,7 @@ class WhisperFactory: NSObject {
     NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
-  func craft(message: Message, navigationController: UINavigationController, action: Action) {
+  func craft(message: Message, navigationController: UINavigationController, action: WhisperAction) {
     self.navigationController = navigationController
     self.navigationController.delegate = self
     presentTimer.invalidate()
@@ -147,7 +147,7 @@ class WhisperFactory: NSObject {
     })
   }
 
-  func changeView(message: Message, action: Action) {
+  func changeView(message: Message, action: WhisperAction) {
     presentTimer.invalidate()
     delayTimer.invalidate()
     hideView()
@@ -195,7 +195,7 @@ class WhisperFactory: NSObject {
 
     if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
 
-    let action = Action(rawValue: actionString)
+    let action = WhisperAction(rawValue: actionString)
     let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images)
 
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
