@@ -1,13 +1,13 @@
 import UIKit
 
-public enum Action: String {
+public enum WhisperAction: String {
   case Present = "Whisper.PresentNotification"
   case Show = "Whisper.ShowNotification"
 }
 
 let whisperFactory: WhisperFactory = WhisperFactory()
 
-public func Whisper(message: Message, to: UINavigationController, action: Action = .Show) {
+public func Whisper(message: Message, to: UINavigationController, action: WhisperAction = .Show) {
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 
@@ -36,14 +36,14 @@ class WhisperFactory: NSObject {
 
   override init() {
     super.init()
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
-  func craft(message: Message, navigationController: UINavigationController, action: Action) {
+  func craft(message: Message, navigationController: UINavigationController, action: WhisperAction) {
     self.navigationController = navigationController
     self.navigationController.delegate = self
     presentTimer.invalidate()
@@ -105,7 +105,7 @@ class WhisperFactory: NSObject {
     whisperView = whisperSubview
     delayTimer.invalidate()
     delayTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self,
-      selector: "delayFired:", userInfo: nil, repeats: false)
+      selector: #selector(WhisperFactory.delayFired(_:)), userInfo: nil, repeats: false)
   }
 
   // MARK: - Presentation
@@ -143,11 +143,11 @@ class WhisperFactory: NSObject {
       }
       }, completion: { _ in
         self.delayTimer = NSTimer.scheduledTimerWithTimeInterval(1.5, target: self,
-          selector: "delayFired:", userInfo: nil, repeats: false)
+          selector: #selector(WhisperFactory.delayFired(_:)), userInfo: nil, repeats: false)
     })
   }
 
-  func changeView(message: Message, action: Action) {
+  func changeView(message: Message, action: WhisperAction) {
     presentTimer.invalidate()
     delayTimer.invalidate()
     hideView()
@@ -161,7 +161,7 @@ class WhisperFactory: NSObject {
     if let images = message.images { array["images"] = images }
 
     presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.1, target: self,
-      selector: "presentFired:", userInfo: array, repeats: false)
+      selector: #selector(WhisperFactory.presentFired(_:)), userInfo: array, repeats: false)
   }
 
   func hideView() {
@@ -195,7 +195,7 @@ class WhisperFactory: NSObject {
 
     if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
 
-    let action = Action(rawValue: actionString)
+    let action = WhisperAction(rawValue: actionString)
     let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images)
 
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
