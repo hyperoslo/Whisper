@@ -168,7 +168,7 @@ class ViewController: UIViewController {
   }
 
   func presentWhistleButtonDidPress(button: UIButton) {
-    let murmur = Murmur(title: "This is a small whistle...",
+    let murmur = Murmur(title: "This is a permanent whistle...",
                         backgroundColor: UIColor.redColor(),
                         titleColor: UIColor.whiteColor())
 
