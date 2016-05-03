@@ -32,7 +32,7 @@ public class WhistleFactory: UIViewController {
     view.clipsToBounds = true
     view.addSubview(titleLabel)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WhistleFactory.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -111,7 +111,7 @@ public class WhistleFactory: UIViewController {
       self.whistleWindow.frame.origin.y = initialOrigin
     })
 
-    hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: "timerDidFire", userInfo: nil, repeats: false)
+    hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: #selector(WhistleFactory.timerDidFire), userInfo: nil, repeats: false)
   }
 
   public func hide() {

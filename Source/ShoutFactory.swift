@@ -71,14 +71,14 @@ public class ShoutView: UIView {
 
   public private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
-    gesture.addTarget(self, action: "handleTapGestureRecognizer")
+    gesture.addTarget(self, action: #selector(ShoutView.handleTapGestureRecognizer))
 
     return gesture
     }()
 
   public private(set) lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
     let gesture = UIPanGestureRecognizer()
-    gesture.addTarget(self, action: "handlePanGestureRecognizer")
+    gesture.addTarget(self, action: #selector(ShoutView.handlePanGestureRecognizer))
 
     return gesture
     }()
@@ -108,7 +108,7 @@ public class ShoutView: UIView {
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "orientationDidChange", name: UIDeviceOrientationDidChangeNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -146,7 +146,7 @@ public class ShoutView: UIView {
 
     displayTimer.invalidate()
     displayTimer = NSTimer.scheduledTimerWithTimeInterval(announcement.duration,
-      target: self, selector: "displayTimerDidFire", userInfo: nil, repeats: false)
+      target: self, selector: #selector(ShoutView.displayTimerDidFire), userInfo: nil, repeats: false)
     setupFrames()
   }
 
