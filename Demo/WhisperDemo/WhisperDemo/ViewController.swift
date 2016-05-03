@@ -50,10 +50,18 @@ class ViewController: UIViewController {
     return button
     }()
 
-  lazy var statusBarButton: UIButton = { [unowned self] in
+  lazy var showWhistleButton: UIButton = { [unowned self] in
     let button = UIButton()
-    button.addTarget(self, action: #selector(statusBarButtonDidPress(_:)), forControlEvents: .TouchUpInside)
-    button.setTitle("Status bar", forState: .Normal)
+    button.addTarget(self, action: #selector(showWhistleButtonDidPress(_:)), forControlEvents: .TouchUpInside)
+    button.setTitle("Show Whistle", forState: .Normal)
+
+    return button
+    }()
+
+  lazy var presentWhistleButton: UIButton = { [unowned self] in
+    let button = UIButton()
+    button.addTarget(self, action: #selector(presentWhistleButtonDidPress(_:)), forControlEvents: .TouchUpInside)
+    button.setTitle("Present permanent Whistle", forState: .Normal)
 
     return button
     }()
@@ -84,13 +92,15 @@ class ViewController: UIViewController {
 
     view.addSubview(scrollView)
     [titleLabel, presentButton, showButton,
-      presentPermanentButton, notificationButton, statusBarButton].forEach { scrollView.addSubview($0) }
+      presentPermanentButton, notificationButton,
+      showWhistleButton, presentWhistleButton].forEach { scrollView.addSubview($0) }
 
-    [presentButton, showButton, presentPermanentButton, notificationButton, statusBarButton].forEach {
-      $0.setTitleColor(UIColor.grayColor(), forState: .Normal)
-      $0.layer.borderColor = UIColor.grayColor().CGColor
-      $0.layer.borderWidth = 1.5
-      $0.layer.cornerRadius = 7.5
+    [presentButton, showButton, presentPermanentButton,
+      notificationButton, showWhistleButton, presentWhistleButton].forEach {
+        $0.setTitleColor(UIColor.grayColor(), forState: .Normal)
+        $0.layer.borderColor = UIColor.grayColor().CGColor
+        $0.layer.borderWidth = 1.5
+        $0.layer.cornerRadius = 7.5
     }
 
     guard let navigationController = navigationController else { return }
@@ -150,11 +160,19 @@ class ViewController: UIViewController {
     navigationController?.pushViewController(controller, animated: true)
   }
 
-  func statusBarButtonDidPress(button: UIButton) {
+  func showWhistleButtonDidPress(button: UIButton) {
     let murmur = Murmur(title: "This is a small whistle...",
       backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
 
     Whistle(murmur)
+  }
+
+  func presentWhistleButtonDidPress(button: UIButton) {
+    let murmur = Murmur(title: "This is a small whistle...",
+                        backgroundColor: UIColor.redColor(),
+                        titleColor: UIColor.whiteColor())
+
+    Whistle(murmur, action: .Present)
   }
 
   // MARK - Configuration
@@ -168,9 +186,10 @@ class ViewController: UIViewController {
     showButton.frame = CGRect(x: 50, y: presentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     presentPermanentButton.frame = CGRect(x: 50, y: showButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
     notificationButton.frame = CGRect(x: 50, y: presentPermanentButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
-    statusBarButton.frame = CGRect(x: 50, y: notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    showWhistleButton.frame = CGRect(x: 50, y: notificationButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
+    presentWhistleButton.frame = CGRect(x: 50, y: showWhistleButton.frame.maxY + 15, width: totalSize.width - 100, height: 50)
 
-    let height = statusBarButton.frame.maxY >= totalSize.height ? statusBarButton.frame.maxY + 35 : totalSize.height
+    let height = presentWhistleButton.frame.maxY >= totalSize.height ? presentWhistleButton.frame.maxY + 35 : totalSize.height
     scrollView.contentSize = CGSize(width: totalSize.width, height: height)
   }
 }
