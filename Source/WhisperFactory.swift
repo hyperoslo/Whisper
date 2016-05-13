@@ -7,11 +7,11 @@ public enum WhisperAction: String {
 
 let whisperFactory: WhisperFactory = WhisperFactory()
 
-public func Whisper(message: Message, to: UINavigationController, action: WhisperAction = .Show) {
+public func whisper(message: Message, to: UINavigationController, action: WhisperAction = .Show) {
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 
-public func Silent(controller: UINavigationController, after: NSTimeInterval = 0) {
+public func silent(controller: UINavigationController, after: NSTimeInterval = 0) {
   whisperFactory.silentWhisper(controller, after: after)
 }
 

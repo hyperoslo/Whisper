@@ -1,9 +1,9 @@
 import UIKit
 
-let shout = ShoutView()
+let shoutView = ShoutView()
 
-public func Shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
-  shout.craft(announcement, to: to, completion: completion)
+public func shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
+  shoutView.craft(announcement, to: to, completion: completion)
 }
 
 public class ShoutView: UIView {

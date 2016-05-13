@@ -7,11 +7,11 @@ public enum WhistleAction {
 
 let whistleFactory = WhistleFactory()
 
-public func Whistle(murmur: Murmur, action: WhistleAction = .Show(1.5)) {
+public func whistle(murmur: Murmur, action: WhistleAction = .Show(1.5)) {
   whistleFactory.whistler(murmur, action: action)
 }
 
-public func Calm(after after: NSTimeInterval = 0) {
+public func calm(after after: NSTimeInterval = 0) {
   whistleFactory.calm(after: after)
 }
 
