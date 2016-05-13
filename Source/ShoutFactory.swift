@@ -55,7 +55,7 @@ public class ShoutView: UIView {
     let label = UILabel()
     label.font = FontList.Shout.title
     label.textColor = ColorList.Shout.title
-    label.numberOfLines = 1
+    label.numberOfLines = 2
 
     return label
     }()
@@ -64,7 +64,7 @@ public class ShoutView: UIView {
     let label = UILabel()
     label.font = FontList.Shout.subtitle
     label.textColor = ColorList.Shout.subtitle
-    label.numberOfLines = 1
+    label.numberOfLines = 2
 
     return label
     }()
@@ -136,17 +136,12 @@ public class ShoutView: UIView {
     self.announcement = announcement
     imageView.image = announcement.image
     titleLabel.text = announcement.title
-    subtitleLabel.text = announcement.subtitle ?? ""
-    
-    [titleLabel, subtitleLabel].forEach {
-      $0.sizeToFit()
-    }
-
-    if imageView.image == nil { Dimensions.textOffset = 18 }
+    subtitleLabel.text = announcement.subtitle
 
     displayTimer.invalidate()
     displayTimer = NSTimer.scheduledTimerWithTimeInterval(announcement.duration,
       target: self, selector: #selector(ShoutView.displayTimerDidFire), userInfo: nil, repeats: false)
+
     setupFrames()
   }
 
@@ -168,22 +163,30 @@ public class ShoutView: UIView {
   public func setupFrames() {
     let totalWidth = UIScreen.mainScreen().bounds.width
     let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
+    let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
+    let imageSize: CGFloat = imageView.image != nil ? Dimensions.imageSize : 0
 
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
     indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
-    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + offset,
-      width: Dimensions.imageSize, height: Dimensions.imageSize)
-    titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
-    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
 
-    if let text = subtitleLabel.text where text.isEmpty {
-      titleLabel.center.y = imageView.center.y - 2.5
-    }
+    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - imageSize) / 2 + offset,
+      width: imageSize, height: imageSize)
 
     [titleLabel, subtitleLabel].forEach {
-      $0.frame.size.width = totalWidth - Dimensions.imageSize - (Dimensions.imageOffset * 2) }
+      $0.frame.size.width = totalWidth - imageSize - (Dimensions.imageOffset * 2)
+      $0.sizeToFit()
+    }
+
+    let textOffsetY = imageView.image != nil ? imageView.frame.origin.x + 3 : textOffsetX
+
+    titleLabel.frame.origin = CGPoint(x: textOffsetX, y: textOffsetY)
+    subtitleLabel.frame.origin = CGPoint(x: textOffsetX, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
+
+    if subtitleLabel.text?.isEmpty ?? true {
+      titleLabel.center.y = imageView.center.y - 2.5
+    }
   }
 
   // MARK: - Actions
