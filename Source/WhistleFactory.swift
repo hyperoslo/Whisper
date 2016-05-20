@@ -8,11 +8,16 @@ public enum WhistleAction {
 let whistleFactory = WhistleFactory()
 
 public func Whistle(murmur: Murmur, action: WhistleAction = .Show(1.5)) {
+  guard !WhistleBlows() else { return }
   whistleFactory.whistler(murmur, action: action)
 }
 
 public func Calm(after after: NSTimeInterval = 0) {
   whistleFactory.calm(after: after)
+}
+
+public func WhistleBlows() -> Bool {
+  return whistleFactory.blows
 }
 
 public class WhistleFactory: UIViewController {
@@ -31,6 +36,7 @@ public class WhistleFactory: UIViewController {
   public var duration: NSTimeInterval = 2
   public var viewController: UIViewController?
   public var hideTimer = NSTimer()
+  public var blows = false
 
   // MARK: - Initializers
 
@@ -123,6 +129,7 @@ public class WhistleFactory: UIViewController {
 
   public func present() {
     hideTimer.invalidate()
+    blows = true
 
     let initialOrigin = whistleWindow.frame.origin.y
     whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight
@@ -137,6 +144,8 @@ public class WhistleFactory: UIViewController {
     UIView.animateWithDuration(0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
+        self.blows = false
+        
         if let window = UIApplication.sharedApplication().windows.filter({ $0 != self.whistleWindow }).first {
           window.makeKeyAndVisible()
           self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
