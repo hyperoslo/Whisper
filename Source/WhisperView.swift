@@ -37,8 +37,8 @@ public class WhisperView: UIView {
 
   // MARK: - Initializers
 
-  init(height: CGFloat, message: Message) {
-    self.height = height
+  init(size: CGSize, message: Message) {
+    self.height = size.height
     self.whisperImages = message.images
     super.init(frame: CGRectZero)
 
@@ -54,7 +54,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, height, UIScreen.mainScreen().bounds.width, Dimensions.height)
+    frame = CGRectMake(0, height, size.width, Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
@@ -65,6 +65,12 @@ public class WhisperView: UIView {
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  public override func layoutSubviews() {
+    super.layoutSubviews()
+    setupFrames()
+  }
+    
 }
 
 // MARK: - Layout
@@ -72,6 +78,7 @@ public class WhisperView: UIView {
 extension WhisperView {
 
   func setupFrames() {
+
     if whisperImages != nil {
       titleLabel.frame = CGRect(
         x: (frame.width - titleLabel.frame.width) / 2 + 20,
@@ -91,5 +98,7 @@ extension WhisperView {
         width: titleLabel.frame.width,
         height: frame.height)
     }
+    guard let superviewWidth = superview?.frame.width else { return }
+    frame.size = CGSize(width: superviewWidth, height: frame.height)
   }
 }
