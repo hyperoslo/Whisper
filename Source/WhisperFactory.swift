@@ -25,7 +25,7 @@ class WhisperFactory: NSObject {
     static let totalDelay: NSTimeInterval = popUp + movement * 2
   }
 
-  var navigationController = UINavigationController()
+  weak var navigationController: UINavigationController?
   var edgeInsetHeight: CGFloat = 0
   var whisperView: WhisperView!
   var delayTimer = NSTimer()
@@ -45,7 +45,7 @@ class WhisperFactory: NSObject {
 
   func craft(message: Message, navigationController: UINavigationController, action: WhisperAction) {
     self.navigationController = navigationController
-    self.navigationController.delegate = self
+    self.navigationController?.delegate = self
     presentTimer.invalidate()
 
     var containsWhisper = false
@@ -88,8 +88,9 @@ class WhisperFactory: NSObject {
   }
 
   func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
-    navigationController = controller
-
+    self.navigationController = controller
+    guard let navigationController = self.navigationController else { return }
+    
     var whisperSubview: WhisperView? = nil
     for subview in navigationController.navigationBar.subviews {
       if let whisper = subview as? WhisperView {
@@ -185,7 +186,8 @@ class WhisperFactory: NSObject {
   }
 
   func presentFired(timer: NSTimer) {
-    guard let userInfo = timer.userInfo,
+    guard let navigationController = self.navigationController,
+      userInfo = timer.userInfo,
       title = userInfo["title"] as? String,
       textColor = userInfo["textColor"] as? UIColor,
       backgroundColor = userInfo["backgroundColor"] as? UIColor,
@@ -216,7 +218,8 @@ class WhisperFactory: NSObject {
   // MARK: - Animations
 
   func moveControllerViews(down: Bool) {
-    guard let visibleController = navigationController.visibleViewController
+    guard let navigationController = self.navigationController,
+        visibleController = navigationController.visibleViewController
       where Config.modifyInset
       else { return }
 
@@ -258,6 +261,7 @@ class WhisperFactory: NSObject {
   // MARK: - Handling screen orientation
 
   func orientationDidChange() {
+    guard let navigationController = self.navigationController else { return }
     for subview in navigationController.navigationBar.subviews {
       guard let whisper = subview as? WhisperView else { continue }
 
