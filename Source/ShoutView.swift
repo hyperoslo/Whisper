@@ -8,9 +8,11 @@
 
 import UIKit
 
+protocol ShoutViewDelegate:class{
+    func shoutViewDidHide(shoutView:ShoutView)
+}
+
 public class ShoutView: UIView {
-    
-    
     public struct Dimensions {
         public static let indicatorHeight: CGFloat = 6
         public static let indicatorWidth: CGFloat = 50
@@ -74,14 +76,14 @@ public class ShoutView: UIView {
     
     public private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
         let gesture = UITapGestureRecognizer()
-        gesture.addTarget(self, action: #selector(ShoutView.handleTapGestureRecognizer))
+        gesture.addTarget(self, action: #selector(self.handleTapGestureRecognizer))
         
         return gesture
         }()
     
     public private(set) lazy var panGestureRecognizer: UIPanGestureRecognizer = { [unowned self] in
         let gesture = UIPanGestureRecognizer()
-        gesture.addTarget(self, action: #selector(ShoutView.handlePanGestureRecognizer))
+        gesture.addTarget(self, action: #selector(self.handlePanGestureRecognizer))
         
         return gesture
         }()
@@ -91,6 +93,9 @@ public class ShoutView: UIView {
     public private(set) var panGestureActive = false
     public private(set) var shouldSilent = false
     public private(set) var completion: (() -> ())?
+    
+    
+    weak var delegate:ShoutViewDelegate?
     
     // MARK: - Initializers
     
@@ -110,28 +115,36 @@ public class ShoutView: UIView {
         
         addGestureRecognizer(tapGestureRecognizer)
         gestureContainer.addGestureRecognizer(panGestureRecognizer)
+        
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    // MARK: - Configuration
-    
-    public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
+    convenience init(announcement: Announcement, completion: (() -> ())? = {}) {
+        self.init()
+        
         Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
         
         panGestureActive = false
         shouldSilent = false
-        configureView(announcement)
-        shout(to: to)
-        
+        self.announcement = announcement
         self.completion = completion
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+    }
+    
+    // MARK: - Configuration
+    
+    public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
+        configureView(announcement)
+        shout(to: to)
+    }
+    
     public func configureView(announcement: Announcement) {
-        self.announcement = announcement
         imageView.image = announcement.image
         titleLabel.text = announcement.title
         subtitleLabel.text = announcement.subtitle ?? ""
@@ -144,7 +157,7 @@ public class ShoutView: UIView {
         
         displayTimer.invalidate()
         displayTimer = NSTimer.scheduledTimerWithTimeInterval(announcement.duration,
-                                                              target: self, selector: #selector(ShoutView.displayTimerDidFire), userInfo: nil, repeats: false)
+                                                              target: self, selector: #selector(self.displayTimerDidFire), userInfo: nil, repeats: false)
         setupFrames()
     }
     
@@ -194,7 +207,10 @@ public class ShoutView: UIView {
             }, completion: { finished in
                 self.completion?()
                 self.displayTimer.invalidate()
+                self.removeFromSuperview()
+                self.delegate?.shoutViewDidHide(self)
         })
+        
     }
     
     // MARK: - Timer methods
@@ -232,7 +248,9 @@ public class ShoutView: UIView {
             duration = 0.2
             UIView.animateWithDuration(duration, animations: {
                 self.frame.size.height = height
-                }, completion: { _ in if translation.y < -5 { self.completion?(); self.removeFromSuperview() }})
+                }, completion: { _ in if translation.y < -5 {
+                    self.silent()
+                    }})
         }
         
         UIView.animateWithDuration(duration, animations: {
@@ -240,12 +258,5 @@ public class ShoutView: UIView {
             self.gestureContainer.frame.origin.y = self.frame.height - 20
             self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
         })
-    }
-    
-    
-    // MARK: - Handling screen orientation
-    
-    func orientationDidChange() {
-        setupFrames()
     }
 }

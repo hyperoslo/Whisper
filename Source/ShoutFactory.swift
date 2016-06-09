@@ -3,14 +3,16 @@ import UIKit
 let shoutFactory = ShoutFactory()
 
 public func Shout(announcement: Announcement, completion: (() -> ())? = {}) {
-    shoutFactory.shout(announcement, completion: completion)
+    shoutFactory.addShout(announcement, completion: completion)
 }
 
 
-public class ShoutFactory:UIViewController{
+public class ShoutFactory:UIViewController, ShoutViewDelegate{
+    
+    private var queue:[ShoutView] = []
+    private var displaying:Bool = false
     
     public lazy var shoutWindow: UIWindow = UIWindow()
-    let shout = ShoutView()
     
     // MARK: - Initializers
     
@@ -20,7 +22,6 @@ public class ShoutFactory:UIViewController{
         setupWindow()
         view.clipsToBounds = true
 
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
     
@@ -30,6 +31,34 @@ public class ShoutFactory:UIViewController{
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+    }
+    
+    
+    func addShout(announcement:Announcement, completion: (() -> ())? = {}){
+        let shout = ShoutView(announcement: announcement, completion: completion)
+        shout.delegate = self
+        self.queue.append(shout)
+        if !displaying{
+            moveWindowToFront()
+            self.displaying = true
+            self.displayNext()
+        }
+    }
+    
+    func displayNext(){
+        if let shout = queue.first{
+            shout.craft(shout.announcement!, to: self, completion: shout.completion)
+            setupFrames()
+            queue.removeFirst()
+        }
+        else{
+            if let window = UIApplication.sharedApplication().windows.filter({ $0 != self.shoutWindow}).first {
+                window.makeKeyAndVisible()
+                self.shoutWindow.windowLevel = UIWindowLevelNormal - 1
+                window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
+            }
+            self.displaying = false
+        }
     }
     
     // MARK: - Setup
@@ -48,32 +77,29 @@ public class ShoutFactory:UIViewController{
         shoutWindow.makeKeyAndVisible()
     }
     
-    func shout(announcement:Announcement, completion: (() -> ())? = {}){
-        shout.craft(announcement, to: self){
-            completion?()
-            if let window = UIApplication.sharedApplication().windows.filter({ $0 != self.shoutWindow}).first {
-                window.makeKeyAndVisible()
-                self.shoutWindow.windowLevel = UIWindowLevelNormal - 1
-                window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
-            }
-        }
-        moveWindowToFront()
-        setupFrames()
-    }
+    
     
     public func setupFrames() {
-        shout.setupFrames()
-        shoutWindow.frame = shout.bounds
-        view.frame = shoutWindow.bounds
+        if let shout = queue.first{
+            shout.setupFrames()
+            shoutWindow.frame = shout.bounds
+            view.frame = shoutWindow.bounds
+            print(self.view.bounds)
+        }
     }
 
 
     func orientationDidChange() {
         if shoutWindow.keyWindow {
             setupFrames()
-            shout.silent()
+            if let shout = queue.first{
+                shout.silent()
+            }
         }
     }
     
-
+    // MARK: - ShoutViewDelegate
+    func shoutViewDidHide(shoutView:ShoutView){
+        self.displayNext()
+    }
 }
