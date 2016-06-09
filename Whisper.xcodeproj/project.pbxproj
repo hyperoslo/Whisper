@@ -14,7 +14,8 @@
 		290531131C20517E00FB382C /* WhisperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310B1C20517E00FB382C /* WhisperFactory.swift */; };
 		290531141C20517E00FB382C /* WhisperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310C1C20517E00FB382C /* WhisperView.swift */; };
 		290531151C20517E00FB382C /* WhistleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310D1C20517E00FB382C /* WhistleFactory.swift */; };
-		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; settings = {ASSET_TAGS = (); }; };
+		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; };
+		F445079B1D09F69600D45D5C /* ShoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F445079A1D09F69600D45D5C /* ShoutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		2905310D1C20517E00FB382C /* WhistleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhistleFactory.swift; sourceTree = "<group>"; };
 		290531171C2051F400FB382C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5170D631C4955F3006F2F37 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		F445079A1D09F69600D45D5C /* ShoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoutView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				290531061C20517E00FB382C /* Configuration */,
 				290531091C20517E00FB382C /* Message.swift */,
 				2905310A1C20517E00FB382C /* ShoutFactory.swift */,
+				F445079A1D09F69600D45D5C /* ShoutView.swift */,
 				2905310B1C20517E00FB382C /* WhisperFactory.swift */,
 				2905310C1C20517E00FB382C /* WhisperView.swift */,
 				2905310D1C20517E00FB382C /* WhistleFactory.swift */,
@@ -126,7 +129,7 @@
 		290530F01C20511C00FB382C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
@@ -141,6 +144,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 290530EF1C20511C00FB382C;
 			productRefGroup = 290530FA1C20511C00FB382C /* Products */;
@@ -172,6 +176,7 @@
 				290531151C20517E00FB382C /* WhistleFactory.swift in Sources */,
 				290531111C20517E00FB382C /* Message.swift in Sources */,
 				290531131C20517E00FB382C /* WhisperFactory.swift in Sources */,
+				F445079B1D09F69600D45D5C /* ShoutView.swift in Sources */,
 				D5170D641C4955F3006F2F37 /* Config.swift in Sources */,
 				290531101C20517E00FB382C /* FontList.swift in Sources */,
 				2905310F1C20517E00FB382C /* ColorList.swift in Sources */,
