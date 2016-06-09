@@ -84,7 +84,6 @@ public class ShoutFactory:UIViewController, ShoutViewDelegate{
             shout.setupFrames()
             shoutWindow.frame = shout.bounds
             view.frame = shoutWindow.bounds
-            print(self.view.bounds)
         }
     }
 
