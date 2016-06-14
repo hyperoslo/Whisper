@@ -2,8 +2,8 @@ import UIKit
 
 let shout = ShoutView()
 
-public func Shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
-  shout.craft(announcement, to: to, completion: completion)
+public func Shout(_ announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
+  shout.craft(announcement: announcement, to: to, completion: completion)
 }
 
 public class ShoutView: UIView {
@@ -13,7 +13,7 @@ public class ShoutView: UIView {
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
-    public static var height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+    public static var height: CGFloat = UIApplication.shared().isStatusBarHidden ? 70 : 80
     public static var textOffset: CGFloat = 75
   }
 
@@ -28,7 +28,7 @@ public class ShoutView: UIView {
 
   public private(set) lazy var gestureContainer: UIView = {
     let view = UIView()
-    view.userInteractionEnabled = true
+    view.isUserInteractionEnabled = true
 
     return view
     }()
@@ -37,7 +37,7 @@ public class ShoutView: UIView {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.dragIndicator
     view.layer.cornerRadius = Dimensions.indicatorHeight / 2
-    view.userInteractionEnabled = true
+    view.isUserInteractionEnabled = true
 
     return view
     }()
@@ -46,7 +46,7 @@ public class ShoutView: UIView {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = Dimensions.imageSize / 2
     imageView.clipsToBounds = true
-    imageView.contentMode = .ScaleAspectFill
+    imageView.contentMode = .scaleAspectFill
 
     return imageView
     }()
@@ -84,7 +84,7 @@ public class ShoutView: UIView {
     }()
 
   public private(set) var announcement: Announcement?
-  public private(set) var displayTimer = NSTimer()
+  public private(set) var displayTimer = Timer()
   public private(set) var panGestureActive = false
   public private(set) var shouldSilent = false
   public private(set) var completion: (() -> ())?
@@ -99,8 +99,8 @@ public class ShoutView: UIView {
       backgroundView.addSubview($0) }
 
     clipsToBounds = false
-    userInteractionEnabled = true
-    layer.shadowColor = UIColor.blackColor().CGColor
+    isUserInteractionEnabled = true
+    layer.shadowColor = UIColor.black().cgColor
     layer.shadowOffset = CGSize(width: 0, height: 0.5)
     layer.shadowOpacity = 0.1
     layer.shadowRadius = 0.5
@@ -108,7 +108,7 @@ public class ShoutView: UIView {
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
 
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
+    NotificationCenter.default().addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -116,17 +116,17 @@ public class ShoutView: UIView {
   }
 
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+    NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
   }
 
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+    Dimensions.height = UIApplication.shared().isStatusBarHidden ? 70 : 80
 
     panGestureActive = false
     shouldSilent = false
-    configureView(announcement)
+    configureView(announcement: announcement)
     shout(to: to)
 
     self.completion = completion
@@ -145,7 +145,7 @@ public class ShoutView: UIView {
     if imageView.image == nil { Dimensions.textOffset = 18 }
 
     displayTimer.invalidate()
-    displayTimer = NSTimer.scheduledTimerWithTimeInterval(announcement.duration,
+    displayTimer = Timer.scheduledTimer(timeInterval: announcement.duration,
       target: self, selector: #selector(ShoutView.displayTimerDidFire), userInfo: nil, repeats: false)
     setupFrames()
   }
@@ -156,13 +156,13 @@ public class ShoutView: UIView {
       return
     }
 
-    let width = UIScreen.mainScreen().bounds.width
+    let width = UIScreen.main().bounds.width
     controller.view.addSubview(self)
 
     frame = CGRect(x: 0, y: 0, width: width, height: 0)
     backgroundView.frame = CGRect(x: 0, y: 0, width: width, height: 0)
 
-    UIView.animateWithDuration(0.35, animations: {
+    UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = Dimensions.height
       self.backgroundView.frame.size.height = self.frame.height
     })
@@ -171,8 +171,8 @@ public class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
-    let totalWidth = UIScreen.mainScreen().bounds.width
-    let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
+    let totalWidth = UIScreen.main().bounds.width
+    let offset: CGFloat = UIApplication.shared().isStatusBarHidden ? 2.5 : 5
 
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
@@ -181,7 +181,7 @@ public class ShoutView: UIView {
     imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - Dimensions.imageSize) / 2 + offset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
     titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
-    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
+    subtitleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: titleLabel.frame.maxY + 2.5)
 
     if let text = subtitleLabel.text where text.isEmpty {
       titleLabel.center.y = imageView.center.y - 2.5
@@ -194,7 +194,7 @@ public class ShoutView: UIView {
   // MARK: - Actions
 
   public func silent() {
-    UIView.animateWithDuration(0.35, animations: {
+    UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = 0
       self.backgroundView.frame.size.height = self.frame.height
       }, completion: { finished in
@@ -222,10 +222,10 @@ public class ShoutView: UIView {
   }
 
   @objc private func handlePanGestureRecognizer() {
-    let translation = panGestureRecognizer.translationInView(self)
-    var duration: NSTimeInterval = 0
+    let translation = panGestureRecognizer.translation(in: self)
+    var duration: TimeInterval = 0
 
-    if panGestureRecognizer.state == .Changed || panGestureRecognizer.state == .Began {
+    if panGestureRecognizer.state == .changed || panGestureRecognizer.state == .began {
       panGestureActive = true
       if translation.y >= 12 {
         frame.size.height = Dimensions.height + 12 + (translation.y) / 25
@@ -237,12 +237,12 @@ public class ShoutView: UIView {
       let height = translation.y < -5 || shouldSilent ? 0 : Dimensions.height
 
       duration = 0.2
-      UIView.animateWithDuration(duration, animations: {
+      UIView.animate(withDuration: duration, animations: {
         self.frame.size.height = height
         }, completion: { _ in if translation.y < -5 { self.completion?(); self.removeFromSuperview() }})
     }
 
-    UIView.animateWithDuration(duration, animations: {
+    UIView.animate(withDuration: duration, animations: {
       self.backgroundView.frame.size.height = self.frame.height
       self.gestureContainer.frame.origin.y = self.frame.height - 20
       self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
