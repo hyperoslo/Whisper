@@ -17,16 +17,16 @@ public class WhisperView: UIView {
 
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.textAlignment = .Center
+    label.textAlignment = .center
     label.font = UIFont(name: "HelveticaNeue", size: 13)
-    label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
+    label.frame.size.width = UIScreen.main().bounds.width - 60
 
     return label
     }()
 
   lazy var complementImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
+    imageView.contentMode = .scaleAspectFill
 
     return imageView
     }()
@@ -40,7 +40,7 @@ public class WhisperView: UIView {
   init(height: CGFloat, message: Message) {
     self.height = height
     self.whisperImages = message.images
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
 
     titleLabel.text = message.title
     titleLabel.textColor = message.textColor
@@ -54,7 +54,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, height, UIScreen.mainScreen().bounds.width, Dimensions.height)
+    frame = CGRect(x: 0, y: height, width: UIScreen.main().bounds.width, height: Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()

@@ -17,14 +17,14 @@ class TableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white()
 
-    tableView.registerClass(UITableViewCell.self,
+    tableView.register(UITableViewCell.self,
       forCellReuseIdentifier: TableViewController.reusableIdentifier)
-    tableView.separatorStyle = .None
+    tableView.separatorStyle = .none
   }
 
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
     guard let navigationController = navigationController else { return }
@@ -36,21 +36,21 @@ class TableViewController: UITableViewController {
 
   // MARK: - TableView methods
 
-  override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 150
   }
 
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 50
   }
 
-  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCellWithIdentifier(TableViewController.reusableIdentifier)
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewController.reusableIdentifier)
       else { return UITableViewCell() }
 
     let number = Int(arc4random_uniform(UInt32(colors.count)))
     cell.backgroundColor = colors[number]
-    cell.selectionStyle = .None
+    cell.selectionStyle = .none
 
     return cell
   }
