@@ -108,7 +108,7 @@ public class ShoutView: UIView {
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
 
-    NotificationCenter.default().addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -116,7 +116,7 @@ public class ShoutView: UIView {
   }
 
   deinit {
-    NotificationCenter.default().removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
   }
 
   // MARK: - Configuration
