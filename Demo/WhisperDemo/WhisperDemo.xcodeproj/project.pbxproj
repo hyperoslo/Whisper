@@ -147,12 +147,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29AD42AC1BBC2BD2004292F1 /* Build configuration list for PBXNativeTarget "WhisperDemo" */;
 			buildPhases = (
-				7C2AD771C3E0C8D8C952C8C1 /* 📦 Check Pods Manifest.lock */,
+				7C2AD771C3E0C8D8C952C8C1 /* [CP] Check Pods Manifest.lock */,
 				29AD42961BBC2BD2004292F1 /* Sources */,
 				29AD42971BBC2BD2004292F1 /* Frameworks */,
 				29AD42981BBC2BD2004292F1 /* Resources */,
-				386529A60BE25BE05191D829 /* 📦 Embed Pods Frameworks */,
-				BCC353EC93296D0E781E45A8 /* 📦 Copy Pods Resources */,
+				386529A60BE25BE05191D829 /* [CP] Embed Pods Frameworks */,
+				BCC353EC93296D0E781E45A8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,15 +170,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Ramon Gilabert Llop";
 				TargetAttributes = {
 					290531351C206A3800FB382C = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 29AD42991BBC2BD2004292F1;
 					};
 					29AD42991BBC2BD2004292F1 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -221,14 +223,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		386529A60BE25BE05191D829 /* 📦 Embed Pods Frameworks */ = {
+		386529A60BE25BE05191D829 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,14 +238,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7C2AD771C3E0C8D8C952C8C1 /* 📦 Check Pods Manifest.lock */ = {
+		7C2AD771C3E0C8D8C952C8C1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,14 +253,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BCC353EC93296D0E781E45A8 /* 📦 Copy Pods Resources */ = {
+		BCC353EC93296D0E781E45A8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,6 +319,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = WhisperDemo;
 				USES_XCTRUNNER = YES;
 			};
@@ -330,6 +333,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = WhisperDemo;
 				USES_XCTRUNNER = YES;
 			};
@@ -422,11 +427,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 955FFF144EC297785D2EF6F9 /* Pods-WhisperDemo.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WhisperDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RamonGilabert.WhisperDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -434,11 +441,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E7E536866D2D92CA0E048ABC /* Pods-WhisperDemo.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WhisperDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = RamonGilabert.WhisperDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
