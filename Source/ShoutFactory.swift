@@ -13,7 +13,7 @@ public class ShoutView: UIView {
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
-    public static var height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+    public static var height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 50 : 60
     public static var textOffset: CGFloat = 75
   }
 
@@ -122,7 +122,7 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 50 : 60
 
     panGestureActive = false
     shouldSilent = false
@@ -166,6 +166,13 @@ public class ShoutView: UIView {
     let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
     let imageSize: CGFloat = imageView.image != nil ? Dimensions.imageSize : 0
 
+    [titleLabel, subtitleLabel].forEach {
+        $0.frame.size.width = totalWidth - imageSize - (Dimensions.imageOffset * 2)
+        $0.sizeToFit()
+    }
+
+    Dimensions.height += subtitleLabel.frame.height
+
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
     gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
     indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
@@ -174,12 +181,7 @@ public class ShoutView: UIView {
     imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - imageSize) / 2 + offset,
       width: imageSize, height: imageSize)
 
-    [titleLabel, subtitleLabel].forEach {
-      $0.frame.size.width = totalWidth - imageSize - (Dimensions.imageOffset * 2)
-      $0.sizeToFit()
-    }
-
-    let textOffsetY = imageView.image != nil ? imageView.frame.origin.x + 3 : textOffsetX
+    let textOffsetY = imageView.image != nil ? imageView.frame.origin.x + 3 : textOffsetX + 5
 
     titleLabel.frame.origin = CGPoint(x: textOffsetX, y: textOffsetY)
     subtitleLabel.frame.origin = CGPoint(x: textOffsetX, y: CGRectGetMaxY(titleLabel.frame) + 2.5)
