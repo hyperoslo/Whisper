@@ -73,17 +73,18 @@ extension WhisperView {
 
   func setupFrames() {
     if whisperImages != nil {
-      titleLabel.frame = CGRect(
-        x: (frame.width - titleLabel.frame.width) / 2 + 20,
-        y: 0,
-        width: titleLabel.frame.width,
-        height: frame.height)
-
+      let sumSize = titleLabel.frame.width + Dimensions.imageSize + Dimensions.loaderTitleOffset
       complementImageView.frame = CGRect(
-        x: titleLabel.frame.origin.x - Dimensions.imageSize - Dimensions.loaderTitleOffset,
+        x: (frame.width - sumSize) / 2,
         y: (Dimensions.height - Dimensions.imageSize) / 2,
         width: Dimensions.imageSize,
         height: Dimensions.imageSize)
+        
+      titleLabel.frame = CGRect(
+        x: complementImageView.frame.origin.x + Dimensions.imageSize + Dimensions.loaderTitleOffset,
+        y: 0,
+        width: titleLabel.frame.width,
+        height: frame.height)
     } else {
       titleLabel.frame = CGRect(
         x: (frame.width - titleLabel.frame.width) / 2,
