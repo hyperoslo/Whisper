@@ -128,15 +128,15 @@ class ViewController: UIViewController {
     guard let navigationController = navigationController else { return }
     let message = Message(title: "This message will silent in 3 seconds.", backgroundColor: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
 
-    whisper(message, to: navigationController, action: .Present)
-    silent(navigationController, after: 3)
+    show(whisper: message, to: navigationController, action: .Present)
+    hide(whisper: navigationController, after: 3)
   }
 
   func showButtonDidPress(button: UIButton) {
     guard let navigationController = navigationController else { return }
 
     let message = Message(title: "Showing all the things.", backgroundColor: UIColor.blackColor())
-    whisper(message, to: navigationController)
+    show(whisper: message, to: navigationController)
   }
 
   func presentPermanentButtonDidPress(button: UIButton) {
@@ -144,14 +144,14 @@ class ViewController: UIViewController {
 
     let message = Message(title: "This is a permanent Whisper.", textColor: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1),
       backgroundColor: UIColor(red:1.000, green:0.973, blue:0.733, alpha: 1))
-    whisper(message, to: navigationController, action: .Present)
+    show(whisper: message, to: navigationController, action: .Present)
   }
 
   func presentNotificationDidPress(button: UIButton) {
     let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
 
     if let navigationController = navigationController {
-      shout(announcement, to: navigationController, completion: {
+      show(shout: announcement, to: navigationController, completion: {
         print("The shout was silent.")
       })
     }
@@ -166,7 +166,7 @@ class ViewController: UIViewController {
     let murmur = Murmur(title: "This is a small whistle...",
       backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
 
-    whistle(murmur)
+    show(whistle: murmur)
   }
 
   func presentWhistleButtonDidPress(button: UIButton) {
@@ -174,7 +174,7 @@ class ViewController: UIViewController {
                         backgroundColor: UIColor.redColor(),
                         titleColor: UIColor.whiteColor())
 
-    whistle(murmur, action: .Present)
+    show(whistle: murmur, action: .Present)
   }
 
   // MARK - Configuration
