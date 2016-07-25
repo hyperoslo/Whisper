@@ -7,14 +7,6 @@ public enum WhistleAction {
 
 let whistleFactory = WhistleFactory()
 
-public func whistle(murmur: Murmur, action: WhistleAction = .Show(1.5)) {
-  whistleFactory.whistler(murmur, action: action)
-}
-
-public func calm(after after: NSTimeInterval = 0) {
-  whistleFactory.calm(after: after)
-}
-
 public class WhistleFactory: UIViewController {
 
   public lazy var whistleWindow: UIWindow = UIWindow()

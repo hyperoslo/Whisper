@@ -2,10 +2,6 @@ import UIKit
 
 let shoutView = ShoutView()
 
-public func shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
-  shoutView.craft(announcement, to: to, completion: completion)
-}
-
 public class ShoutView: UIView {
 
   public struct Dimensions {
