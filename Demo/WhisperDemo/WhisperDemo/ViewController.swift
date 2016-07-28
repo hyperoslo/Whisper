@@ -129,7 +129,7 @@ class ViewController: UIViewController {
     let message = Message(title: "This message will silent in 3 seconds.", backgroundColor: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
 
     show(whisper: message, to: navigationController, action: .Present)
-    hide(whisper: navigationController, after: 3)
+    hide(whisperFrom: navigationController, after: 3)
   }
 
   func showButtonDidPress(button: UIButton) {

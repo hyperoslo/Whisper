@@ -4,7 +4,7 @@ public func show(whisper message: Message, to: UINavigationController, action: W
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 
-public func hide(whisper from: UINavigationController, after: NSTimeInterval = 0) {
+public func hide(whisperFrom from: UINavigationController, after: NSTimeInterval = 0) {
   whisperFactory.silentWhisper(from, after: after)
 }
 
@@ -16,6 +16,6 @@ public func show(whistle murmur: Murmur, action: WhistleAction = .Present) {
   whistleFactory.whistler(murmur, action: action)
 }
 
-public func hide(whistle after: NSTimeInterval = 0) {
+public func hide(whistleAfter after: NSTimeInterval = 0) {
   whistleFactory.calm(after: after)
 }
