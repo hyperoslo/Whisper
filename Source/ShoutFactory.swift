@@ -3,10 +3,10 @@ import UIKit
 let shoutView = ShoutView()
 
 public func Shout(announcement: Announcement, titleColor: UIColor, subtitleColor: UIColor, backgroundViewColor: UIColor, to: UIViewController, completion: (() -> ())? = {}) {
-  shout.craft(announcement, to: to, completion: completion)
-  shout.backgroundView.backgroundColor = backgroundViewColor
-  shout.titleLabel.textColor = titleColor
-  shout.subtitleLabel.textColor = subtitleColor
+  shoutView.craft(announcement, to: to, completion: completion)
+  shoutView.backgroundView.backgroundColor = backgroundViewColor
+  shoutView.titleLabel.textColor = titleColor
+  shoutView.subtitleLabel.textColor = subtitleColor
 }
 
 public class ShoutView: UIView {
