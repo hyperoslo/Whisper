@@ -13,7 +13,7 @@ public class ShoutView: UIView {
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
-    public static var height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 50 : 60
+    public static var height: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 55 : 65
     public static var textOffset: CGFloat = 75
   }
 
@@ -122,8 +122,8 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 50 : 60
-
+    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 55 : 65
+    
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
@@ -174,7 +174,7 @@ public class ShoutView: UIView {
     Dimensions.height += subtitleLabel.frame.height
 
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
-    gestureContainer.frame = CGRect(x: 0, y: Dimensions.height - 20, width: totalWidth, height: 20)
+    gestureContainer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: backgroundView.frame.size)
     indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
 
@@ -220,15 +220,24 @@ public class ShoutView: UIView {
     announcement.action?()
     silent()
   }
-
+  
+  var subtitleLabelOriginalHeight: CGFloat = 0
+  
   @objc private func handlePanGestureRecognizer() {
     let translation = panGestureRecognizer.translationInView(self)
     var duration: NSTimeInterval = 0
-
-    if panGestureRecognizer.state == .Changed || panGestureRecognizer.state == .Began {
+    
+    if panGestureRecognizer.state == .Began {
+      subtitleLabelOriginalHeight = self.subtitleLabel.bounds.size.height
+      self.subtitleLabel.numberOfLines = 0
+      self.subtitleLabel.sizeToFit()
+    } else if panGestureRecognizer.state == .Changed {
       panGestureActive = true
-      if translation.y >= 12 {
-        frame.size.height = Dimensions.height + 12 + (translation.y) / 25
+      
+      let maxTranslation = subtitleLabel.bounds.size.height - subtitleLabelOriginalHeight
+      
+      if translation.y >= maxTranslation {
+        frame.size.height = Dimensions.height + maxTranslation + (translation.y - maxTranslation) / 25
       } else {
         frame.size.height = Dimensions.height + translation.y
       }
@@ -237,6 +246,10 @@ public class ShoutView: UIView {
       let height = translation.y < -5 || shouldSilent ? 0 : Dimensions.height
 
       duration = 0.2
+      
+      self.subtitleLabel.numberOfLines = 2
+      self.subtitleLabel.sizeToFit()
+      
       UIView.animateWithDuration(duration, animations: {
         self.frame.size.height = height
         }, completion: { _ in if translation.y < -5 { self.completion?(); self.removeFromSuperview() }})
@@ -244,7 +257,6 @@ public class ShoutView: UIView {
 
     UIView.animateWithDuration(duration, animations: {
       self.backgroundView.frame.size.height = self.frame.height
-      self.gestureContainer.frame.origin.y = self.frame.height - 20
       self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
     })
   }
