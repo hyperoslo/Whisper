@@ -20,7 +20,6 @@ public class WhistleFactory: UIViewController {
     return label
   }()
 
-  public var duration: NSTimeInterval = 2
   public var viewController: UIViewController?
   public var hideTimer = NSTimer()
 
@@ -139,7 +138,7 @@ public class WhistleFactory: UIViewController {
 
   public func calm(after after: NSTimeInterval) {
     hideTimer.invalidate()
-    hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: #selector(WhistleFactory.timerDidFire), userInfo: nil, repeats: false)
+    hideTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self, selector: #selector(WhistleFactory.timerDidFire), userInfo: nil, repeats: false)
   }
 
   // MARK: - Timer methods
