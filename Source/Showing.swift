@@ -1,6 +1,6 @@
 import UIKit
 
-public enum Showing {
+public enum WhisperShowing {
     public static func show(whisper message: Message, to: UINavigationController, action: WhisperAction = .Present) {
         whisperFactory.craft(message, navigationController: to, action: action)
     }
