@@ -46,20 +46,22 @@ The usage of the component is so simple, you just create a message in the case o
 let message = Message(title: "Enter your message here.", backgroundColor: UIColor.redColor())
 
 // Show and hide a message after delay
-Whisper(message, to: navigationController, action: .Show)
+show(whisper: message, to: navigationController, action: .Show)
 
 // Present a permanent message
-Whisper(message, to: navigationController, action: .Present)
+show(whisper: message, to: navigationController, action: .Present)
 
 // Hide a message
-Silent(navigationController)
+hide(whisperFrom: navigationController)
 ```
 
 ##### For a Shout:
 
 ```swift
 let announcement = Announcement(title: "Your title", subtitle: "Your subtitle", image: UIImage(named: "avatar"))
-Shout(announcement, to: self)
+show(shout: announcement, to: navigationController, completion: {
+  print("The shout was silent.")
+})
 ```
 
 ##### For a Whistle:
@@ -68,13 +70,13 @@ Shout(announcement, to: self)
 let murmur = Murmur(title: "This is a small whistle...")
 
 // Show and hide a message after delay
-Whistle(murmur) // Whistle(murmur, action: .Show(1.5))
+show(whistle: murmur, action: .Show(0.5))
 
 // Present a permanent status bar message
-Whistle(murmur, action: .Present)
+show(whistle: murmur, action: .Present)
 
 // Hide a message
-Calm()
+hide(whistleAfter: 3)
 ```
 
 If you want to use **Whisper** with Objective-C, you can find information about it [here](https://github.com/hyperoslo/Whisper/wiki/Using-Whisper-in-Objective-C).
