@@ -187,11 +187,11 @@ class WhisperFactory: NSObject {
 
   func presentFired(_ timer: Timer) {
     guard let navigationController = self.navigationController,
-      userInfo = timer.userInfo,
-      title = userInfo["title"] as? String,
-      textColor = userInfo["textColor"] as? UIColor,
-      backgroundColor = userInfo["backgroundColor"] as? UIColor,
-      actionString = userInfo["action"] as? String else { return }
+      let userInfo = timer.userInfo,
+      let title = userInfo["title"] as? String,
+      let textColor = userInfo["textColor"] as? UIColor,
+      let backgroundColor = userInfo["backgroundColor"] as? UIColor,
+      let actionString = userInfo["action"] as? String else { return }
 
     var images: [UIImage]? = nil
 
@@ -219,8 +219,8 @@ class WhisperFactory: NSObject {
 
   func moveControllerViews(_ down: Bool) {
     guard let navigationController = self.navigationController,
-        visibleController = navigationController.visibleViewController
-      where Config.modifyInset
+        let visibleController = navigationController.visibleViewController
+      , Config.modifyInset
       else { return }
 
     let stackCount = navigationController.viewControllers.count
@@ -244,10 +244,10 @@ class WhisperFactory: NSObject {
     guard Config.modifyInset else { return }
 
     if let tableView = viewController.view as? UITableView
-      where viewController is UITableViewController {
+      , viewController is UITableViewController {
         tableView.contentInset = UIEdgeInsetsMake(tableView.contentInset.top + edgeInsetHeight, tableView.contentInset.left, tableView.contentInset.bottom, tableView.contentInset.right)
     } else if let collectionView = viewController.view as? UICollectionView
-      where viewController is UICollectionViewController {
+      , viewController is UICollectionViewController {
         collectionView.contentInset = UIEdgeInsetsMake(collectionView.contentInset.top + edgeInsetHeight, collectionView.contentInset.left, collectionView.contentInset.bottom, collectionView.contentInset.right)
     } else {
       for view in viewController.view.subviews {
@@ -273,7 +273,7 @@ class WhisperFactory: NSObject {
       whisper.frame = CGRect(
         x: whisper.frame.origin.x,
         y: maximumY,
-        width: UIScreen.main().bounds.width,
+        width: UIScreen.main.bounds.width,
         height: whisper.frame.size.height)
       whisper.setupFrames()
     }
@@ -285,7 +285,7 @@ class WhisperFactory: NSObject {
 extension WhisperFactory: UINavigationControllerDelegate {
 
   func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-    var maximumY = navigationController.navigationBar.frame.maxY - UIApplication.shared().statusBarFrame.height
+    var maximumY = navigationController.navigationBar.frame.maxY - UIApplication.shared.statusBarFrame.height
 
     for subview in navigationController.navigationBar.subviews {
       if subview is WhisperView { navigationController.navigationBar.bringSubview(toFront: subview) }
@@ -303,7 +303,7 @@ extension WhisperFactory: UINavigationControllerDelegate {
     for subview in navigationController.navigationBar.subviews where subview is WhisperView {
       moveControllerViews(true)
 
-      if let index = navigationController.viewControllers.index(of: viewController) where index > 0 {
+      if let index = navigationController.viewControllers.index(of: viewController) , index > 0 {
         edgeInsetHeight = -WhisperView.Dimensions.height
         performControllerMove(navigationController.viewControllers[Int(index) - 1])
         break

@@ -7,7 +7,7 @@ public struct Message {
   public var backgroundColor: UIColor
   public var images: [UIImage]?
 
-  public init(title: String, textColor: UIColor = UIColor.white(), backgroundColor: UIColor = UIColor.lightGray(), images: [UIImage]? = nil) {
+  public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, images: [UIImage]? = nil) {
     self.title = title
     self.textColor = textColor
     self.backgroundColor = backgroundColor

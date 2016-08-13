@@ -81,13 +81,13 @@ public class WhistleFactory: UIViewController {
   }
 
   func moveWindowToFront() {
-    let currentStatusBarStyle = UIApplication.shared().statusBarStyle
+    let currentStatusBarStyle = UIApplication.shared.statusBarStyle
     whistleWindow.windowLevel = UIWindowLevelStatusBar
-    UIApplication.shared().setStatusBarStyle(currentStatusBarStyle, animated: false)
+    UIApplication.shared.setStatusBarStyle(currentStatusBarStyle, animated: false)
   }
 
   public func setupFrames() {
-    let labelWidth = UIScreen.main().bounds.width
+    let labelWidth = UIScreen.main.bounds.width
     let defaultHeight = titleLabelHeight
 
     if let text = titleLabel.text {
@@ -137,7 +137,7 @@ public class WhistleFactory: UIViewController {
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
-        if let window = UIApplication.shared().windows.filter({ $0 != self.whistleWindow }).first {
+        if let window = UIApplication.shared.windows.filter({ $0 != self.whistleWindow }).first {
           window.makeKeyAndVisible()
           self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
           window.rootViewController?.setNeedsStatusBarAppearanceUpdate()

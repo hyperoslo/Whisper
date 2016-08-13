@@ -13,7 +13,7 @@ public class ShoutView: UIView {
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
-    public static var height: CGFloat = UIApplication.shared().isStatusBarHidden ? 70 : 80
+    public static var height: CGFloat = UIApplication.shared.isStatusBarHidden ? 70 : 80
     public static var textOffset: CGFloat = 75
   }
 
@@ -100,7 +100,7 @@ public class ShoutView: UIView {
 
     clipsToBounds = false
     isUserInteractionEnabled = true
-    layer.shadowColor = UIColor.black().cgColor
+    layer.shadowColor = UIColor.black.cgColor
     layer.shadowOffset = CGSize(width: 0, height: 0.5)
     layer.shadowOpacity = 0.1
     layer.shadowRadius = 0.5
@@ -122,7 +122,7 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(_ announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.shared().isStatusBarHidden ? 70 : 80
+    Dimensions.height = UIApplication.shared.isStatusBarHidden ? 70 : 80
 
     panGestureActive = false
     shouldSilent = false
@@ -146,7 +146,7 @@ public class ShoutView: UIView {
   }
 
   public func shout(to controller: UIViewController) {
-    let width = UIScreen.main().bounds.width
+    let width = UIScreen.main.bounds.width
     controller.view.addSubview(self)
 
     frame = CGRect(x: 0, y: 0, width: width, height: 0)
@@ -161,8 +161,8 @@ public class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
-    let totalWidth = UIScreen.main().bounds.width
-    let offset: CGFloat = UIApplication.shared().isStatusBarHidden ? 2.5 : 5
+    let totalWidth = UIScreen.main.bounds.width
+    let offset: CGFloat = UIApplication.shared.isStatusBarHidden ? 2.5 : 5
     let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
     let imageSize: CGFloat = imageView.image != nil ? Dimensions.imageSize : 0
 
