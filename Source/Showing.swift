@@ -1,6 +1,6 @@
 import UIKit
 
-public func show(whisper message: Message, to: UINavigationController, action: WhisperAction = .Present) {
+public func show(whisper message: Message, to: UINavigationController, action: WhisperAction = .Show) {
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 
@@ -12,7 +12,7 @@ public func show(shout announcement: Announcement, to: UIViewController, complet
   shoutView.craft(announcement, to: to, completion: completion)
 }
 
-public func show(whistle murmur: Murmur, action: WhistleAction = .Present) {
+public func show(whistle murmur: Murmur, action: WhistleAction = .Show(1.5)) {
   whistleFactory.whistler(murmur, action: action)
 }
 
