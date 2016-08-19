@@ -158,7 +158,7 @@ class WhisperFactory: NSObject {
     let backgroundColor = message.backgroundColor
     let action = action.rawValue
 
-    var array = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "action": action]
+    var array:[String:Any] = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "action": action]
     if let images = message.images { array["images"] = images }
 
     presentTimer = Timer.scheduledTimer(timeInterval: AnimationTiming.movement * 1.1, target: self,
@@ -187,11 +187,13 @@ class WhisperFactory: NSObject {
 
   func presentFired(_ timer: Timer) {
     guard let navigationController = self.navigationController,
-      let userInfo = timer.userInfo,
+        let userInfo = timer.userInfo as? [String:Any],
       let title = userInfo["title"] as? String,
       let textColor = userInfo["textColor"] as? UIColor,
       let backgroundColor = userInfo["backgroundColor"] as? UIColor,
-      let actionString = userInfo["action"] as? String else { return }
+      let actionString = userInfo["action"] as? String else {
+        return
+    }
 
     var images: [UIImage]? = nil
 
