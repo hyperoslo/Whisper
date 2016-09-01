@@ -19,7 +19,15 @@ public class WhistleFactory: UIViewController {
 
     return label
   }()
+    
+  public private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+      let gesture = UITapGestureRecognizer()
+      gesture.addTarget(self, action: #selector(WhistleFactory.handleTapGestureRecognizer))
+        
+      return gesture
+  }()
 
+  public private(set) var murmur: Murmur?
   public var viewController: UIViewController?
   public var hideTimer = NSTimer()
 
@@ -31,6 +39,8 @@ public class WhistleFactory: UIViewController {
     setupWindow()
     view.clipsToBounds = true
     view.addSubview(titleLabel)
+    
+    view.addGestureRecognizer(tapGestureRecognizer)
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WhistleFactory.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
@@ -46,6 +56,7 @@ public class WhistleFactory: UIViewController {
   // MARK: - Configuration
 
   public func whistler(murmur: Murmur, action: WhistleAction) {
+    self.murmur = murmur
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
@@ -152,5 +163,12 @@ public class WhistleFactory: UIViewController {
       setupFrames()
       hide()
     }
+  }
+    
+  // MARK: - Gesture methods
+    
+  @objc private func handleTapGestureRecognizer() {
+      guard let murmur = murmur else { return }
+      murmur.action?()
   }
 }
