@@ -14,7 +14,7 @@
 		290531131C20517E00FB382C /* WhisperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310B1C20517E00FB382C /* WhisperFactory.swift */; };
 		290531141C20517E00FB382C /* WhisperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310C1C20517E00FB382C /* WhisperView.swift */; };
 		290531151C20517E00FB382C /* WhistleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310D1C20517E00FB382C /* WhistleFactory.swift */; };
-		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; settings = {ASSET_TAGS = (); }; };
+		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,6 +132,7 @@
 				TargetAttributes = {
 					290530F81C20511C00FB382C = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -284,6 +285,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Whisper;
 				PRODUCT_NAME = Whisper;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -301,6 +303,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Whisper;
 				PRODUCT_NAME = Whisper;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
