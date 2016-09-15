@@ -89,6 +89,8 @@ public class WhistleFactory: UIViewController {
   }
 
   public func setupFrames() {
+    whistleWindow = UIWindow()
+    setupWindow()
     let labelWidth = UIScreen.mainScreen().bounds.width
     let defaultHeight = titleLabelHeight
 
