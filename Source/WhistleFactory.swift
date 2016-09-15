@@ -89,6 +89,10 @@ open class WhistleFactory: UIViewController {
   }
 
   open func setupFrames() {
+    whistleWindow = UIWindow()
+
+    setupWindow()
+
     let labelWidth = UIScreen.main.bounds.width
     let defaultHeight = titleLabelHeight
 
@@ -118,12 +122,12 @@ open class WhistleFactory: UIViewController {
 
   // MARK: - Movement methods
 
-  open func show(duration: TimeInterval) {
+  public func show(duration: TimeInterval) {
     present()
     calm(after: duration)
   }
 
-  open func present() {
+  public func present() {
     hideTimer.invalidate()
 
     let initialOrigin = whistleWindow.frame.origin.y
@@ -134,7 +138,7 @@ open class WhistleFactory: UIViewController {
     })
   }
 
-  open func hide() {
+  public func hide() {
     let finalOrigin = view.frame.origin.y - titleLabelHeight
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
@@ -147,14 +151,14 @@ open class WhistleFactory: UIViewController {
     })
   }
 
-  open func calm(after: TimeInterval) {
+  public func calm(after: TimeInterval) {
     hideTimer.invalidate()
     hideTimer = Timer.scheduledTimer(timeInterval: after, target: self, selector: #selector(WhistleFactory.timerDidFire), userInfo: nil, repeats: false)
   }
 
   // MARK: - Timer methods
 
-  open func timerDidFire() {
+  public func timerDidFire() {
     hide()
   }
 
