@@ -6,4 +6,4 @@ before_install:
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
 
 script:
-- xcodebuild test -project Sugar.xcodeproj -scheme Sugar-iOS -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'
+- xcodebuild test -project Sugar.xcodeproj -scheme Whisper -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'
