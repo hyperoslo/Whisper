@@ -2,27 +2,27 @@ import UIKit
 
 let shoutFactory = ShoutFactory()
 
-public func Shout(announcement: Announcement, completion: (() -> ())? = {}) {
+public func Shout(_ announcement: Announcement, completion: (() -> ())? = {}) {
     shoutFactory.addShout(announcement, completion: completion)
 }
 
 
-public class ShoutFactory:UIViewController, ShoutViewDelegate{
+open class ShoutFactory:UIViewController, ShoutViewDelegate{
     
-    private var queue:[ShoutView] = []
-    private var displaying:Bool = false
+    fileprivate var queue:[ShoutView] = []
+    fileprivate var displaying:Bool = false
     
-    public lazy var shoutWindow: UIWindow = UIWindow()
+    open lazy var shoutWindow: UIWindow = UIWindow()
     
     // MARK: - Initializers
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nil, bundle: nil)
         
         setupWindow()
         view.clipsToBounds = true
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -30,11 +30,11 @@ public class ShoutFactory:UIViewController, ShoutViewDelegate{
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     }
     
     
-    func addShout(announcement:Announcement, completion: (() -> ())? = {}){
+    func addShout(_ announcement:Announcement, completion: (() -> ())? = {}){
         let shout = ShoutView(announcement: announcement, completion: completion)
         shout.delegate = self
         self.queue.append(shout)
@@ -52,7 +52,7 @@ public class ShoutFactory:UIViewController, ShoutViewDelegate{
             queue.removeFirst()
         }
         else{
-            if let window = UIApplication.sharedApplication().windows.filter({ $0 != self.shoutWindow}).first {
+            if let window = UIApplication.shared.windows.filter({ $0 != self.shoutWindow}).first {
                 window.makeKeyAndVisible()
                 self.shoutWindow.windowLevel = UIWindowLevelNormal - 1
                 window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
@@ -63,23 +63,23 @@ public class ShoutFactory:UIViewController, ShoutViewDelegate{
     
     // MARK: - Setup
     
-    public func setupWindow() {
+    open func setupWindow() {
         shoutWindow.addSubview(self.view)
-        shoutWindow.backgroundColor = UIColor.clearColor()
+        shoutWindow.backgroundColor = UIColor.clear
         shoutWindow.clipsToBounds = true
         moveWindowToFront()
     }
     
     func moveWindowToFront() {
-        let currentStatusBarStyle = UIApplication.sharedApplication().statusBarStyle
+        let currentStatusBarStyle = UIApplication.shared.statusBarStyle
         shoutWindow.windowLevel = UIWindowLevelStatusBar
-        UIApplication.sharedApplication().setStatusBarStyle(currentStatusBarStyle, animated: false)
+        UIApplication.shared.setStatusBarStyle(currentStatusBarStyle, animated: false)
         shoutWindow.makeKeyAndVisible()
     }
     
     
     
-    public func setupFrames() {
+    open func setupFrames() {
         if let shout = queue.first{
             shout.setupFrames()
             shoutWindow.frame = shout.bounds
@@ -89,7 +89,7 @@ public class ShoutFactory:UIViewController, ShoutViewDelegate{
 
 
     func orientationDidChange() {
-        if shoutWindow.keyWindow {
+        if shoutWindow.isKeyWindow {
             setupFrames()
             if let shout = queue.first{
                 shout.silent()
@@ -98,7 +98,7 @@ public class ShoutFactory:UIViewController, ShoutViewDelegate{
     }
     
     // MARK: - ShoutViewDelegate
-    func shoutViewDidHide(shoutView:ShoutView){
+    func shoutViewDidHide(_ shoutView:ShoutView){
         self.displayNext()
     }
 }
