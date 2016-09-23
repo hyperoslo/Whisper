@@ -1,6 +1,6 @@
 import UIKit
 
-public func show(whisper message: Message, to: UINavigationController, action: WhisperAction = .Show) {
+public func show(whisper message: Message, to: UINavigationController, action: WhisperAction = .show) {
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 

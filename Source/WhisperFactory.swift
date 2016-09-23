@@ -1,8 +1,8 @@
 import UIKit
 
 public enum WhisperAction: String {
-  case Present = "Whisper.PresentNotification"
-  case Show = "Whisper.ShowNotification"
+  case present = "Whisper.PresentNotification"
+  case show = "Whisper.ShowNotification"
 }
 
 let whisperFactory: WhisperFactory = WhisperFactory()
@@ -71,9 +71,9 @@ class WhisperFactory: NSObject {
       changeView(message, action: action)
     } else {
       switch action {
-      case .Present:
+      case .present:
         presentView()
-      case .Show:
+      case .show:
         showView()
       }
     }
@@ -204,7 +204,7 @@ class WhisperFactory: NSObject {
 
     whisperView.frame.origin.y = maximumY
 
-    action == .Present ? presentView() : showView()
+    action == .present ? presentView() : showView()
   }
 
   // MARK: - Animations
