@@ -149,12 +149,13 @@ class ViewController: UIViewController {
 
   func presentNotificationDidPress(_ button: UIButton) {
     let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
-
+    /*
     if let navigationController = navigationController {
       Whisper.show(shout: announcement, to: navigationController, completion: {
         print("The shout was silent.")
       })
     }
+    */
   }
 
   func nextButtonDidPress() {
