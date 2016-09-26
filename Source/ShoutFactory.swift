@@ -1,5 +1,7 @@
 import UIKit
 
+let shoutView = ShoutView()
+
 public func Shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
   ShoutFactory.newShout(announcement: announcement, to: to, completion: completion)
 }
