@@ -21,12 +21,18 @@ public class ShoutFactory {
 
   public static func displayNext() {
     self.displaying = false
-    if !self.queue.isEmpty {
-      self.displaying = true
-      let not = self.queue[0]
-      not.craft(not.announcement!, to: not.to!, completion: not.completion)
-      self.queue.remove(at: 0)
-    }
+
+    guard
+      let shoutView = self.queue.first,
+      let announcement = shoutView.announcement,
+      let to = shoutView.to
+    else { return }
+
+    self.displaying = true
+
+    shoutView.craft(announcement, to: to, completion: shoutView.completion)
+
+    self.queue.remove(at: 0)
   }
 }
 
@@ -107,7 +113,7 @@ open class ShoutView: UIView {
     }()
 
   open fileprivate(set) var announcement: Announcement?
-  open fileprivate(set) var to: UIViewController
+  open fileprivate(set) var to: UIViewController?
   open fileprivate(set) var displayTimer = Timer()
   open fileprivate(set) var panGestureActive = false
   open fileprivate(set) var shouldSilent = false
