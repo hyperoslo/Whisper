@@ -135,6 +135,7 @@
 				TargetAttributes = {
 					290530F81C20511C00FB382C = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -288,6 +289,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Whisper;
 				PRODUCT_NAME = Whisper;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -305,6 +307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.Whisper;
 				PRODUCT_NAME = Whisper;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
