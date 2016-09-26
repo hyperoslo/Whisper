@@ -1,7 +1,7 @@
 import UIKit
 
 public func Shout(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
-  ShoutFactory.newShout(announcement, to: to, completion: completion)
+  ShoutFactory.newShout(announcement: announcement, to: to, completion: completion)
 }
 
 public class ShoutFactory {
@@ -25,7 +25,7 @@ public class ShoutFactory {
       self.displaying = true
       let not = self.queue[0]
       not.craft(not.announcement!, to: not.to!, completion: not.completion)
-      self.queue.removeAtIndex(0)
+      self.queue.remove(at: 0)
     }
   }
 }
@@ -107,6 +107,7 @@ open class ShoutView: UIView {
     }()
 
   open fileprivate(set) var announcement: Announcement?
+  open fileprivate(set) var to: UIViewController
   open fileprivate(set) var displayTimer = Timer()
   open fileprivate(set) var panGestureActive = false
   open fileprivate(set) var shouldSilent = false
@@ -141,7 +142,7 @@ open class ShoutView: UIView {
   convenience init(announcement: Announcement, to: UIViewController, completion: (() -> ())? = {}) {
     self.init()
 
-    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 70 : 80
+    Dimensions.height = UIApplication.shared.isStatusBarHidden ? 70 : 80
 
     panGestureActive = false
     shouldSilent = false
@@ -166,7 +167,6 @@ open class ShoutView: UIView {
     imageView.image = announcement.image
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle
-    // subtitleLabel.text = announcement.subtitle ?? ""
 
     [titleLabel, subtitleLabel].forEach {
       $0.sizeToFit()
