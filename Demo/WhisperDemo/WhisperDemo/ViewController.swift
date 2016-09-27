@@ -60,10 +60,19 @@ class ViewController: UIViewController {
 
   lazy var presentWhistleButton: UIButton = { [unowned self] in
     let button = UIButton()
+    button.addTarget(self, action: #selector(presentShoutWithQueueDidPress), for: .touchUpInside)
+    button.setTitle("Present Shout with Queue", for: UIControlState())
+
+    return button
+    }()
+
+  lazy var presentShoutButton: UIButton = { [unowned self] in
+    let button = UIButton()
     button.addTarget(self, action: #selector(presentWhistleButtonDidPress(_:)), for: .touchUpInside)
     button.setTitle("Present permanent Whistle", for: UIControlState())
 
     return button
+
     }()
 
   lazy var containerView: UIView = {
@@ -93,10 +102,10 @@ class ViewController: UIViewController {
     view.addSubview(scrollView)
     [titleLabel, presentButton, showButton,
       presentPermanentButton, notificationButton,
-      showWhistleButton, presentWhistleButton].forEach { scrollView.addSubview($0) }
+      showWhistleButton, presentWhistleButton, presentShoutButton].forEach { scrollView.addSubview($0) }
 
     [presentButton, showButton, presentPermanentButton,
-      notificationButton, showWhistleButton, presentWhistleButton].forEach {
+      notificationButton, showWhistleButton, presentWhistleButton, presentShoutButton].forEach {
         $0.setTitleColor(UIColor.gray, for: UIControlState())
         $0.layer.borderColor = UIColor.gray.cgColor
         $0.layer.borderWidth = 1.5
@@ -175,6 +184,17 @@ class ViewController: UIViewController {
                         titleColor: UIColor.white)
 
     Whisper.show(whistle: murmur, action: .present)
+  }
+
+  var numberOfPressingShout = 0
+
+  func presentShoutWithQueueDidPress() {
+    let announcements = (["First", "Second", "Third"] + Array(4...7).map(String.init)).map { Announcement(title: $0) }
+
+    if let navigationController = navigationController {
+      ShoutFactory.newShout(announcement: announcements[numberOfPressingShout % announcements.count], to: navigationController)
+      numberOfPressingShout += 1
+    }
   }
 
   // MARK - Configuration
