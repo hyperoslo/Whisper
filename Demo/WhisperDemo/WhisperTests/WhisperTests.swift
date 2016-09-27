@@ -8,7 +8,7 @@ class WhisperTests: XCTestCase {
     continueAfterFailure = false
     XCUIApplication().launch()
 
-    XCUIDevice.sharedDevice().orientation = .Portrait
+    XCUIDevice.shared().orientation = .portrait
   }
   
   override func tearDown() {
@@ -18,9 +18,9 @@ class WhisperTests: XCTestCase {
   func testBasicSetup() {
     let app = XCUIApplication()
 
-    XCTAssert(app.navigationBars["Whisper".uppercaseString].exists)
+    XCTAssert(app.navigationBars["Whisper".uppercased()].exists)
     XCTAssert(app.staticTexts["Welcome to the magic of a tiny Whisper... 🍃"].exists)
-    XCTAssertEqual(app.buttons.count, 6)
+    XCTAssertEqual(app.buttons.count, 7)
   }
 
   func testWhisper() {
@@ -49,7 +49,7 @@ class WhisperTests: XCTestCase {
   func testStatusBar() {
     let app = XCUIApplication()
 
-    app.buttons["Status bar"].tap()
+    app.buttons["Show Whistle"].tap()
     sleep(1)
     XCTAssert(app.staticTexts["This is a small whistle..."].exists)
   }
