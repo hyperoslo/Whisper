@@ -84,7 +84,8 @@ public class ShoutView: UIView {
   public private(set) var panGestureActive = false
   public private(set) var shouldSilent = false
   public private(set) var completion: (() -> ())?
-
+  private var subtitleLabelOriginalHeight: CGFloat = 0
+    
   // MARK: - Initializers
 
   public override init(frame: CGRect) {
@@ -118,8 +119,6 @@ public class ShoutView: UIView {
   // MARK: - Configuration
 
   public func craft(announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 55 : 65
-    
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
@@ -157,6 +156,8 @@ public class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
+    Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 55 : 65
+    
     let totalWidth = UIScreen.mainScreen().bounds.width
     let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
     let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
@@ -170,7 +171,7 @@ public class ShoutView: UIView {
     Dimensions.height += subtitleLabel.frame.height
 
     backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
-    gestureContainer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: backgroundView.frame.size)
+    gestureContainer.frame = backgroundView.frame
     indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
       y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
 
@@ -217,16 +218,14 @@ public class ShoutView: UIView {
     silent()
   }
   
-  var subtitleLabelOriginalHeight: CGFloat = 0
-  
   @objc private func handlePanGestureRecognizer() {
     let translation = panGestureRecognizer.translationInView(self)
     var duration: NSTimeInterval = 0
     
     if panGestureRecognizer.state == .Began {
-      subtitleLabelOriginalHeight = self.subtitleLabel.bounds.size.height
-      self.subtitleLabel.numberOfLines = 0
-      self.subtitleLabel.sizeToFit()
+      subtitleLabelOriginalHeight = subtitleLabel.bounds.size.height
+      subtitleLabel.numberOfLines = 0
+      subtitleLabel.sizeToFit()
     } else if panGestureRecognizer.state == .Changed {
       panGestureActive = true
       
@@ -243,8 +242,8 @@ public class ShoutView: UIView {
 
       duration = 0.2
       
-      self.subtitleLabel.numberOfLines = 2
-      self.subtitleLabel.sizeToFit()
+      subtitleLabel.numberOfLines = 2
+      subtitleLabel.sizeToFit()
       
       UIView.animateWithDuration(duration, animations: {
         self.frame.size.height = height

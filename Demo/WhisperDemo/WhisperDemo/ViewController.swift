@@ -148,7 +148,7 @@ class ViewController: UIViewController {
   }
 
   func presentNotificationDidPress(button: UIButton) {
-    let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post", image: UIImage(named: "avatar"))
+    let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'", duration: 30, image: UIImage(named: "avatar"))
 
     if let navigationController = navigationController {
       show(shout: announcement, to: navigationController, completion: {
