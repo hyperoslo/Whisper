@@ -157,7 +157,7 @@ public class ShoutView: UIView {
 
   public func setupFrames() {
     Dimensions.height = UIApplication.sharedApplication().statusBarHidden ? 55 : 65
-    
+
     let totalWidth = UIScreen.mainScreen().bounds.width
     let offset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 2.5 : 5
     let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
