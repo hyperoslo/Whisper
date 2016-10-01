@@ -7,14 +7,6 @@ public enum WhistleAction {
 
 let whistleFactory = WhistleFactory()
 
-public func whistle(murmur: Murmur, action: WhistleAction = .Show(1.5)) {
-  whistleFactory.whistler(murmur, action: action)
-}
-
-public func calm(after after: NSTimeInterval = 0) {
-  whistleFactory.calm(after: after)
-}
-
 public class WhistleFactory: UIViewController {
 
   public lazy var whistleWindow: UIWindow = UIWindow()
@@ -27,8 +19,15 @@ public class WhistleFactory: UIViewController {
 
     return label
   }()
+    
+  public private(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
+      let gesture = UITapGestureRecognizer()
+      gesture.addTarget(self, action: #selector(WhistleFactory.handleTapGestureRecognizer))
+        
+      return gesture
+  }()
 
-  public var duration: NSTimeInterval = 2
+  public private(set) var murmur: Murmur?
   public var viewController: UIViewController?
   public var hideTimer = NSTimer()
 
@@ -40,6 +39,8 @@ public class WhistleFactory: UIViewController {
     setupWindow()
     view.clipsToBounds = true
     view.addSubview(titleLabel)
+    
+    view.addGestureRecognizer(tapGestureRecognizer)
 
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WhistleFactory.orientationDidChange), name: UIDeviceOrientationDidChangeNotification, object: nil)
   }
@@ -55,6 +56,7 @@ public class WhistleFactory: UIViewController {
   // MARK: - Configuration
 
   public func whistler(murmur: Murmur, action: WhistleAction) {
+    self.murmur = murmur
     titleLabel.text = murmur.title
     titleLabel.font = murmur.font
     titleLabel.textColor = murmur.titleColor
@@ -87,6 +89,8 @@ public class WhistleFactory: UIViewController {
   }
 
   public func setupFrames() {
+    whistleWindow = UIWindow()
+    setupWindow()
     let labelWidth = UIScreen.mainScreen().bounds.width
     let defaultHeight = titleLabelHeight
 
@@ -147,7 +151,7 @@ public class WhistleFactory: UIViewController {
 
   public func calm(after after: NSTimeInterval) {
     hideTimer.invalidate()
-    hideTimer = NSTimer.scheduledTimerWithTimeInterval(duration, target: self, selector: #selector(WhistleFactory.timerDidFire), userInfo: nil, repeats: false)
+    hideTimer = NSTimer.scheduledTimerWithTimeInterval(after, target: self, selector: #selector(WhistleFactory.timerDidFire), userInfo: nil, repeats: false)
   }
 
   // MARK: - Timer methods
@@ -161,5 +165,12 @@ public class WhistleFactory: UIViewController {
       setupFrames()
       hide()
     }
+  }
+    
+  // MARK: - Gesture methods
+    
+  @objc private func handleTapGestureRecognizer() {
+      guard let murmur = murmur else { return }
+      murmur.action?()
   }
 }
