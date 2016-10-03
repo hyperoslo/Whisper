@@ -187,7 +187,7 @@ class WhisperFactory: NSObject {
 
   func presentFired(_ timer: Timer) {
     guard let navigationController = self.navigationController,
-      let userInfo = timer.userInfo,
+      let userInfo = timer.userInfo as? Dictionary<String, Any>,
       let title = userInfo["title"] as? String,
       let textColor = userInfo["textColor"] as? UIColor,
       let backgroundColor = userInfo["backgroundColor"] as? UIColor,
