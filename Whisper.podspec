@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Whisper"
   s.summary          = "Whisper is a component that will make the task of display messages and in-app notifications simple."
-  s.version          = "3.1.1"
+  s.version          = "4.0.0"
   s.homepage         = "https://github.com/hyperoslo/Whisper"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files = 'Source/**/*'
-
   s.frameworks = 'UIKit', 'Foundation'
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
 end
