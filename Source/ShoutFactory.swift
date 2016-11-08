@@ -102,7 +102,8 @@ open class ShoutView: UIView {
     layer.shadowOffset = CGSize(width: 0, height: 0.5)
     layer.shadowOpacity = 0.1
     layer.shadowRadius = 0.5
-
+    accessibilityIdentifier = "ShoutView"
+    
     addGestureRecognizer(tapGestureRecognizer)
     gestureContainer.addGestureRecognizer(panGestureRecognizer)
 

@@ -37,7 +37,7 @@ open class WhisperView: UIView {
 
   // MARK: - Initializers
 
-  init(height: CGFloat, message: Message) {
+  init(height: CGFloat, width: CGFloat, message: Message) {
     self.height = height
     self.whisperImages = message.images
     super.init(frame: CGRect.zero)
@@ -45,7 +45,8 @@ open class WhisperView: UIView {
     titleLabel.text = message.title
     titleLabel.textColor = message.textColor
     backgroundColor = message.backgroundColor
-
+    accessibilityIdentifier = "WhisperView"
+    
     if let images = whisperImages , images.count > 1 {
       complementImageView.animationImages = images
       complementImageView.animationDuration = 0.7
@@ -54,7 +55,7 @@ open class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: Dimensions.height)
+    frame = CGRect(x: 0, y: height, width: width, height: Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
@@ -74,7 +75,7 @@ extension WhisperView {
   func setupFrames() {
     if whisperImages != nil {
       titleLabel.frame = CGRect(
-        x: (frame.width - titleLabel.frame.width) / 2 + 20,
+        x: (frame.width - titleLabel.frame.width) / 2 + Dimensions.imageSize,
         y: 0,
         width: titleLabel.frame.width,
         height: frame.height)

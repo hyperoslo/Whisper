@@ -62,7 +62,8 @@ open class WhistleFactory: UIViewController {
     titleLabel.textColor = murmur.titleColor
     view.backgroundColor = murmur.backgroundColor
     whistleWindow.backgroundColor = murmur.backgroundColor
-
+    whistleWindow.accessibilityIdentifier = "WhistleWindow"
+    
     moveWindowToFront()
     setupFrames()
 
