@@ -23,7 +23,8 @@ class WhisperFactory: NSObject {
   var delayTimer = Timer()
   var presentTimer = Timer()
   var navigationStackCount = 0
-
+  var isDisplayed = false
+  
   // MARK: - Initializers
 
   override init() {
@@ -116,6 +117,7 @@ class WhisperFactory: NSObject {
         }
 
         subview.alpha = 1
+        self.isDisplayed = true
       }
     })
   }
@@ -133,6 +135,7 @@ class WhisperFactory: NSObject {
         }
 
         subview.alpha = 1
+        self.isDisplayed = true
       }
       }, completion: { _ in
         self.delayTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self,
@@ -167,6 +170,7 @@ class WhisperFactory: NSObject {
         subview.alpha = 0
       }
       }, completion: { _ in
+        self.isDisplayed = false
         self.whisperView.removeFromSuperview()
     })
   }

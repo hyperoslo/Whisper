@@ -84,6 +84,7 @@ open class ShoutView: UIView {
   open fileprivate(set) var panGestureActive = false
   open fileprivate(set) var shouldSilent = false
   open fileprivate(set) var completion: (() -> ())?
+  var isDisplayed = false
 
   private var subtitleLabelOriginalHeight: CGFloat = 0
 
@@ -153,6 +154,7 @@ open class ShoutView: UIView {
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = Dimensions.height
       self.backgroundView.frame.size.height = self.frame.height
+      self.isDisplayed = true
     })
   }
 
@@ -198,6 +200,7 @@ open class ShoutView: UIView {
       self.frame.size.height = 0
       self.backgroundView.frame.size.height = self.frame.height
       }, completion: { finished in
+        self.isDisplayed = false
         self.completion?()
         self.displayTimer.invalidate()
         self.removeFromSuperview()

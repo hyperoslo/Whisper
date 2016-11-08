@@ -30,6 +30,7 @@ open class WhistleFactory: UIViewController {
   open fileprivate(set) var murmur: Murmur?
   open var viewController: UIViewController?
   open var hideTimer = Timer()
+  var isDisplayed = false
 
   // MARK: - Initializers
 
@@ -135,6 +136,7 @@ open class WhistleFactory: UIViewController {
     whistleWindow.makeKeyAndVisible()
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
+      self.isDisplayed = true
     })
   }
 
@@ -143,6 +145,7 @@ open class WhistleFactory: UIViewController {
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
+        self.isDisplayed = false
         if let window = UIApplication.shared.windows.filter({ $0 != self.whistleWindow }).first {
           window.makeKeyAndVisible()
           self.whistleWindow.windowLevel = UIWindowLevelNormal - 1

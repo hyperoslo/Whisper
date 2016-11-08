@@ -19,3 +19,15 @@ public func hide(whisperFrom from: UINavigationController, after: TimeInterval =
 public func hide(whistleAfter after: TimeInterval = 0) {
   whistleFactory.calm(after: after)
 }
+
+public var isWhisperDisplayed: Bool {
+  return whisperFactory.isDisplayed
+}
+
+public var isWhistleDisplayed: Bool {
+  return whistleFactory.isDisplayed
+}
+
+public var isShoutDisplayed: Bool {
+  return shoutView.isDisplayed
+}
