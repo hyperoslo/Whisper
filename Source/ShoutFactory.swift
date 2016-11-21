@@ -99,7 +99,7 @@ open class ShoutView: UIView {
     layer.shadowOpacity = 0.1
     layer.shadowRadius = 0.5
 
-    addGestureRecognizer(tapGestureRecognizer)
+    backgroundView.addGestureRecognizer(tapGestureRecognizer)
     addGestureRecognizer(panGestureRecognizer)
 
     NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
