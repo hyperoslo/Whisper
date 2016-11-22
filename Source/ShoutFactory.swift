@@ -9,8 +9,8 @@ open class ShoutView: UIView {
     public static let indicatorWidth: CGFloat = 50
     public static let imageSize: CGFloat = 48
     public static let imageOffset: CGFloat = 18
-    public static var height: CGFloat = UIApplication.shared.isStatusBarHidden ? 55 : 65
     public static var textOffset: CGFloat = 75
+    public static var touchOffset: CGFloat = 40
   }
 
   open fileprivate(set) lazy var backgroundView: UIView = {
@@ -18,13 +18,6 @@ open class ShoutView: UIView {
     view.backgroundColor = ColorList.Shout.background
     view.alpha = 0.98
     view.clipsToBounds = true
-
-    return view
-    }()
-
-  open fileprivate(set) lazy var gestureContainer: UIView = {
-    let view = UIView()
-    view.isUserInteractionEnabled = true
 
     return view
     }()
@@ -86,6 +79,7 @@ open class ShoutView: UIView {
   open fileprivate(set) var completion: (() -> ())?
 
   private var subtitleLabelOriginalHeight: CGFloat = 0
+  private var internalHeight: CGFloat = 0
 
   // MARK: - Initializers
 
@@ -93,8 +87,10 @@ open class ShoutView: UIView {
     super.init(frame: frame)
 
     addSubview(backgroundView)
-    [indicatorView, imageView, titleLabel, subtitleLabel, gestureContainer].forEach {
-      backgroundView.addSubview($0) }
+    [imageView, titleLabel, subtitleLabel, indicatorView].forEach {
+      $0.autoresizingMask = []
+      backgroundView.addSubview($0)
+    }
 
     clipsToBounds = false
     isUserInteractionEnabled = true
@@ -103,8 +99,8 @@ open class ShoutView: UIView {
     layer.shadowOpacity = 0.1
     layer.shadowRadius = 0.5
 
-    addGestureRecognizer(tapGestureRecognizer)
-    gestureContainer.addGestureRecognizer(panGestureRecognizer)
+    backgroundView.addGestureRecognizer(tapGestureRecognizer)
+    addGestureRecognizer(panGestureRecognizer)
 
     NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
   }
@@ -120,8 +116,6 @@ open class ShoutView: UIView {
   // MARK: - Configuration
 
   open func craft(_ announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
-    Dimensions.height = UIApplication.shared.isStatusBarHidden ? 70 : 80
-
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
@@ -144,22 +138,18 @@ open class ShoutView: UIView {
   }
 
   open func shout(to controller: UIViewController) {
-    let width = UIScreen.main.bounds.width
     controller.view.addSubview(self)
 
-    frame = CGRect(x: 0, y: 0, width: width, height: 0)
-    backgroundView.frame = CGRect(x: 0, y: 0, width: width, height: 0)
-
+    frame.size.height = 0
     UIView.animate(withDuration: 0.35, animations: {
-      self.frame.size.height = Dimensions.height
-      self.backgroundView.frame.size.height = self.frame.height
+      self.frame.size.height = self.internalHeight + Dimensions.touchOffset
     })
   }
 
   // MARK: - Setup
 
   public func setupFrames() {
-    Dimensions.height = UIApplication.shared.isStatusBarHidden ? 55 : 65
+    internalHeight = (UIApplication.shared.isStatusBarHidden ? 55 : 65)
 
     let totalWidth = UIScreen.main.bounds.width
     let offset: CGFloat = UIApplication.shared.isStatusBarHidden ? 2.5 : 5
@@ -171,14 +161,9 @@ open class ShoutView: UIView {
         $0.sizeToFit()
     }
 
-    Dimensions.height += subtitleLabel.frame.height
+    internalHeight += subtitleLabel.frame.height
 
-    backgroundView.frame.size = CGSize(width: totalWidth, height: Dimensions.height)
-    gestureContainer.frame = backgroundView.frame
-    indicatorView.frame = CGRect(x: (totalWidth - Dimensions.indicatorWidth) / 2,
-      y: Dimensions.height - Dimensions.indicatorHeight - 5, width: Dimensions.indicatorWidth, height: Dimensions.indicatorHeight)
-
-    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (Dimensions.height - imageSize) / 2 + offset,
+    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (internalHeight - imageSize) / 2 + offset,
       width: imageSize, height: imageSize)
 
     let textOffsetY = imageView.image != nil ? imageView.frame.origin.x + 3 : textOffsetX + 5
@@ -189,6 +174,23 @@ open class ShoutView: UIView {
     if subtitleLabel.text?.isEmpty ?? true {
       titleLabel.center.y = imageView.center.y - 2.5
     }
+
+    frame = CGRect(x: 0, y: 0, width: totalWidth, height: internalHeight + Dimensions.touchOffset)
+  }
+
+  // MARK: - Frame
+
+  open override var frame: CGRect {
+    didSet {
+      backgroundView.frame = CGRect(x: 0, y: 0,
+                                    width: frame.size.width,
+                                    height: frame.size.height - Dimensions.touchOffset)
+
+      indicatorView.frame = CGRect(x: (backgroundView.frame.size.width - Dimensions.indicatorWidth) / 2,
+                                   y: backgroundView.frame.height - Dimensions.indicatorHeight - 5,
+                                   width: Dimensions.indicatorWidth,
+                                   height: Dimensions.indicatorHeight)
+    }
   }
 
   // MARK: - Actions
@@ -196,7 +198,6 @@ open class ShoutView: UIView {
   open func silent() {
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = 0
-      self.backgroundView.frame.size.height = self.frame.height
       }, completion: { finished in
         self.completion?()
         self.displayTimer.invalidate()
@@ -223,7 +224,6 @@ open class ShoutView: UIView {
   
   @objc private func handlePanGestureRecognizer() {
     let translation = panGestureRecognizer.translation(in: self)
-    var duration: TimeInterval = 0
 
     if panGestureRecognizer.state == .began {
       subtitleLabelOriginalHeight = subtitleLabel.bounds.size.height
@@ -235,27 +235,27 @@ open class ShoutView: UIView {
       let maxTranslation = subtitleLabel.bounds.size.height - subtitleLabelOriginalHeight
       
       if translation.y >= maxTranslation {
-        frame.size.height = Dimensions.height + maxTranslation + (translation.y - maxTranslation) / 25
+        frame.size.height = internalHeight + maxTranslation
+          + (translation.y - maxTranslation) / 25 + Dimensions.touchOffset
       } else {
-        frame.size.height = Dimensions.height + translation.y
+        frame.size.height = internalHeight + translation.y + Dimensions.touchOffset
       }
     } else {
       panGestureActive = false
-      let height = translation.y < -5 || shouldSilent ? 0 : Dimensions.height
+      let height = translation.y < -5 || shouldSilent ? 0 : internalHeight
 
-      duration = 0.2
       subtitleLabel.numberOfLines = 2
       subtitleLabel.sizeToFit()
       
-      UIView.animate(withDuration: duration, animations: {
-        self.frame.size.height = height
-        }, completion: { _ in if translation.y < -5 { self.completion?(); self.removeFromSuperview() }})
+      UIView.animate(withDuration: 0.2, animations: {
+        self.frame.size.height = height + Dimensions.touchOffset
+      }, completion: { _ in
+          if translation.y < -5 {
+            self.completion?()
+            self.removeFromSuperview()
+        }
+      })
     }
-
-    UIView.animate(withDuration: duration, animations: {
-      self.backgroundView.frame.size.height = self.frame.height
-      self.indicatorView.frame.origin.y = self.frame.height - Dimensions.indicatorHeight - 5
-    })
   }
 
 
