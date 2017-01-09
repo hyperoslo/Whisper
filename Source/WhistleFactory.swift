@@ -143,7 +143,7 @@ open class WhistleFactory: UIViewController {
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
-        if let window = UIApplication.shared.windows.filter({ $0 != self.whistleWindow }).first {
+        if let window = UIApplication.shared.windows.filter({ $0 != self.whistleWindow }).last {
           window.makeKeyAndVisible()
           self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
           window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
