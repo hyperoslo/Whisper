@@ -44,13 +44,13 @@ The usage of the component is so simple, you just create a message in the case o
 ##### For a Whisper:
 
 ```swift
-let message = Message(title: "Enter your message here.", backgroundColor: UIColor.redColor())
+let message = Message(title: "Enter your message here.", backgroundColor: .red)
 
 // Show and hide a message after delay
-show(whisper: message, to: navigationController, action: .Show)
+show(whisper: message, to: navigationController, action: .show)
 
 // Present a permanent message
-show(whisper: message, to: navigationController, action: .Present)
+show(whisper: message, to: navigationController, action: .present)
 
 // Hide a message
 hide(whisperFrom: navigationController)
@@ -71,10 +71,10 @@ show(shout: announcement, to: navigationController, completion: {
 let murmur = Murmur(title: "This is a small whistle...")
 
 // Show and hide a message after delay
-show(whistle: murmur, action: .Show(0.5))
+show(whistle: murmur, action: .show(0.5))
 
 // Present a permanent status bar message
-show(whistle: murmur, action: .Present)
+show(whistle: murmur, action: .present)
 
 // Hide a message
 hide(whistleAfter: 3)
