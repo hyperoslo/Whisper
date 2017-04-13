@@ -132,7 +132,7 @@ open class WhistleFactory: UIViewController {
 
     let initialOrigin = whistleWindow.frame.origin.y
     whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight
-    whistleWindow.makeKeyAndVisible()
+    whistleWindow.isHidden = false
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
     })
