@@ -5,6 +5,7 @@ let shoutView = ShoutView()
 open class ShoutView: UIView {
 
   public struct Dimensions {
+    public static var imageRoundedCorners: Bool = true
     public static var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 1, left: 18, bottom: 1, right: 18)
     public static var textToImageMargin: CGFloat = 9
     public static let indicatorHeight: CGFloat = 6
@@ -33,7 +34,6 @@ open class ShoutView: UIView {
 
   open fileprivate(set) lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.layer.cornerRadius = Dimensions.imageSize / 2
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
 
@@ -128,6 +128,7 @@ open class ShoutView: UIView {
     self.announcement = announcement
     imageView.image = announcement.image
     imageView.sizeToFit()
+    imageView.layer.cornerRadius = Dimensions.imageRoundedCorners ? (min(imageView.frame.width, imageView.frame.height) / 2) : 0
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle
 
