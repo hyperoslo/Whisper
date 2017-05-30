@@ -5,11 +5,11 @@ let shoutView = ShoutView()
 open class ShoutView: UIView {
 
   public struct Dimensions {
+    public static var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
+    public static var textToImageMargin: CGFloat = 15
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
-    public static let imageSize: CGFloat = 48
-    public static let imageOffset: CGFloat = 18
-    public static var textOffset: CGFloat = 75
+    public static let indicatorBottomMargin: CGFloat = 5
     public static var touchOffset: CGFloat = 40
   }
 
@@ -127,6 +127,7 @@ open class ShoutView: UIView {
   open func configureView(_ announcement: Announcement) {
     self.announcement = announcement
     imageView.image = announcement.image
+    imageView.sizeToFit()
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle
 
@@ -149,33 +150,43 @@ open class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
-    internalHeight = (UIApplication.shared.isStatusBarHidden ? 55 : 65)
-
+    // totalWidth should be dependent on navigation controller's width
+    // in which the shout will be shown
     let totalWidth = UIScreen.main.bounds.width
-    let offset: CGFloat = UIApplication.shared.isStatusBarHidden ? 2.5 : 5
-    let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
-    let imageSize: CGFloat = imageView.image != nil ? Dimensions.imageSize : 0
-
+    let spaceBetweenLabels: CGFloat = 2
+    let absoluteContentInsets: UIEdgeInsets = UIEdgeInsets(top: Dimensions.contentInsets.top + (UIApplication.shared.isStatusBarHidden ? 0 : 20), left: Dimensions.contentInsets.left, bottom: Dimensions.contentInsets.bottom, right: Dimensions.contentInsets.right)
+    
+    let textOffsetX = absoluteContentInsets.left + (imageView.image != nil ? imageView.frame.width + Dimensions.textToImageMargin : 0)
+    let labelWidth = totalWidth - textOffsetX - absoluteContentInsets.right
+    
+    var labelsHeight: CGFloat = 0
+    var prevView: UIView?
     [titleLabel, subtitleLabel].forEach {
-        $0.frame.size.width = totalWidth - imageSize - (Dimensions.imageOffset * 2)
-        $0.sizeToFit()
+      $0.frame.size.width = labelWidth
+      $0.frame.origin.x = textOffsetX
+      $0.sizeToFit()
+      $0.isHidden = ($0.text ?? "").isEmpty
+      if !$0.isHidden {
+        labelsHeight += $0.frame.height + (prevView != nil ? spaceBetweenLabels : 0)
+        prevView = $0
+      }
     }
-
-    internalHeight += subtitleLabel.frame.height
-
-    imageView.frame = CGRect(x: Dimensions.imageOffset, y: (internalHeight - imageSize) / 2 + offset,
-      width: imageSize, height: imageSize)
-
-    let textOffsetY = imageView.image != nil ? imageView.frame.origin.x + 3 : textOffsetX + 5
-
-    titleLabel.frame.origin = CGPoint(x: textOffsetX, y: textOffsetY)
-    subtitleLabel.frame.origin = CGPoint(x: textOffsetX, y: titleLabel.frame.maxY + 2.5)
-
-    if subtitleLabel.text?.isEmpty ?? true {
-      titleLabel.center.y = imageView.center.y - 2.5
+    
+    let contentHeight = max(labelsHeight, imageView.frame.height)
+    let indicatorTakenHeight = Dimensions.indicatorBottomMargin + Dimensions.indicatorHeight
+    let containerHeight = absoluteContentInsets.top + contentHeight + absoluteContentInsets.bottom + indicatorTakenHeight
+    
+    imageView.frame.origin.x = absoluteContentInsets.left
+    imageView.center.y = absoluteContentInsets.top + (contentHeight / 2)
+    
+    var labelY = absoluteContentInsets.top + (contentHeight - labelsHeight) / 2
+    [titleLabel, subtitleLabel].filter { !$0.isHidden }.forEach {
+      $0.frame.origin.y = labelY
+      labelY += $0.frame.size.height + spaceBetweenLabels
     }
-
-    frame = CGRect(x: 0, y: 0, width: totalWidth, height: internalHeight + Dimensions.touchOffset)
+    
+    frame = CGRect(x: 0, y: 0, width: totalWidth, height: containerHeight + Dimensions.touchOffset)
+    internalHeight = containerHeight
   }
 
   // MARK: - Frame
