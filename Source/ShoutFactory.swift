@@ -5,8 +5,8 @@ let shoutView = ShoutView()
 open class ShoutView: UIView {
 
   public struct Dimensions {
-    public static var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
-    public static var textToImageMargin: CGFloat = 15
+    public static var contentInsets: UIEdgeInsets = UIEdgeInsets(top: 1, left: 18, bottom: 1, right: 18)
+    public static var textToImageMargin: CGFloat = 9
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
     public static let indicatorBottomMargin: CGFloat = 5
