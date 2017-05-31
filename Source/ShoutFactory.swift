@@ -103,11 +103,7 @@ open class ShoutView: UIView {
     addGestureRecognizer(panGestureRecognizer)
 
     NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    
-    // Adding observer for frame change
-    if let observableView = (UIApplication.shared.delegate?.window as? UIWindow)?.rootViewController?.view {
-        observableView.addObserver(self, forKeyPath: "frame", options: .new, context: nil)
-    }
+    NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.setupFrames), name: NSNotification.Name(rawValue: Notifications.windowFrameChanged), object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -115,10 +111,7 @@ open class ShoutView: UIView {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    if let observableView = (UIApplication.shared.delegate?.window as? UIWindow)?.rootViewController?.view {
-        observableView.removeObserver(self, forKeyPath: "frame")
-    }
+    NotificationCenter.default.removeObserver(self)
   }
 
   // MARK: - Configuration
@@ -212,13 +205,6 @@ open class ShoutView: UIView {
         self.removeFromSuperview()
     })
   }
-    
-  // MARK: - Observer methods
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let observableView = (UIApplication.shared.delegate?.window as? UIWindow)?.rootViewController?.view, (object as? UIView) == observableView && keyPath == "frame" {
-            setupFrames()
-        }
-    }
 
   // MARK: - Timer methods
 

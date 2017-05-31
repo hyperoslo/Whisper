@@ -29,18 +29,11 @@ class WhisperFactory: NSObject {
   override init() {
     super.init()
     NotificationCenter.default.addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    
-    // Adding observer for frame change
-    if let observableView = (UIApplication.shared.delegate?.window as? UIWindow)?.rootViewController?.view {
-        observableView.addObserver(self, forKeyPath: "frame", options: .new, context: nil)
-    }
+    NotificationCenter.default.addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: NSNotification.Name(rawValue: Notifications.windowFrameChanged), object: nil)
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
-    if let observableView = (UIApplication.shared.delegate?.window as? UIWindow)?.rootViewController?.view {
-        observableView.removeObserver(self, forKeyPath: "frame")
-    }
+    NotificationCenter.default.removeObserver(self)
   }
 
   func craft(_ message: Message, navigationController: UINavigationController, action: WhisperAction) {
@@ -108,13 +101,6 @@ class WhisperFactory: NSObject {
     delayTimer = Timer.scheduledTimer(timeInterval: after, target: self,
       selector: #selector(WhisperFactory.delayFired(_:)), userInfo: nil, repeats: false)
   }
-    
-    // MARK: - Observer methods
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if let observableView = (UIApplication.shared.delegate?.window as? UIWindow)?.rootViewController?.view, (object as? UIView) == observableView && keyPath == "frame" {
-            orientationDidChange()
-        }
-    }
 
   // MARK: - Presentation
 
