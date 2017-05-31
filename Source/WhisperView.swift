@@ -19,7 +19,7 @@ open class WhisperView: UIView {
     let label = UILabel()
     label.textAlignment = .center
     label.font = UIFont(name: "HelveticaNeue", size: 13)
-    label.frame.size.width = UIScreen.main.bounds.width - 60
+    label.frame.size.width = (UIApplication.shared.delegate?.window??.frame.width ?? UIScreen.main.bounds.width) - 60
 
     return label
     }()
@@ -54,7 +54,7 @@ open class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: Dimensions.height)
+    frame = CGRect(x: 0, y: height, width: UIApplication.shared.delegate?.window??.frame.width ?? UIScreen.main.bounds.width, height: Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()
