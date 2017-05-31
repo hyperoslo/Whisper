@@ -13,8 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
     
-    WindowFrameObserver.shared.startObserving()
-    
     return true
   }
 }

@@ -28,6 +28,8 @@ class WhisperFactory: NSObject {
 
   override init() {
     super.init()
+    WindowFrameObserver.shared.startObserving()
+    
     NotificationCenter.default.addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: NSNotification.Name(rawValue: Notifications.windowFrameChanged), object: nil)
   }

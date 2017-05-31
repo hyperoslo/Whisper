@@ -19,3 +19,7 @@ public func hide(whisperFrom from: UINavigationController, after: TimeInterval =
 public func hide(whistleAfter after: TimeInterval = 0) {
   whistleFactory.calm(after: after)
 }
+
+public func updateWhistleText(text: String) {
+    whistleFactory.titleLabel.text = text
+}

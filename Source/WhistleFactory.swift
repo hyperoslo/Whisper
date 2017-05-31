@@ -37,6 +37,8 @@ open class WhistleFactory: UIViewController {
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
+    
+    WindowFrameObserver.shared.startObserving()
 
     setupWindow()
     view.clipsToBounds = true

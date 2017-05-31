@@ -85,7 +85,8 @@ open class ShoutView: UIView {
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
-
+    WindowFrameObserver.shared.startObserving()
+    
     addSubview(backgroundView)
     [imageView, titleLabel, subtitleLabel, indicatorView].forEach {
       $0.autoresizingMask = []
