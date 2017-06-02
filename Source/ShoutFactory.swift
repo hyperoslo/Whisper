@@ -142,6 +142,7 @@ open class ShoutView: UIView {
   open func shout(to controller: UIViewController) {
     controller.view.addSubview(self)
 
+    setupFrames()
     frame.size.height = 0
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = self.internalHeight + Dimensions.touchOffset
@@ -151,11 +152,15 @@ open class ShoutView: UIView {
   // MARK: - Setup
 
   public func setupFrames() {
-    // totalWidth should be dependent on navigation controller's width
-    // in which the shout will be shown
-    let totalWidth = UIScreen.main.bounds.width
+    guard let superview = superview else { return }
+    
+    let totalWidth = superview.frame.width
     let spaceBetweenLabels: CGFloat = 2
-    let absoluteContentInsets: UIEdgeInsets = UIEdgeInsets(top: Dimensions.contentInsets.top + (UIApplication.shared.isStatusBarHidden ? 0 : 20), left: Dimensions.contentInsets.left, bottom: Dimensions.contentInsets.bottom, right: Dimensions.contentInsets.right)
+    let indicatorTakenHeight = Dimensions.indicatorBottomMargin + Dimensions.indicatorHeight
+    
+    let zz = convert(CGRect(x: 0, y: 0, width: superview.frame.width, height: 1), to: UIApplication.shared.keyWindow)
+    let intersectsStatusBar = zz.intersects(UIApplication.shared.statusBarFrame)
+    let absoluteContentInsets: UIEdgeInsets = UIEdgeInsets(top: Dimensions.contentInsets.top + (UIApplication.shared.isStatusBarHidden || !intersectsStatusBar ? indicatorTakenHeight : 20), left: Dimensions.contentInsets.left, bottom: Dimensions.contentInsets.bottom, right: Dimensions.contentInsets.right)
     
     let textOffsetX = absoluteContentInsets.left + (imageView.image != nil ? imageView.frame.width + Dimensions.textToImageMargin : 0)
     let labelWidth = totalWidth - textOffsetX - absoluteContentInsets.right
@@ -174,7 +179,6 @@ open class ShoutView: UIView {
     }
     
     let contentHeight = max(labelsHeight, imageView.frame.height)
-    let indicatorTakenHeight = Dimensions.indicatorBottomMargin + Dimensions.indicatorHeight
     let containerHeight = absoluteContentInsets.top + contentHeight + absoluteContentInsets.bottom + indicatorTakenHeight
     
     imageView.frame.origin.x = absoluteContentInsets.left
