@@ -22,13 +22,17 @@ public struct Announcement {
   public var image: UIImage?
   public var duration: TimeInterval
   public var action: (() -> Void)?
+  // Closure which is called when notification is dismissed manually
+  // not by automatic timer
+  public var dismissed: (() -> Void)?
 
-  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, action: (() -> Void)? = nil) {
+  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, action: (() -> Void)? = nil, dismissed: (() -> Void)? = nil) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
     self.duration = duration
     self.action = action
+    self.dismissed = dismissed
   }
 }
 

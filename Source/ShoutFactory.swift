@@ -258,17 +258,26 @@ open class ShoutView: UIView {
       }
     } else {
       panGestureActive = false
-      let height = translation.y < -5 || shouldSilent ? 0 : internalHeight
-
+      // it was either dragged significantly up/down or timer flagged it to be closesd
+      let shouldOpen = translation.y > 5
+      let forceDismissed = translation.y < -5
+      let shouldDismiss = shouldOpen || forceDismissed || shouldSilent
+      let height = shouldDismiss ? 0 : internalHeight
+      
       subtitleLabel.numberOfLines = 2
       subtitleLabel.sizeToFit()
       
       UIView.animate(withDuration: 0.2, animations: {
         self.frame.size.height = height + Dimensions.touchOffset
       }, completion: { _ in
-          if translation.y < -5 {
-            self.completion?()
-            self.removeFromSuperview()
+        if shouldOpen {
+          self.announcement?.action?()
+        } else if forceDismissed {
+          self.announcement?.dismissed?()
+        }
+        if shouldDismiss {
+          self.completion?()
+          self.removeFromSuperview()
         }
       })
     }
