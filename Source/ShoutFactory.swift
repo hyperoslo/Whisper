@@ -19,7 +19,8 @@ open class ShoutView: UIView {
     view.backgroundColor = ColorList.Shout.background
     view.alpha = 0.98
     view.clipsToBounds = true
-
+    view.autoresizingMask = [.flexibleWidth]
+    
     return view
     }()
 
@@ -80,12 +81,14 @@ open class ShoutView: UIView {
 
   private var subtitleLabelOriginalHeight: CGFloat = 0
   private var internalHeight: CGFloat = 0
-
+  private var didRotate: Bool = false
+    
   // MARK: - Initializers
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
+    autoresizingMask = [.flexibleWidth]
     addSubview(backgroundView)
     [imageView, titleLabel, subtitleLabel, indicatorView].forEach {
       $0.autoresizingMask = []
@@ -112,6 +115,13 @@ open class ShoutView: UIView {
   deinit {
     NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
   }
+    
+  open override func layoutSubviews() {
+    super.layoutSubviews()
+    if didRotate {
+      setupFrames(resetHeight: false)
+    }
+  }
 
   // MARK: - Configuration
 
@@ -135,8 +145,6 @@ open class ShoutView: UIView {
     displayTimer.invalidate()
     displayTimer = Timer.scheduledTimer(timeInterval: announcement.duration,
       target: self, selector: #selector(ShoutView.displayTimerDidFire), userInfo: nil, repeats: false)
-
-    setupFrames()
   }
 
   open func shout(to controller: UIViewController) {
@@ -151,7 +159,9 @@ open class ShoutView: UIView {
 
   // MARK: - Setup
 
-  public func setupFrames() {
+  public func setupFrames(resetHeight: Bool = true) {
+    didRotate = false
+    
     guard let superview = superview else { return }
     
     let totalWidth = superview.frame.width
@@ -189,8 +199,9 @@ open class ShoutView: UIView {
       $0.frame.origin.y = labelY
       labelY += $0.frame.size.height + spaceBetweenLabels
     }
-    
-    frame = CGRect(x: 0, y: 0, width: totalWidth, height: containerHeight + Dimensions.touchOffset)
+    if resetHeight {
+      frame = CGRect(x: 0, y: 0, width: totalWidth, height: containerHeight + Dimensions.touchOffset)
+    }
     internalHeight = containerHeight
   }
 
@@ -287,6 +298,6 @@ open class ShoutView: UIView {
   // MARK: - Handling screen orientation
 
   func orientationDidChange() {
-    setupFrames()
+    didRotate = true
   }
 }
