@@ -168,8 +168,8 @@ open class ShoutView: UIView {
     let spaceBetweenLabels: CGFloat = 2
     let indicatorTakenHeight = Dimensions.indicatorBottomMargin + Dimensions.indicatorHeight
     
-    let zz = convert(CGRect(x: 0, y: 0, width: superview.frame.width, height: 1), to: UIApplication.shared.keyWindow)
-    let intersectsStatusBar = zz.intersects(UIApplication.shared.statusBarFrame)
+    let checkFrame = convert(CGRect(x: 0, y: 0, width: superview.frame.width, height: 1), to: UIApplication.shared.keyWindow)
+    let intersectsStatusBar = checkFrame.intersects(UIApplication.shared.statusBarFrame)
     let absoluteContentInsets: UIEdgeInsets = UIEdgeInsets(top: Dimensions.contentInsets.top + (UIApplication.shared.isStatusBarHidden || !intersectsStatusBar ? indicatorTakenHeight : 20), left: Dimensions.contentInsets.left, bottom: Dimensions.contentInsets.bottom, right: Dimensions.contentInsets.right)
     
     let textOffsetX = absoluteContentInsets.left + (imageView.image != nil ? imageView.frame.width + Dimensions.textToImageMargin : 0)
