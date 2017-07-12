@@ -6,7 +6,7 @@
 //
 //
 
-import Foundation
+import UIKit
 
 public class WindowFrameObserver: NSObject {
     static public let shared = WindowFrameObserver()
