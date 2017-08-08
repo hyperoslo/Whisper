@@ -1,4 +1,5 @@
 import UIKit
+import SDWebImage
 
 let shoutView = ShoutView()
 
@@ -126,7 +127,15 @@ open class ShoutView: UIView {
 
   open func configureView(_ announcement: Announcement) {
     self.announcement = announcement
-    imageView.image = announcement.image
+    
+    if let image = announcement.image {
+        imageView.image = image
+    }
+    
+    if let imageURL = announcement.imageURL {
+        imageView.sd_setImage(with: imageURL)
+    }
+    
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle
 

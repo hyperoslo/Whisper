@@ -14,11 +14,14 @@
 		290531131C20517E00FB382C /* WhisperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310B1C20517E00FB382C /* WhisperFactory.swift */; };
 		290531141C20517E00FB382C /* WhisperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310C1C20517E00FB382C /* WhisperView.swift */; };
 		290531151C20517E00FB382C /* WhistleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310D1C20517E00FB382C /* WhistleFactory.swift */; };
+		CF2289068B762218CECFCE29 /* Pods_Whisper_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA49227189D2B2C872DF1FF3 /* Pods_Whisper_iOS.framework */; };
 		D2D71BB81D54B62B006AB907 /* Showing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BB71D54B62B006AB907 /* Showing.swift */; };
 		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0BF73AF89B0BCDA4BF262645 /* Pods-Whisper-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Whisper-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Whisper-iOS/Pods-Whisper-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		1EF71C1686265756A240BB1C /* Pods-Whisper-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Whisper-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Whisper-iOS/Pods-Whisper-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		290530F91C20511C00FB382C /* Whisper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Whisper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		290531071C20517E00FB382C /* ColorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorList.swift; sourceTree = "<group>"; };
 		290531081C20517E00FB382C /* FontList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontList.swift; sourceTree = "<group>"; };
@@ -28,6 +31,7 @@
 		2905310C1C20517E00FB382C /* WhisperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhisperView.swift; sourceTree = "<group>"; };
 		2905310D1C20517E00FB382C /* WhistleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhistleFactory.swift; sourceTree = "<group>"; };
 		290531171C2051F400FB382C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA49227189D2B2C872DF1FF3 /* Pods_Whisper_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Whisper_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D71BB71D54B62B006AB907 /* Showing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Showing.swift; sourceTree = "<group>"; };
 		D5170D631C4955F3006F2F37 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF2289068B762218CECFCE29 /* Pods_Whisper_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +54,8 @@
 				290531161C2051F400FB382C /* SupportFiles */,
 				290531041C20517E00FB382C /* Source */,
 				290530FA1C20511C00FB382C /* Products */,
+				694FB495C872C67EFED13A33 /* Pods */,
+				F9E26F50B98C01207D9E4974 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +99,23 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
+		694FB495C872C67EFED13A33 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1EF71C1686265756A240BB1C /* Pods-Whisper-iOS.debug.xcconfig */,
+				0BF73AF89B0BCDA4BF262645 /* Pods-Whisper-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F9E26F50B98C01207D9E4974 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AA49227189D2B2C872DF1FF3 /* Pods_Whisper_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -109,10 +133,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 290531011C20511C00FB382C /* Build configuration list for PBXNativeTarget "Whisper-iOS" */;
 			buildPhases = (
+				AC6DC1DE384D394C467B9A31 /* [CP] Check Pods Manifest.lock */,
 				290530F41C20511C00FB382C /* Sources */,
 				290530F51C20511C00FB382C /* Frameworks */,
 				290530F61C20511C00FB382C /* Headers */,
 				290530F71C20511C00FB382C /* Resources */,
+				B0170D6D719E9103F90A5D62 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -165,6 +191,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AC6DC1DE384D394C467B9A31 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B0170D6D719E9103F90A5D62 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Whisper-iOS/Pods-Whisper-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		290530F41C20511C00FB382C /* Sources */ = {
@@ -282,6 +341,7 @@
 		};
 		290531021C20511C00FB382C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1EF71C1686265756A240BB1C /* Pods-Whisper-iOS.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
@@ -301,6 +361,7 @@
 		};
 		290531031C20511C00FB382C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BF73AF89B0BCDA4BF262645 /* Pods-Whisper-iOS.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
