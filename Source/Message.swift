@@ -3,16 +3,30 @@ import UIKit
 public struct Message {
 
   public var title: String
+  public var attributedTitle: NSAttributedString?
+  
   public var textColor: UIColor
   public var backgroundColor: UIColor
   public var images: [UIImage]?
 
   public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, images: [UIImage]? = nil) {
     self.title = title
+    self.attributedTitle=nil
+    
     self.textColor = textColor
     self.backgroundColor = backgroundColor
     self.images = images
   }
+    
+  public init(attributedTitle: NSAttributedString, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, images: [UIImage]? = nil) {
+    self.title = attributedTitle.string
+    self.attributedTitle=attributedTitle
+    
+    self.textColor = textColor
+    self.backgroundColor = backgroundColor
+    self.images = images
+  }
+
 }
 
 public struct Announcement {

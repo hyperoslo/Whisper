@@ -5,6 +5,7 @@ public protocol NotificationControllerDelegate: class {
 }
 
 open class WhisperView: UIView {
+  public static let titleFont=UIFont(name: "HelveticaNeue", size: 13)
 
   public struct Dimensions {
     public static let height: CGFloat = 24
@@ -18,7 +19,7 @@ open class WhisperView: UIView {
   open lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
-    label.font = UIFont(name: "HelveticaNeue", size: 13)
+    label.font = titleFont
     label.frame.size.width = UIScreen.main.bounds.width - 60
 
     return label
@@ -42,8 +43,19 @@ open class WhisperView: UIView {
     self.whisperImages = message.images
     super.init(frame: CGRect.zero)
 
-    titleLabel.text = message.title
     titleLabel.textColor = message.textColor
+    
+    if (message.attributedTitle != nil && message.attributedTitle!.length>0)
+    {
+        titleLabel.attributedText = message.attributedTitle
+        
+    }
+    else
+    {
+        titleLabel.text = message.title
+        
+    }
+    
     backgroundColor = message.backgroundColor
 
     if let images = whisperImages , images.count > 1 {
