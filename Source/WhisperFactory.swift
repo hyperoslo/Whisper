@@ -37,6 +37,14 @@ class WhisperFactory: NSObject {
 
   func craft(_ message: Message, navigationController: UINavigationController, action: WhisperAction) {
     self.navigationController = navigationController
+    
+    if (self.navigationController?.delegate != nil && !(self.navigationController?.delegate is WhisperFactory))
+    {
+        fatalError("Navigation Controller relationship is required, but delegate is already set to a different target on destination.");
+        
+    }
+    ////
+    
     self.navigationController?.delegate = self
     presentTimer.invalidate()
 
