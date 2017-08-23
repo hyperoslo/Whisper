@@ -12,6 +12,10 @@ public func show(shout announcement: Announcement, to: UIViewController, complet
   shoutView.craft(announcement, to: to, completion: completion)
 }
 
+public func showSimultaneouslyOnMultipleNavigationControllers(shout announcement: Announcement, to: UIViewController, completion: (() -> Void)? = nil) {
+  ShoutView.init().craft(announcement, to: to, completion: completion)
+}
+
 public func show(whistle murmur: Murmur, action: WhistleAction = .show(1.5)) {
   whistleFactory.whistler(murmur, action: action)
 }
