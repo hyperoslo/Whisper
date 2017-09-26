@@ -207,7 +207,7 @@ open class ShoutView: UIView {
 
   // MARK: - Timer methods
 
-  open func displayTimerDidFire() {
+    @objc open func displayTimerDidFire() {
     shouldSilent = true
 
     if panGestureActive { return }
@@ -261,7 +261,7 @@ open class ShoutView: UIView {
 
   // MARK: - Handling screen orientation
 
-  func orientationDidChange() {
+    @objc func orientationDidChange() {
     setupFrames()
   }
 }
