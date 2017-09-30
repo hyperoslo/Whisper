@@ -127,6 +127,9 @@ open class ShoutView: UIView {
   open func configureView(_ announcement: Announcement) {
     self.announcement = announcement
     imageView.image = announcement.image
+    if !announcement.roundedImage {
+        imageView.layer.cornerRadius = 0
+    }
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle
 

@@ -21,12 +21,14 @@ public struct Announcement {
   public var subtitle: String?
   public var image: UIImage?
   public var duration: TimeInterval
+  public var roundedImage: Bool
   public var action: (() -> Void)?
 
-  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, action: (() -> Void)? = nil) {
+  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, roundedImage: Bool = true, duration: TimeInterval = 2, action: (() -> Void)? = nil) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
+    self.roundedImage = roundedImage
     self.duration = duration
     self.action = action
   }
