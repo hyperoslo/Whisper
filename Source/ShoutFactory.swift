@@ -139,7 +139,12 @@ open class ShoutView: UIView {
 
   open func shout(to controller: UIViewController) {
     controller.view.addSubview(self)
-
+    
+    //check if device has notch and change frame origin
+    if #available(iOS 11.0, *), self.announcement != nil {
+        let guide = controller.view.safeAreaLayoutGuide
+        frame.origin.y = guide.layoutFrame.origin.y
+    }
     frame.size.height = 0
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = self.internalHeight + Dimensions.touchOffset

@@ -1,16 +1,16 @@
 PODS:
-  - Whisper (4.0.0)
+  - Whisper (5.0.0)
 
 DEPENDENCIES:
   - Whisper (from `../../`)
 
 EXTERNAL SOURCES:
   Whisper:
-    :path: "../../"
+    :path: ../../
 
 SPEC CHECKSUMS:
-  Whisper: 08be92623311f8e53201e62e17f6d7b9599a4714
+  Whisper: b0f581b7ad647e8dc16cd53a180e4fd6c9cdacad
 
 PODFILE CHECKSUM: e20a3f258a5cd7e57b37f62aadb18fd14d135133
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1

@@ -135,8 +135,18 @@ open class WhistleFactory: UIViewController {
     if UIApplication.shared.keyWindow != whistleWindow {
       previousKeyWindow = UIApplication.shared.keyWindow
     }
-
-    let initialOrigin = whistleWindow.frame.origin.y
+    
+    var initialOrigin: CGFloat = whistleWindow.frame.origin.y
+    
+    //add some padding between notch and nav title
+    let padding: CGFloat = 7.0
+    //print("Device type", UIDevice.current.type)
+    
+    //check if device has notch and change initialOrigin
+    if #available(iOS 11, *), UIDevice.current.orientation.isPortrait, UIDevice.current.type != Model.none {
+        let guide = view.safeAreaLayoutGuide
+        initialOrigin = whistleWindow.frame.origin.y + (guide.layoutFrame.height/2) + padding
+    }
     whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight
     whistleWindow.makeKeyAndVisible()
     UIView.animate(withDuration: 0.2, animations: {
