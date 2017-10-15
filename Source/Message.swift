@@ -3,12 +3,14 @@ import UIKit
 public struct Message {
 
   public var title: String
-  public var color: UIColor
+  public var textColor: UIColor
+  public var backgroundColor: UIColor
   public var images: [UIImage]?
 
-  public init(title: String, color: UIColor = UIColor.lightGrayColor(), images: [UIImage]? = nil) {
+  public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, images: [UIImage]? = nil) {
     self.title = title
-    self.color = color
+    self.textColor = textColor
+    self.backgroundColor = backgroundColor
     self.images = images
   }
 }
@@ -18,10 +20,10 @@ public struct Announcement {
   public var title: String
   public var subtitle: String?
   public var image: UIImage?
-  public var duration: NSTimeInterval
+  public var duration: TimeInterval
   public var action: (() -> Void)?
 
-  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: NSTimeInterval = 2, action: (() -> Void)? = nil) {
+  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, action: (() -> Void)? = nil) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
@@ -33,16 +35,16 @@ public struct Announcement {
 public struct Murmur {
 
   public var title: String
-  public var duration: NSTimeInterval
   public var backgroundColor: UIColor
   public var titleColor: UIColor
   public var font: UIFont
+  public var action: (() -> Void)?
 
-  public init(title: String, duration: NSTimeInterval = 1.5, backgroundColor: UIColor = ColorList.Whistle.background, titleColor: UIColor = ColorList.Whistle.title, font: UIFont = FontList.Whistle.title) {
+  public init(title: String, backgroundColor: UIColor = ColorList.Whistle.background, titleColor: UIColor = ColorList.Whistle.title, font: UIFont = FontList.Whistle.title, action: (() -> Void)? = nil) {
     self.title = title
-    self.duration = duration
     self.backgroundColor = backgroundColor
     self.titleColor = titleColor
     self.font = font
+    self.action = action
   }
 }

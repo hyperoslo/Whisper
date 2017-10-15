@@ -4,36 +4,35 @@ public protocol NotificationControllerDelegate: class {
   func notificationControllerWillHide()
 }
 
-public class WhisperView: UIView {
+open class WhisperView: UIView {
 
-  struct Dimensions {
-    static let height: CGFloat = 24
+  public struct Dimensions {
+    public static let height: CGFloat = 24
     static let offsetHeight: CGFloat = height * 2
     static let imageSize: CGFloat = 14
     static let loaderTitleOffset: CGFloat = 5
   }
 
-  lazy private(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
+  lazy fileprivate(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
 
-  public lazy var titleLabel: UILabel = {
+  open lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.textAlignment = .Center
-    label.textColor = UIColor.whiteColor()
+    label.textAlignment = .center
     label.font = UIFont(name: "HelveticaNeue", size: 13)
-    label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
+    label.frame.size.width = UIScreen.main.bounds.width - 60
 
     return label
     }()
 
   lazy var complementImageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFill
+    imageView.contentMode = .scaleAspectFill
 
     return imageView
     }()
 
-  public weak var delegate: NotificationControllerDelegate?
-  public var height: CGFloat
+  open weak var delegate: NotificationControllerDelegate?
+  open var height: CGFloat
   var whisperImages: [UIImage]?
 
   // MARK: - Initializers
@@ -41,12 +40,13 @@ public class WhisperView: UIView {
   init(height: CGFloat, message: Message) {
     self.height = height
     self.whisperImages = message.images
-    super.init(frame: CGRectZero)
+    super.init(frame: CGRect.zero)
 
     titleLabel.text = message.title
-    backgroundColor = message.color
+    titleLabel.textColor = message.textColor
+    backgroundColor = message.backgroundColor
 
-    if let images = whisperImages where images.count > 1 {
+    if let images = whisperImages , images.count > 1 {
       complementImageView.animationImages = images
       complementImageView.animationDuration = 0.7
       complementImageView.startAnimating()
@@ -54,7 +54,7 @@ public class WhisperView: UIView {
       complementImageView.image = whisperImages?.first
     }
 
-    frame = CGRectMake(0, height, UIScreen.mainScreen().bounds.width, Dimensions.height)
+    frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
     titleLabel.sizeToFit()

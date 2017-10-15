@@ -1,9 +1,11 @@
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
-[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
+[![CI Status](http://img.shields.io/travis/hyperoslo/Whisper.svg?style=flat)](https://travis-ci.org/hyperoslo/Whisper)
+[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
+![Swift](https://img.shields.io/badge/%20in-swift%203.0-orange.svg)
 
 ## Description :leaves:
 
@@ -33,32 +35,52 @@ All the sounds are fully customizable, from colors to fonts.
 
 Shouts have an optional action that will be called if the user taps on it, and you'll even get a message when the Shout is gone. Finally, if you want to set how long the Shout should be displayed, you have a duration property.
 
-In Whisper, there is no need to think about scroll view insets anymore, this will be handled automatically. As and added bonus, when transitioning from one view controller to another, the next controllers offset will be adjusted like you would except. It just works!
+In Whisper, there is no need to think about scroll view insets anymore, this will be handled automatically. As and added bonus, when transitioning from one view controller to another, the next controllers offset will be adjusted like you would expect. It just works!
 
 ## Usage
 
-The usage of the component is so simple, you just create a message in the case of Whisper, an announcement in the case of a Shout or a Murmur in the case of a Whistle, it's done like this:
+The usage of the component is so simple, you just create a message in the case of Whisper, an announcement in the case of a Shout or a Murmur in the case of a Whistle. Because there maybe conflict with `show` from `UIViewController`, you need to explicitly use `Whisper` namespace to call `show`
 
 ##### For a Whisper:
 
 ```swift
-let message = Message(title: "Enter your message here.", color: UIColor.redColor())
-Whisper(message, to: navigationController, action: .Present)
+let message = Message(title: "Enter your message here.", backgroundColor: .red)
+
+// Show and hide a message after delay
+Whisper.show(whisper: message, to: navigationController, action: .show)
+
+// Present a permanent message
+Whisper.show(whisper: message, to: navigationController, action: .present)
+
+// Hide a message
+Whisper.hide(whisperFrom: navigationController)
 ```
 
 ##### For a Shout:
 
 ```swift
 let announcement = Announcement(title: "Your title", subtitle: "Your subtitle", image: UIImage(named: "avatar"))
-Shout(announcement, to: self)
+Whisper.show(shout: announcement, to: navigationController, completion: {
+  print("The shout was silent.")
+})
 ```
 
 ##### For a Whistle:
 
 ```swift
 let murmur = Murmur(title: "This is a small whistle...")
-Whistle(murmur)
+
+// Show and hide a message after delay
+Whisper.show(whistle: murmur, action: .show(0.5))
+
+// Present a permanent status bar message
+Whisper.show(whistle: murmur, action: .present)
+
+// Hide a message
+Whisper.hide(whistleAfter: 3)
 ```
+
+If you want to use **Whisper** with Objective-C, you can find information about it [here](https://github.com/hyperoslo/Whisper/wiki/Using-Whisper-in-Objective-C).
 
 ## Installation
 
@@ -91,7 +113,7 @@ In the future the idea is to keep improving and add some features:
 
 ## Contribute
 
-We would love you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
+We would love for you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
 
 ## License
 
