@@ -174,27 +174,18 @@ open class ShoutView: UIView {
     if subtitleLabel.text?.isEmpty ?? true {
       titleLabel.center.y = imageView.center.y - 2.5
     }
-    if #available(iOS 11.0, *) {
-      frame = CGRect(x: 0, y: self.safeAreaInsets.top, width: totalWidth, height: internalHeight + Dimensions.touchOffset)    
-    } else {
-      frame = CGRect(x: 0, y: 0, width: totalWidth, height: internalHeight + Dimensions.touchOffset)  
-    }
+
+    frame = CGRect(x: 0, y: safeYCoordinate,
+                   width: totalWidth, height: internalHeight + Dimensions.touchOffset)
   }
 
   // MARK: - Frame
 
   open override var frame: CGRect {
     didSet {
-      if #available(iOS 11.0, *) {
-			backgroundView.frame = CGRect(x: 0, y: self.safeAreaInsets.top,
-										  width: frame.size.width,
-										  height: frame.size.height - Dimensions.touchOffset)
-		} else {
-			// Fallback on earlier versions
-			backgroundView.frame = CGRect(x: 0, y: 0,
-										  width: frame.size.width,
-										  height: frame.size.height - Dimensions.touchOffset)
-		}
+      backgroundView.frame = CGRect(x: 0, y: safeYCoordinate,
+                                    width: frame.size.width,
+                                    height: frame.size.height - Dimensions.touchOffset)
 
       indicatorView.frame = CGRect(x: (backgroundView.frame.size.width - Dimensions.indicatorWidth) / 2,
                                    y: backgroundView.frame.height - Dimensions.indicatorHeight - 5,

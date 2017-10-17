@@ -14,6 +14,7 @@
 		290531131C20517E00FB382C /* WhisperFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310B1C20517E00FB382C /* WhisperFactory.swift */; };
 		290531141C20517E00FB382C /* WhisperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310C1C20517E00FB382C /* WhisperView.swift */; };
 		290531151C20517E00FB382C /* WhistleFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2905310D1C20517E00FB382C /* WhistleFactory.swift */; };
+		BDA2138F1F95D75F003FBC71 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA2138E1F95D75F003FBC71 /* UIView+Extensions.swift */; };
 		D2D71BB81D54B62B006AB907 /* Showing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D71BB71D54B62B006AB907 /* Showing.swift */; };
 		D5170D641C4955F3006F2F37 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5170D631C4955F3006F2F37 /* Config.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 		2905310C1C20517E00FB382C /* WhisperView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhisperView.swift; sourceTree = "<group>"; };
 		2905310D1C20517E00FB382C /* WhistleFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhistleFactory.swift; sourceTree = "<group>"; };
 		290531171C2051F400FB382C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDA2138E1F95D75F003FBC71 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		D2D71BB71D54B62B006AB907 /* Showing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Showing.swift; sourceTree = "<group>"; };
 		D5170D631C4955F3006F2F37 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +73,7 @@
 				2905310C1C20517E00FB382C /* WhisperView.swift */,
 				2905310D1C20517E00FB382C /* WhistleFactory.swift */,
 				D5170D631C4955F3006F2F37 /* Config.swift */,
+				BDA2138E1F95D75F003FBC71 /* UIView+Extensions.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				290531121C20517E00FB382C /* ShoutFactory.swift in Sources */,
 				290531141C20517E00FB382C /* WhisperView.swift in Sources */,
+				BDA2138F1F95D75F003FBC71 /* UIView+Extensions.swift in Sources */,
 				290531151C20517E00FB382C /* WhistleFactory.swift in Sources */,
 				290531111C20517E00FB382C /* Message.swift in Sources */,
 				290531131C20517E00FB382C /* WhisperFactory.swift in Sources */,
