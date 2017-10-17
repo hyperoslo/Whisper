@@ -1,5 +1,5 @@
-osx_image: xcode8
-language: objective-c
+osx_image: xcode9
+language: swift
 
 script:
 - xcodebuild clean build -project Whisper.xcodeproj -scheme "Whisper-iOS" -sdk iphonesimulator
