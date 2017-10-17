@@ -116,14 +116,9 @@ open class WhistleFactory: UIViewController {
       titleLabel.sizeToFit()
     }
 
-    if #available(iOS 11.0, *) {
-		whistleWindow.frame = CGRect(x: 0, y: self.view.safeAreaInsets.top, width: labelWidth,
-									 height: titleLabelHeight)
-	} else {
-		// Fallback on earlier versions
-    whistleWindow.frame = CGRect(x: 0, y: 0, width: labelWidth,
-      height: titleLabelHeight)
-	}
+    whistleWindow.frame = CGRect(x: 0, y: view.safeYCoordinate,
+                                 width: labelWidth,
+                                 height: titleLabelHeight)
     view.frame = whistleWindow.bounds
     titleLabel.frame = view.bounds
   }
