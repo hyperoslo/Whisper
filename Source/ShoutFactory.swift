@@ -175,14 +175,15 @@ open class ShoutView: UIView {
       titleLabel.center.y = imageView.center.y - 2.5
     }
 
-    frame = CGRect(x: 0, y: 0, width: totalWidth, height: internalHeight + Dimensions.touchOffset)
+    frame = CGRect(x: 0, y: safeYCoordinate,
+                   width: totalWidth, height: internalHeight + Dimensions.touchOffset)
   }
 
   // MARK: - Frame
 
   open override var frame: CGRect {
     didSet {
-      backgroundView.frame = CGRect(x: 0, y: 0,
+      backgroundView.frame = CGRect(x: 0, y: safeYCoordinate,
                                     width: frame.size.width,
                                     height: frame.size.height - Dimensions.touchOffset)
 
