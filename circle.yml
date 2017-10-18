@@ -1,0 +1,7 @@
+machine:
+  xcode:
+    version: "9.0"
+
+test:
+  override:
+    - set -o pipefail && xcodebuild -project Whisper.xcodeproj -scheme "Whisper-iOS" -sdk iphonesimulator clean build
