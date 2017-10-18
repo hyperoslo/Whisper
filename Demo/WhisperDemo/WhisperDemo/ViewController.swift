@@ -124,7 +124,7 @@ class ViewController: UIViewController {
 
   // MARK: Action methods
 
-  func presentButtonDidPress(_ button: UIButton) {
+  @objc func presentButtonDidPress(_ button: UIButton) {
     guard let navigationController = navigationController else { return }
     let message = Message(title: "This message will silent in 3 seconds.", backgroundColor: UIColor(red:0.89, green:0.09, blue:0.44, alpha:1))
 
@@ -132,14 +132,14 @@ class ViewController: UIViewController {
     hide(whisperFrom: navigationController, after: 3)
   }
 
-  func showButtonDidPress(_ button: UIButton) {
+  @objc func showButtonDidPress(_ button: UIButton) {
     guard let navigationController = navigationController else { return }
 
     let message = Message(title: "Showing all the things.", backgroundColor: UIColor.black)
     Whisper.show(whisper: message, to: navigationController)
   }
 
-  func presentPermanentButtonDidPress(_ button: UIButton) {
+  @objc func presentPermanentButtonDidPress(_ button: UIButton) {
     guard let navigationController = navigationController else { return }
 
     let message = Message(title: "This is a permanent Whisper.", textColor: UIColor(red:0.87, green:0.34, blue:0.05, alpha:1),
@@ -147,7 +147,7 @@ class ViewController: UIViewController {
     Whisper.show(whisper: message, to: navigationController, action: .present)
   }
 
-  func presentNotificationDidPress(_ button: UIButton) {
+  @objc func presentNotificationDidPress(_ button: UIButton) {
     let announcement = Announcement(title: "Ramon Gilabert", subtitle: "Vadym Markov just commented your post: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'", image: UIImage(named: "avatar"), duration: 30)
 
     if let navigationController = navigationController {
@@ -157,19 +157,19 @@ class ViewController: UIViewController {
     }
   }
 
-  func nextButtonDidPress() {
+  @objc func nextButtonDidPress() {
     let controller = TableViewController()
     navigationController?.pushViewController(controller, animated: true)
   }
 
-  func showWhistleButtonDidPress(_ button: UIButton) {
+  @objc func showWhistleButtonDidPress(_ button: UIButton) {
     let murmur = Murmur(title: "This is a small whistle...",
       backgroundColor: UIColor(red: 0.975, green: 0.975, blue: 0.975, alpha: 1))
 
     Whisper.show(whistle: murmur)
   }
 
-  func presentWhistleButtonDidPress(_ button: UIButton) {
+  @objc func presentWhistleButtonDidPress(_ button: UIButton) {
     let murmur = Murmur(title: "This is a permanent whistle...",
                         backgroundColor: UIColor.red,
                         titleColor: UIColor.white)
