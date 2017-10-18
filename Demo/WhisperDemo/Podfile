@@ -1,9 +1,6 @@
-source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
 
-platform :ios, '8.0'
-
-use_frameworks!
-inhibit_all_warnings!
-
-pod 'Whisper', path: '../../'
-target 'WhisperDemo'
+target 'WhisperDemo' do
+  use_frameworks!
+  pod 'Whisper', path: '../../'
+end
