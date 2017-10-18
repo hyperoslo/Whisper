@@ -1,7 +1,6 @@
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
 [![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
-[![CI Status](http://img.shields.io/travis/hyperoslo/Whisper.svg?style=flat)](https://travis-ci.org/hyperoslo/Whisper)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
