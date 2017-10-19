@@ -139,7 +139,7 @@ open class WhistleFactory: UIViewController {
 
     let initialOrigin = whistleWindow.frame.origin.y
     whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight
-    whistleWindow.makeKeyAndVisible()
+    whistleWindow.isHidden = false
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
     })
@@ -151,7 +151,7 @@ open class WhistleFactory: UIViewController {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
         if let window = self.previousKeyWindow {
-          window.makeKeyAndVisible()
+          window.isHidden = false
           self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
           self.previousKeyWindow = nil
           window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
