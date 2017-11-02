@@ -11,6 +11,17 @@ open class WhistleFactory: UIViewController {
 
   open lazy var whistleWindow: UIWindow = UIWindow()
 
+  public struct Dimensions {
+
+    static var notchHeight: CGFloat {
+      if UIApplication.shared.statusBarFrame.height > 20 {
+        return 32.0
+      } else {
+        return 0.0
+      }
+    }
+  }
+
   open lazy var titleLabelHeight = CGFloat(20.0)
 
   open lazy var titleLabel: UILabel = {
@@ -116,11 +127,17 @@ open class WhistleFactory: UIViewController {
       titleLabel.sizeToFit()
     }
 
-    whistleWindow.frame = CGRect(x: 0, y: view.safeYCoordinate,
+    whistleWindow.frame = CGRect(x: 0, y: 0,
                                  width: labelWidth,
-                                 height: titleLabelHeight)
+                                 height: titleLabelHeight + Dimensions.notchHeight)
     view.frame = whistleWindow.bounds
-    titleLabel.frame = view.bounds
+
+    titleLabel.frame = CGRect(
+        x: 0.0,
+        y: Dimensions.notchHeight,
+        width: view.bounds.width,
+        height: titleLabelHeight
+    )
   }
 
   // MARK: - Movement methods
@@ -138,7 +155,7 @@ open class WhistleFactory: UIViewController {
     }
 
     let initialOrigin = whistleWindow.frame.origin.y
-    whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight
+    whistleWindow.frame.origin.y = initialOrigin - titleLabelHeight - Dimensions.notchHeight
     whistleWindow.isHidden = false
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
@@ -146,7 +163,7 @@ open class WhistleFactory: UIViewController {
   }
 
   public func hide() {
-    let finalOrigin = view.frame.origin.y - titleLabelHeight
+    let finalOrigin = view.frame.origin.y - titleLabelHeight - Dimensions.notchHeight
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = finalOrigin
       }, completion: { _ in
