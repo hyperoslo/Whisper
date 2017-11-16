@@ -99,13 +99,21 @@ open class WhistleFactory: UIViewController {
     let defaultHeight = titleLabelHeight
 
     if let text = titleLabel.text {
+      #if swift(>=4.0)
       let neededDimensions =
         NSString(string: text).boundingRect(
-          with: CGSize(width: labelWidth, height: CGFloat.infinity),
-          options: NSStringDrawingOptions.usesLineFragmentOrigin,
+          with: CGSize(width: labelWidth, height: .infinity),
+          options: .usesLineFragmentOrigin,
           attributes: [NSAttributedStringKey.font: titleLabel.font],
-          context: nil
-        )
+          context: nil)
+      #else
+      let neededDimensions =
+        NSString(string: text).boundingRect(
+          with: CGSize(width: labelWidth, height: .infinity),
+          options: .usesLineFragmentOrigin,
+          attributes: [NSFontAttributeName: titleLabel.font],
+          context: nil)
+      #endif
       titleLabelHeight = CGFloat(neededDimensions.size.height)
       titleLabel.numberOfLines = 0 // Allows unwrapping
 
