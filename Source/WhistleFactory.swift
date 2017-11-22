@@ -96,9 +96,12 @@ open class WhistleFactory: UIViewController {
   }
 
   func moveWindowToFront() {
-    let currentStatusBarStyle = UIApplication.shared.statusBarStyle
     whistleWindow.windowLevel = view.isiPhoneX ? UIWindowLevelNormal : UIWindowLevelStatusBar
-    UIApplication.shared.setStatusBarStyle(currentStatusBarStyle, animated: false)
+    setNeedsStatusBarAppearanceUpdate()
+  }
+
+  open override var preferredStatusBarStyle: UIStatusBarStyle {
+    return UIApplication.shared.statusBarStyle
   }
 
   open func setupFrames() {
