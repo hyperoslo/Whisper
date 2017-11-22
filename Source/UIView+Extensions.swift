@@ -13,6 +13,6 @@ extension UIView {
   }
 
   var isiPhoneX: Bool {
-    return safeYCoordinate > 0
+    return safeYCoordinate > 20
   }
 }
