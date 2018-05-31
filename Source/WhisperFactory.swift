@@ -28,11 +28,14 @@ class WhisperFactory: NSObject {
 
   override init() {
     super.init()
+    WindowFrameObserver.shared.startObserving()
+    
     NotificationCenter.default.addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(WhisperFactory.orientationDidChange), name: NSNotification.Name(rawValue: Notifications.windowFrameChanged), object: nil)
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.removeObserver(self)
   }
 
   func craft(_ message: Message, navigationController: UINavigationController, action: WhisperAction) {
@@ -265,7 +268,7 @@ class WhisperFactory: NSObject {
       whisper.frame = CGRect(
         x: whisper.frame.origin.x,
         y: maximumY,
-        width: UIScreen.main.bounds.width,
+        width: UIApplication.shared.delegate?.window??.frame.width ?? UIScreen.main.bounds.width,
         height: whisper.frame.size.height)
       whisper.setupFrames()
     }

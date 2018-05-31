@@ -8,7 +8,7 @@ public enum WhistleAction {
 let whistleFactory = WhistleFactory()
 
 open class WhistleFactory: UIViewController {
-
+    
   open lazy var whistleWindow: UIWindow = UIWindow()
 
   public struct Dimensions {
@@ -48,6 +48,8 @@ open class WhistleFactory: UIViewController {
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nil, bundle: nil)
+    
+    WindowFrameObserver.shared.startObserving()
 
     setupWindow()
     view.clipsToBounds = true
@@ -56,6 +58,7 @@ open class WhistleFactory: UIViewController {
     view.addGestureRecognizer(tapGestureRecognizer)
 
     NotificationCenter.default.addObserver(self, selector: #selector(WhistleFactory.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(WhistleFactory.setupFrames), name: NSNotification.Name(rawValue: Notifications.windowFrameChanged), object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -63,7 +66,7 @@ open class WhistleFactory: UIViewController {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.removeObserver(self)
   }
 
   // MARK: - Configuration
@@ -102,11 +105,11 @@ open class WhistleFactory: UIViewController {
   }
 
   open func setupFrames() {
-    whistleWindow = UIWindow()
+    //whistleWindow = UIWindow()
 
-    setupWindow()
+    //setupWindow()
 
-    let labelWidth = UIScreen.main.bounds.width
+    let labelWidth = UIApplication.shared.delegate?.window??.frame.width ?? UIScreen.main.bounds.width
     let defaultHeight = titleLabelHeight
 
     if let text = titleLabel.text {
@@ -190,7 +193,7 @@ open class WhistleFactory: UIViewController {
     @objc func orientationDidChange() {
     if whistleWindow.isKeyWindow {
       setupFrames()
-      hide()
+      //hide()
     }
   }
     

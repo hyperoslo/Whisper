@@ -1,4 +1,5 @@
 import UIKit
+import Whisper
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,8 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow()
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
-
+    
     return true
   }
 }
-

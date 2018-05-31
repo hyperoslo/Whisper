@@ -85,7 +85,8 @@ open class ShoutView: UIView {
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
-
+    WindowFrameObserver.shared.startObserving()
+    
     addSubview(backgroundView)
     [imageView, titleLabel, subtitleLabel, indicatorView].forEach {
       $0.autoresizingMask = []
@@ -103,6 +104,7 @@ open class ShoutView: UIView {
     addGestureRecognizer(panGestureRecognizer)
 
     NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.setupFrames), name: NSNotification.Name(rawValue: Notifications.windowFrameChanged), object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -110,7 +112,7 @@ open class ShoutView: UIView {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.removeObserver(self)
   }
 
   // MARK: - Configuration
@@ -151,7 +153,7 @@ open class ShoutView: UIView {
   public func setupFrames() {
     internalHeight = (UIApplication.shared.isStatusBarHidden ? 55 : 65)
 
-    let totalWidth = UIScreen.main.bounds.width
+    let totalWidth = UIApplication.shared.delegate?.window??.frame.width ?? UIScreen.main.bounds.width
     let offset: CGFloat = UIApplication.shared.isStatusBarHidden ? 2.5 : 5
     let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
     let imageSize: CGFloat = imageView.image != nil ? Dimensions.imageSize : 0
