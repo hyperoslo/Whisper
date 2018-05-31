@@ -104,7 +104,7 @@ open class WhistleFactory: UIViewController {
     UIApplication.shared.setStatusBarStyle(currentStatusBarStyle, animated: false)
   }
 
-  open func setupFrames() {
+  @objc open func setupFrames() {
     //whistleWindow = UIWindow()
 
     //setupWindow()

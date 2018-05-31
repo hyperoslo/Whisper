@@ -29,7 +29,7 @@ public class WindowFrameObserver: NSObject {
         }
     }
     
-    public func stopObserving() {
+  @objc public func stopObserving() {
         isObserving = false
         if let window = UIApplication.shared.delegate?.window {
             window?.removeObserver(self, forKeyPath: "frame")
