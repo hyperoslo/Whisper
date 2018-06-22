@@ -143,7 +143,25 @@ open class ShoutView: UIView {
     frame.size.height = 0
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = self.internalHeight + Dimensions.touchOffset
-    })
+    }) { _ in UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self) }
+  }
+
+  // MARK: - Accessibility
+
+  open override func accessibilityPerformEscape() -> Bool {
+    self.silent()
+    
+    return true
+  }
+
+  open override var isAccessibilityElement: Bool {
+    get { return true }
+    set {}
+  }
+
+  open override var accessibilityLabel: String? {
+    get { return "\(titleLabel.text ?? ""): \(subtitleLabel.text ?? "")" }
+    set {}
   }
 
   // MARK: - Setup
@@ -203,6 +221,7 @@ open class ShoutView: UIView {
         self.completion?()
         self.displayTimer.invalidate()
         self.removeFromSuperview()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     })
   }
 
