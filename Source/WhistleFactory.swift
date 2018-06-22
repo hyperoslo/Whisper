@@ -162,7 +162,7 @@ open class WhistleFactory: UIViewController {
     whistleWindow.isHidden = false
     UIView.animate(withDuration: 0.2, animations: {
       self.whistleWindow.frame.origin.y = initialOrigin
-    })
+    }) { _ in UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.whistleWindow) }
   }
 
   public func hide() {
@@ -176,6 +176,7 @@ open class WhistleFactory: UIViewController {
           self.previousKeyWindow = nil
           window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
         }
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self)
     })
   }
 
