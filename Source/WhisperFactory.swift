@@ -117,7 +117,7 @@ class WhisperFactory: NSObject {
 
         subview.alpha = 1
       }
-    })
+    }) { _ in UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.whisperView) }
   }
 
   func showView() {
@@ -137,6 +137,7 @@ class WhisperFactory: NSObject {
       }, completion: { _ in
         self.delayTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self,
           selector: #selector(WhisperFactory.delayFired(_:)), userInfo: nil, repeats: false)
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.whisperView)
     })
   }
 
@@ -155,6 +156,7 @@ class WhisperFactory: NSObject {
 
     presentTimer = Timer.scheduledTimer(timeInterval: AnimationTiming.movement * 1.1, target: self,
       selector: #selector(WhisperFactory.presentFired(_:)), userInfo: array, repeats: false)
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.whisperView)
   }
 
   func hideView() {
@@ -168,6 +170,7 @@ class WhisperFactory: NSObject {
       }
       }, completion: { _ in
         self.whisperView.removeFromSuperview()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.whisperView)
     })
   }
 
