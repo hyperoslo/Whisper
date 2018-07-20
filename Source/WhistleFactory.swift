@@ -12,9 +12,12 @@ open class WhistleFactory: UIViewController {
   open lazy var whistleWindow: UIWindow = UIWindow()
 
   public struct Dimensions {
-
     static var notchHeight: CGFloat {
-      if UIApplication.shared.statusBarFrame.height > 20 {
+        var safeAreaInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0) //Default insets to zero
+        if #available(iOS 11, *), let window = UIApplication.shared.keyWindow {
+            safeAreaInsets = window.safeAreaInsets
+        }
+      if safeAreaInsets.top > 20 {
         return 32.0
       } else {
         return 0.0
