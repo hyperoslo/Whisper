@@ -1,3 +1,5 @@
+⚠️ DEPRECATED, NO LONGER MAINTAINED
+
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
 ![CircleCI](https://circleci.com/gh/hyperoslo/Whisper.png)
