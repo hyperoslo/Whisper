@@ -152,7 +152,6 @@
 				29AD42971BBC2BD2004292F1 /* Frameworks */,
 				29AD42981BBC2BD2004292F1 /* Resources */,
 				D5B676FD334912E862F55066 /* [CP] Embed Pods Frameworks */,
-				BB4915A56966DA1B990596E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -224,21 +223,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BB4915A56966DA1B990596E3 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C522021051BE11D3DAB44930 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
