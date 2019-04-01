@@ -55,7 +55,7 @@ open class WhistleFactory: UIViewController {
     
     view.addGestureRecognizer(tapGestureRecognizer)
 
-    NotificationCenter.default.addObserver(self, selector: #selector(WhistleFactory.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(WhistleFactory.orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -63,7 +63,7 @@ open class WhistleFactory: UIViewController {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
   }
 
   // MARK: - Configuration
@@ -96,7 +96,7 @@ open class WhistleFactory: UIViewController {
   }
 
   func moveWindowToFront() {
-    whistleWindow.windowLevel = view.isiPhoneX ? UIWindowLevelNormal : UIWindowLevelStatusBar
+    whistleWindow.windowLevel = view.isiPhoneX ? UIWindow.Level.normal : UIWindow.Level.statusBar
     setNeedsStatusBarAppearanceUpdate()
   }
 
@@ -117,7 +117,7 @@ open class WhistleFactory: UIViewController {
         NSString(string: text).boundingRect(
           with: CGSize(width: labelWidth, height: CGFloat.infinity),
           options: NSStringDrawingOptions.usesLineFragmentOrigin,
-          attributes: [NSAttributedStringKey.font: titleLabel.font],
+          attributes: [NSAttributedString.Key.font: titleLabel.font],
           context: nil
         )
       titleLabelHeight = CGFloat(neededDimensions.size.height)
@@ -172,7 +172,7 @@ open class WhistleFactory: UIViewController {
       }, completion: { _ in
         if let window = self.previousKeyWindow {
           window.isHidden = false
-          self.whistleWindow.windowLevel = UIWindowLevelNormal - 1
+          self.whistleWindow.windowLevel = UIWindow.Level.normal - 1
           self.previousKeyWindow = nil
           window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
         }

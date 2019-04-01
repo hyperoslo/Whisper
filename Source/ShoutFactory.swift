@@ -103,7 +103,7 @@ open class ShoutView: UIView {
         backgroundView.addGestureRecognizer(tapGestureRecognizer)
         addGestureRecognizer(panGestureRecognizer)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ShoutView.orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -111,7 +111,7 @@ open class ShoutView: UIView {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     // MARK: - Configuration
@@ -141,10 +141,26 @@ open class ShoutView: UIView {
         button.addTarget(self, action: #selector(tapGestureAction), for: .touchUpInside)
         button.backgroundColor = .clear
         self.addSubview(button)
-        button.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        button.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        button.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        if #available(iOS 9.0, *) {
+            button.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 9.0, *) {
+            button.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 9.0, *) {
+            button.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 9.0, *) {
+            button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     @objc func tapGestureAction() {
