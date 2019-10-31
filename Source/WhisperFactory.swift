@@ -295,7 +295,7 @@ extension WhisperFactory: UINavigationControllerDelegate {
     for subview in navigationController.navigationBar.subviews where subview is WhisperView {
       moveControllerViews(true)
 
-      if let index = navigationController.viewControllers.index(of: viewController) , index > 0 {
+        if let index = navigationController.viewControllers.firstIndex(of: viewController) , index > 0 {
         edgeInsetHeight = -WhisperView.Dimensions.height
         performControllerMove(navigationController.viewControllers[Int(index) - 1])
         break
