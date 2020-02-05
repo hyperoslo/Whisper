@@ -1,4 +1,4 @@
-⚠️ DEPRECATED, NO LONGER MAINTAINED
+⚠️ UPDATED FOR SWIFT 5, iOS 13
 
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
