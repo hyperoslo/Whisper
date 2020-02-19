@@ -21,7 +21,7 @@ class ViewController: UIViewController {
   lazy var presentButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(presentButtonDidPress(_:)), for: .touchUpInside)
-    button.setTitle("Present and silent", for: UIControlState())
+    button.setTitle("Present and silent", for: UIControl.State())
 
     return button
     }()
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
   lazy var showButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(showButtonDidPress(_:)), for: .touchUpInside)
-    button.setTitle("Show", for: UIControlState())
+    button.setTitle("Show", for: UIControl.State())
 
     return button
     }()
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
   lazy var presentPermanentButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(presentPermanentButtonDidPress(_:)), for: .touchUpInside)
-    button.setTitle("Present permanent Whisper", for: UIControlState())
+    button.setTitle("Present permanent Whisper", for: UIControl.State())
 
     return button
     }()
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
   lazy var notificationButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(presentNotificationDidPress(_:)), for: .touchUpInside)
-    button.setTitle("Notification", for: UIControlState())
+    button.setTitle("Notification", for: UIControl.State())
 
     return button
     }()
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
   lazy var showWhistleButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(showWhistleButtonDidPress(_:)), for: .touchUpInside)
-    button.setTitle("Show Whistle", for: UIControlState())
+    button.setTitle("Show Whistle", for: UIControl.State())
 
     return button
     }()
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
   lazy var presentWhistleButton: UIButton = { [unowned self] in
     let button = UIButton()
     button.addTarget(self, action: #selector(presentWhistleButtonDidPress(_:)), for: .touchUpInside)
-    button.setTitle("Present permanent Whistle", for: UIControlState())
+    button.setTitle("Present permanent Whistle", for: UIControl.State())
 
     return button
     }()
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
 
     [presentButton, showButton, presentPermanentButton,
       notificationButton, showWhistleButton, presentWhistleButton].forEach {
-        $0.setTitleColor(UIColor.gray, for: UIControlState())
+        $0.setTitleColor(UIColor.gray, for: UIControl.State())
         $0.layer.borderColor = UIColor.gray.cgColor
         $0.layer.borderWidth = 1.5
         $0.layer.cornerRadius = 7.5
