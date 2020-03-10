@@ -130,7 +130,7 @@ open class ShoutView: UIView {
     titleLabel.text = announcement.title
     subtitleLabel.text = announcement.subtitle
     if let identifier = announcement.accessibilityIdentifier {
-        accessibilityIdentifier = identifier
+        titleLabel.accessibilityIdentifier = identifier
     }
     displayTimer.invalidate()
     displayTimer = Timer.scheduledTimer(timeInterval: announcement.duration,

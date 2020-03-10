@@ -58,7 +58,7 @@ open class WhisperView: UIView {
     for subview in transformViews { addSubview(subview) }
 
     if let identifier = message.accessibilityIdentifier {
-        accessibilityIdentifier = identifier
+        titleLabel.accessibilityIdentifier = identifier
     }
     titleLabel.sizeToFit()
     setupFrames()
