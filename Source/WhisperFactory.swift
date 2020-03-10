@@ -151,6 +151,9 @@ class WhisperFactory: NSObject {
     let action = action.rawValue
 
     var array = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "action": action] as [String : Any]
+    if let accessibilityIdentifier = message.accessibilityIdentifier {
+        array["accessibilityIdentifier"] = accessibilityIdentifier
+    }
     if let images = message.images { array["images"] = images }
 
     presentTimer = Timer.scheduledTimer(timeInterval: AnimationTiming.movement * 1.1, target: self,
@@ -183,6 +186,7 @@ class WhisperFactory: NSObject {
       let title = userInfo["title"] as? String,
       let textColor = userInfo["textColor"] as? UIColor,
       let backgroundColor = userInfo["backgroundColor"] as? UIColor,
+      let accessibilityIdentifier = userInfo["accessibilityIdentifier"] as? String?,
       let actionString = userInfo["action"] as? String else { return }
 
     var images: [UIImage]? = nil
@@ -190,7 +194,7 @@ class WhisperFactory: NSObject {
     if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
 
     let action = WhisperAction(rawValue: actionString)
-    let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images)
+    let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images, accessibilityIdentifier: accessibilityIdentifier)
 
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
     navigationController.navigationBar.addSubview(whisperView)
