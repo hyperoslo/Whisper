@@ -6,12 +6,14 @@ public struct Message {
   public var textColor: UIColor
   public var backgroundColor: UIColor
   public var images: [UIImage]?
+  public var accessibilityIdentifier: String?
 
-  public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, images: [UIImage]? = nil) {
+  public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, images: [UIImage]? = nil, accessibilityIdentifier: String? = nil) {
     self.title = title
     self.textColor = textColor
     self.backgroundColor = backgroundColor
     self.images = images
+    self.accessibilityIdentifier = accessibilityIdentifier
   }
 }
 
@@ -22,12 +24,14 @@ public struct Announcement {
   public var image: UIImage?
   public var duration: TimeInterval
   public var action: (() -> Void)?
+  public var accessibilityIdentifier: String?
 
-  public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, action: (() -> Void)? = nil) {
+    public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, accessibilityIdentifier: String? = nil, action: (() -> Void)? = nil) {
     self.title = title
     self.subtitle = subtitle
     self.image = image
     self.duration = duration
+    self.accessibilityIdentifier = accessibilityIdentifier
     self.action = action
   }
 }
