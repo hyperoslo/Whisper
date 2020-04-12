@@ -280,7 +280,7 @@ extension WhisperFactory: UINavigationControllerDelegate {
     var maximumY = navigationController.navigationBar.frame.maxY - UIApplication.shared.statusBarFrame.height
 
     for subview in navigationController.navigationBar.subviews {
-        if subview is WhisperView { navigationController.navigationBar.bringSubviewToFront(subview) }
+      if subview is WhisperView { navigationController.navigationBar.bringSubviewToFront(subview) }
 
       if subview.frame.maxY > maximumY && !(subview is WhisperView) {
         maximumY = subview.frame.maxY
@@ -295,7 +295,7 @@ extension WhisperFactory: UINavigationControllerDelegate {
     for subview in navigationController.navigationBar.subviews where subview is WhisperView {
       moveControllerViews(true)
 
-      if let index = navigationController.viewControllers.index(of: viewController) , index > 0 {
+      if let index = navigationController.viewControllers.firstIndex(of: viewController) , index > 0 {
         edgeInsetHeight = -WhisperView.Dimensions.height
         performControllerMove(navigationController.viewControllers[Int(index) - 1])
         break
