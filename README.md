@@ -1,13 +1,8 @@
-⚠️ DEPRECATED, NO LONGER MAINTAINED
-
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
 ![CircleCI](https://circleci.com/gh/hyperoslo/Whisper.png)
-[![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
-[![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
-![Swift](https://img.shields.io/badge/%20in-swift%204.0-orange.svg)
 
 ## Description :leaves:
 
