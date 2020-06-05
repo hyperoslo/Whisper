@@ -21,6 +21,7 @@ public struct Announcement {
   public var subtitle: String?
   public var image: UIImage?
   public var duration: TimeInterval
+  public var notifData: [AnyHashable : Any]?
   public var action: (() -> Void)?
 
   public init(title: String, subtitle: String? = nil, image: UIImage? = nil, duration: TimeInterval = 2, action: (() -> Void)? = nil) {
