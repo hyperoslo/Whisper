@@ -13,7 +13,7 @@
 		29AD42A01BBC2BD2004292F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AD429F1BBC2BD2004292F1 /* ViewController.swift */; };
 		29AD42A51BBC2BD2004292F1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A41BBC2BD2004292F1 /* Assets.xcassets */; };
 		29AD42A81BBC2BD2004292F1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29AD42A61BBC2BD2004292F1 /* LaunchScreen.storyboard */; };
-		F0A980C33596AF684B3D9EB0 /* Pods_WhisperDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9E11F8DF355CB269D58C5F /* Pods_WhisperDemo.framework */; };
+		D5F89D6C6F893B668C1E0914 /* Pods_WhisperDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BD174320F91379408D99AF0 /* Pods_WhisperDemo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,9 +38,9 @@
 		29AD42A71BBC2BD2004292F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29AD42A91BBC2BD2004292F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F0DEAB1F8C735F802579CE1 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD9E11F8DF355CB269D58C5F /* Pods_WhisperDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhisperDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B056A0C0A940EF3C92E08D24 /* Pods-WhisperDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhisperDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		EF03BCFAFBE8B2FA7C98C617 /* Pods-WhisperDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhisperDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo.release.xcconfig"; sourceTree = "<group>"; };
+		8BD174320F91379408D99AF0 /* Pods_WhisperDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WhisperDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4A71338F3DF190292DD104D /* Pods-WhisperDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhisperDemo.release.xcconfig"; path = "Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo.release.xcconfig"; sourceTree = "<group>"; };
+		D9E335AA186045DCD2BC50D5 /* Pods-WhisperDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WhisperDemo.debug.xcconfig"; path = "Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0A980C33596AF684B3D9EB0 /* Pods_WhisperDemo.framework in Frameworks */,
+				D5F89D6C6F893B668C1E0914 /* Pods_WhisperDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,7 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				6F0DEAB1F8C735F802579CE1 /* Pods.framework */,
-				AD9E11F8DF355CB269D58C5F /* Pods_WhisperDemo.framework */,
+				8BD174320F91379408D99AF0 /* Pods_WhisperDemo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -87,7 +87,7 @@
 				290531401C206A6400FB382C /* WhisperTests */,
 				29AD429B1BBC2BD2004292F1 /* Products */,
 				029D90BE27CCA78731543D55 /* Frameworks */,
-				92E7BFA29EF63C51C080FD06 /* Pods */,
+				420939CAC7B4A8D0B642B280 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,13 +113,13 @@
 			path = WhisperDemo;
 			sourceTree = "<group>";
 		};
-		92E7BFA29EF63C51C080FD06 /* Pods */ = {
+		420939CAC7B4A8D0B642B280 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B056A0C0A940EF3C92E08D24 /* Pods-WhisperDemo.debug.xcconfig */,
-				EF03BCFAFBE8B2FA7C98C617 /* Pods-WhisperDemo.release.xcconfig */,
+				D9E335AA186045DCD2BC50D5 /* Pods-WhisperDemo.debug.xcconfig */,
+				B4A71338F3DF190292DD104D /* Pods-WhisperDemo.release.xcconfig */,
 			);
-			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,12 +147,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 29AD42AC1BBC2BD2004292F1 /* Build configuration list for PBXNativeTarget "WhisperDemo" */;
 			buildPhases = (
-				C522021051BE11D3DAB44930 /* [CP] Check Pods Manifest.lock */,
+				30D8076D98BC1ED888B8A6A4 /* [CP] Check Pods Manifest.lock */,
 				29AD42961BBC2BD2004292F1 /* Sources */,
 				29AD42971BBC2BD2004292F1 /* Frameworks */,
 				29AD42981BBC2BD2004292F1 /* Resources */,
-				D5B676FD334912E862F55066 /* [CP] Embed Pods Frameworks */,
-				BB4915A56966DA1B990596E3 /* [CP] Copy Pods Resources */,
+				E86258B25941D5C4BB6BB94D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -170,24 +169,25 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Ramon Gilabert Llop";
 				TargetAttributes = {
 					290531351C206A3800FB382C = {
 						CreatedOnToolsVersion = 7.2;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1150;
 						TestTargetID = 29AD42991BBC2BD2004292F1;
 					};
 					29AD42991BBC2BD2004292F1 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						DevelopmentTeam = D34XZHQLE3;
+						LastSwiftMigration = 1150;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 29AD42951BBC2BD2004292F1 /* Build configuration list for PBXProject "WhisperDemo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -224,31 +224,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BB4915A56966DA1B990596E3 /* [CP] Copy Pods Resources */ = {
+		30D8076D98BC1ED888B8A6A4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C522021051BE11D3DAB44930 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-WhisperDemo-checkManifestLockResult.txt",
 			);
@@ -257,13 +246,13 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D5B676FD334912E862F55066 /* [CP] Embed Pods Frameworks */ = {
+		E86258B25941D5C4BB6BB94D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Whisper/Whisper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -272,7 +261,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WhisperDemo/Pods-WhisperDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -326,6 +315,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = WhisperDemo;
 				USES_XCTRUNNER = YES;
 			};
@@ -339,6 +329,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = WhisperDemo;
 				USES_XCTRUNNER = YES;
 			};
@@ -348,6 +339,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -356,12 +348,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -402,6 +396,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -410,12 +405,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -448,31 +445,33 @@
 		};
 		29AD42AD1BBC2BD2004292F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B056A0C0A940EF3C92E08D24 /* Pods-WhisperDemo.debug.xcconfig */;
+			baseConfigurationReference = D9E335AA186045DCD2BC50D5 /* Pods-WhisperDemo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D34XZHQLE3;
 				INFOPLIST_FILE = WhisperDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = demo.no.hyper.Whisper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		29AD42AE1BBC2BD2004292F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF03BCFAFBE8B2FA7C98C617 /* Pods-WhisperDemo.release.xcconfig */;
+			baseConfigurationReference = B4A71338F3DF190292DD104D /* Pods-WhisperDemo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D34XZHQLE3;
 				INFOPLIST_FILE = WhisperDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.WhisperDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = demo.no.hyper.Whisper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

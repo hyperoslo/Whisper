@@ -8,7 +8,7 @@ class WhisperTests: XCTestCase {
     continueAfterFailure = false
     XCUIApplication().launch()
 
-    XCUIDevice.shared().orientation = .portrait
+    XCUIDevice.shared.orientation = .portrait
   }
   
   override func tearDown() {
