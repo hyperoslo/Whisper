@@ -3,7 +3,7 @@ import UIKit
 let shoutView = ShoutView()
 
 open class ShoutView: UIView {
-  
+
   public struct Dimensions {
     public static let indicatorHeight: CGFloat = 6
     public static let indicatorWidth: CGFloat = 50
@@ -12,52 +12,52 @@ open class ShoutView: UIView {
     public static var textOffset: CGFloat = 75
     public static var touchOffset: CGFloat = 40
   }
-  
+
   open fileprivate(set) lazy var backgroundView: UIView = {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.background
     view.alpha = 0.98
     view.clipsToBounds = true
-    
+
     return view
   }()
-  
+
   open fileprivate(set) lazy var indicatorView: UIView = {
     let view = UIView()
     view.backgroundColor = ColorList.Shout.dragIndicator
     view.layer.cornerRadius = Dimensions.indicatorHeight / 2
     view.isUserInteractionEnabled = true
-    
+
     return view
   }()
-  
+
   open fileprivate(set) lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = Dimensions.imageSize / 2
     imageView.clipsToBounds = true
     imageView.contentMode = .scaleAspectFill
-    
+
     return imageView
   }()
-  
+
   open fileprivate(set) lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.title
     label.textColor = ColorList.Shout.title
     label.numberOfLines = 2
-    
+  
     return label
   }()
-  
+
   open fileprivate(set) lazy var subtitleLabel: UILabel = {
     let label = UILabel()
     label.font = FontList.Shout.subtitle
     label.textColor = ColorList.Shout.subtitle
     label.numberOfLines = 2
-    
+  
     return label
   }()
-  
+
   open fileprivate(set) lazy var tapGestureRecognizer: UITapGestureRecognizer = { [unowned self] in
     let gesture = UITapGestureRecognizer()
     gesture.addTarget(self, action: #selector(ShoutView.handleTapGestureRecognizer))
@@ -77,7 +77,6 @@ open class ShoutView: UIView {
   open fileprivate(set) var panGestureActive = false
   open fileprivate(set) var shouldSilent = false
   open fileprivate(set) var completion: (() -> ())?
-  open fileprivate(set) var tapAction: (([AnyHashable: Any]?) -> Void)?
   
   private var subtitleLabelOriginalHeight: CGFloat = 0
   private var internalHeight: CGFloat = 0
@@ -116,12 +115,11 @@ open class ShoutView: UIView {
   
   // MARK: - Configuration
   
-  open func craft(_ announcement: Announcement, to: UIViewController, completion: (() -> ())?, tapAction: (([AnyHashable: Any]?) -> Void)?) {
+  open func craft(_ announcement: Announcement, to: UIViewController, completion: (() -> ())?) {
     panGestureActive = false
     shouldSilent = false
     configureView(announcement)
     shout(to: to)
-    self.tapAction = tapAction
     self.completion = completion
   }
   
@@ -136,42 +134,11 @@ open class ShoutView: UIView {
                                         target: self, selector: #selector(ShoutView.displayTimerDidFire), userInfo: nil, repeats: false)
     
     setupFrames()
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.addTarget(self, action: #selector(tapGestureAction), for: .touchUpInside)
-    button.backgroundColor = .clear
-    self.addSubview(button)
-    if #available(iOS 9.0, *) {
-      button.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    } else {
-      // Fallback on earlier versions
-    }
-    if #available(iOS 9.0, *) {
-      button.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    } else {
-      // Fallback on earlier versions
-    }
-    if #available(iOS 9.0, *) {
-      button.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    } else {
-      // Fallback on earlier versions
-    }
-    if #available(iOS 9.0, *) {
-      button.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    } else {
-      // Fallback on earlier versions
-    }
-  }
-  
-  @objc func tapGestureAction() {
-    if let tapAction = self.tapAction, let announcement = self.announcement {
-      tapAction(announcement.notifData)
-    }
   }
   
   open func shout(to controller: UIViewController) {
     controller.view.addSubview(self)
-    
+
     frame.size.height = 0
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = self.internalHeight + Dimensions.touchOffset
@@ -179,7 +146,7 @@ open class ShoutView: UIView {
   }
   
   // MARK: - Setup
-  
+
   public func setupFrames() {
     internalHeight = (UIApplication.shared.isStatusBarHidden ? 55 : 65)
     
@@ -187,7 +154,7 @@ open class ShoutView: UIView {
     let offset: CGFloat = UIApplication.shared.isStatusBarHidden ? 2.5 : 5
     let textOffsetX: CGFloat = imageView.image != nil ? Dimensions.textOffset : 18
     let imageSize: CGFloat = imageView.image != nil ? Dimensions.imageSize : 0
-    
+
     [titleLabel, subtitleLabel].forEach {
       $0.frame.size.width = totalWidth - imageSize - (Dimensions.imageOffset * 2)
       $0.sizeToFit()
@@ -199,14 +166,14 @@ open class ShoutView: UIView {
                              width: imageSize, height: imageSize)
     
     let textOffsetY = imageView.image != nil ? imageView.frame.origin.x + 3 : textOffsetX + 5
-    
+
     titleLabel.frame.origin = CGPoint(x: textOffsetX, y: textOffsetY)
     subtitleLabel.frame.origin = CGPoint(x: textOffsetX, y: titleLabel.frame.maxY + 2.5)
     
     if subtitleLabel.text?.isEmpty ?? true {
       titleLabel.center.y = imageView.center.y - 2.5
     }
-    
+
     frame = CGRect(x: 0, y: safeYCoordinate,
                    width: totalWidth, height: internalHeight + Dimensions.touchOffset)
   }
@@ -227,7 +194,7 @@ open class ShoutView: UIView {
   }
   
   // MARK: - Actions
-  
+
   open func silent() {
     UIView.animate(withDuration: 0.35, animations: {
       self.frame.size.height = 0
@@ -242,11 +209,11 @@ open class ShoutView: UIView {
   
   @objc open func displayTimerDidFire() {
     shouldSilent = true
-    
+
     if panGestureActive { return }
     silent()
   }
-  
+
   // MARK: - Gesture methods
   
   @objc fileprivate func handleTapGestureRecognizer() {
@@ -257,7 +224,7 @@ open class ShoutView: UIView {
   
   @objc private func handlePanGestureRecognizer() {
     let translation = panGestureRecognizer.translation(in: self)
-    
+
     if panGestureRecognizer.state == .began {
       subtitleLabelOriginalHeight = subtitleLabel.bounds.size.height
       subtitleLabel.numberOfLines = 0
@@ -276,7 +243,7 @@ open class ShoutView: UIView {
     } else {
       panGestureActive = false
       let height = translation.y < -5 || shouldSilent ? 0 : internalHeight
-      
+
       subtitleLabel.numberOfLines = 2
       subtitleLabel.sizeToFit()
       
@@ -290,8 +257,8 @@ open class ShoutView: UIView {
       })
     }
   }
-  
-  
+
+
   // MARK: - Handling screen orientation
   
   @objc func orientationDidChange() {

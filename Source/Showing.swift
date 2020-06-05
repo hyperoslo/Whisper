@@ -4,8 +4,8 @@ public func show(whisper message: Message, to: UINavigationController, action: W
   whisperFactory.craft(message, navigationController: to, action: action)
 }
 
-public func show(shout announcement: Announcement, to: UIViewController, completion: (() -> Void)? = nil, tapAction: (([AnyHashable: Any]?) -> Void)? = nil) {
-    shoutView.craft(announcement, to: to, completion: completion, tapAction: tapAction)
+public func show(shout announcement: Announcement, to: UIViewController, completion: (() -> Void)? = nil) {
+    shoutView.craft(announcement, to: to, completion: completion)
 }
 
 public func show(whistle murmur: Murmur, action: WhistleAction = .show(1.5)) {
