@@ -7,10 +7,10 @@ public protocol NotificationControllerDelegate: class {
 open class WhisperView: UIView {
 
   public struct Dimensions {
-    public static let height: CGFloat = 24
-    static let offsetHeight: CGFloat = height * 2
-    static let imageSize: CGFloat = 14
-    static let loaderTitleOffset: CGFloat = 5
+    public static var height: CGFloat = 24
+    static var offsetHeight: CGFloat = height * 2
+    static var imageSize: CGFloat = 14
+    static var loaderTitleOffset: CGFloat = 5
   }
 
   lazy fileprivate(set) var transformViews: [UIView] = [self.titleLabel, self.complementImageView]
