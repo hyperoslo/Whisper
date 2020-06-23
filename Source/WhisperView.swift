@@ -18,7 +18,7 @@ open class WhisperView: UIView {
   open lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
-    label.font = UIFont(name: "HelveticaNeue", size: 13)
+    label.font = FontList.Whisper.title
     label.frame.size.width = UIScreen.main.bounds.width - 60
 
     return label
